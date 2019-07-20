@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jul 2019 12:23:04 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jul 2019 13:05:40 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Fork工作流</title>
+      <link>https://hueralin.github.io/2019/git/</link>
+      <pubDate>Sat, 20 Jul 2019 13:05:40 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/git/</guid>
+      <description>Fork工作流！</description>
+    </item>
     
     <item>
       <title>学习Redux</title>
