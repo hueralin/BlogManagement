@@ -5,36 +5,17 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jul 2019 13:05:40 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jul 2019 23:28:34 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Fork工作流</title>
-      <link>https://hueralin.github.io/2019/git/</link>
-      <pubDate>Sat, 20 Jul 2019 13:05:40 +0800</pubDate>
+      <title>搭个窝，储点儿粮，准备过冬！</title>
+      <link>https://hueralin.github.io/2019/life20190720/</link>
+      <pubDate>Sat, 20 Jul 2019 23:28:34 +0800</pubDate>
       
-      <guid>https://hueralin.github.io/2019/git/</guid>
-      <description>&lt;p&gt;Fork工作流！&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>学习Redux</title>
-      <link>https://hueralin.github.io/2019/redux/</link>
-      <pubDate>Sat, 20 Jul 2019 12:23:04 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/redux/</guid>
-      <description>&lt;p&gt;Redux&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Welcome</title>
-      <link>https://hueralin.github.io/2019/welcome/</link>
-      <pubDate>Sat, 20 Jul 2019 12:19:41 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/welcome/</guid>
-      <description>&lt;p&gt;Welcome!&lt;/p&gt;
+      <guid>https://hueralin.github.io/2019/life20190720/</guid>
+      <description>&lt;p&gt;今天总算把我的小窝搭建起来了，hugo + github pages 还真不错，感谢该hugo主题的作者，UI很好看。
+为什么要放在GiHub上而不是自己前后端+服务器啥的一通瞎搞呢？记得有人说过，刚开始做博客的时候大包大揽，前后端都自己做，确实考验技术也很有成就感，或许也是一时兴起，刚接触博客，饶有趣味，可后来操心太多，可能还会修复bug，还不时续费维护，那时才想起来，”我就是要发篇博客嘛，那么麻烦干什么，都不能专心写作了“，于是github静态博客成了首选（毕竟CSDN、博客园、简书啥的不能定制），通过简单的Markdown语法+GitHub基础就可以发布一篇博客了，岂不美哉～ 可以在该博客上发发技术文章，也可以记录学习和生活，简简单单，专心写作。今天也算是里程碑的一天吧，有此博客就像在北京有了一套房（哈哈哈😂，有些夸张～），实习的日子，加油！&lt;/p&gt;
 </description>
     </item>
     
