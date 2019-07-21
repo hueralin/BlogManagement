@@ -48,6 +48,8 @@
 5.1. &lt;code&gt;&amp;quot;build&amp;quot;: &amp;quot;webpack&amp;quot;&lt;/code&gt;打包&lt;br /&gt;
 5.2. &lt;code&gt;&amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;&lt;/code&gt;启动测试服务器&lt;/p&gt;&lt;/li&gt;
 
+&lt;li&gt;&lt;p&gt;在package.json文件里配置&lt;code&gt;&amp;quot;babel&amp;quot;: {&amp;quot;presets&amp;quot;: [&amp;quot;es2015&amp;quot;, &amp;quot;react&amp;quot;]}&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
 &lt;li&gt;&lt;p&gt;运行下试试？？？ Emmm，这个代码块有点丑啊😂&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
