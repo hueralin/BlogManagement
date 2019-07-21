@@ -5,8 +5,53 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jul 2019 23:28:34 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jul 2019 00:19:54 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>用webpack搭建简易的React应用</title>
+      <link>https://hueralin.github.io/2019/createreactwithwebpack/</link>
+      <pubDate>Sun, 21 Jul 2019 00:19:54 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/createreactwithwebpack/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;Emmm,步骤清单😂&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;npm init -y&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;npm i webpack webpack-cli webpack-dev-server --save&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;npm i react react-dom --save&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;npm i babel-core babel-preset-es2015 babel-preset-react --save-dev&lt;/code&gt;&lt;br /&gt;
+需要安装的包差不多就这些了，接下来配置webpack.config.js文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;module.exports = {
+    entry: &amp;quot;./index.jsx&amp;quot;,
+    output: {
+        path: __dirname + &amp;quot;/public&amp;quot;,
+        filename: &amp;quot;bundle.js&amp;quot;
+    },
+    module: {
+        rules: [
+            {
+                test: /\.jsx$/,
+                loader: &amp;quot;babel-loader&amp;quot;
+            }
+        ]
+    },
+    devServer: {
+        contentBase: &amp;quot;./&amp;quot;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在package.json文件中添加脚本&lt;br /&gt;
+5.1. &lt;code&gt;&amp;quot;build&amp;quot;: &amp;quot;webpack&amp;quot;&lt;/code&gt;打包&lt;br /&gt;
+5.2. &lt;code&gt;&amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;&lt;/code&gt;启动测试服务器&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;运行下试试？？？ Emmm，这个代码块有点丑啊😂&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>搭个窝，储点儿粮，准备过冬！</title>

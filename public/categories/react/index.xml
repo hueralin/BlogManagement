@@ -6,18 +6,27 @@
     <description>Recent content in React on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jul 2019 12:23:04 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jul 2019 00:19:54 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/react/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>学习Redux</title>
-      <link>https://hueralin.github.io/2019/redux/</link>
-      <pubDate>Sat, 20 Jul 2019 12:23:04 +0800</pubDate>
+      <title>用webpack搭建简易的React应用</title>
+      <link>https://hueralin.github.io/2019/createreactwithwebpack/</link>
+      <pubDate>Sun, 21 Jul 2019 00:19:54 +0800</pubDate>
       
-      <guid>https://hueralin.github.io/2019/redux/</guid>
-      <description>Redux</description>
+      <guid>https://hueralin.github.io/2019/createreactwithwebpack/</guid>
+      <description>Emmm,步骤清单😂
+ npm init -y
+ npm i webpack webpack-cli webpack-dev-server --save
+ npm i react react-dom --save
+ npm i babel-core babel-preset-es2015 babel-preset-react --save-dev
+需要安装的包差不多就这些了，接下来配置webpack.config.js文件
+module.exports = { entry: &amp;quot;./index.jsx&amp;quot;, output: { path: __dirname + &amp;quot;/public&amp;quot;, filename: &amp;quot;bundle.js&amp;quot; }, module: { rules: [ { test: /\.jsx$/, loader: &amp;quot;babel-loader&amp;quot; } ] }, devServer: { contentBase: &amp;quot;./&amp;quot; } }  在package.json文件中添加脚本
+5.1. &amp;quot;build&amp;quot;: &amp;quot;webpack&amp;quot;打包
+5.2. &amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;启动测试服务器
+ 运行下试试？？？ Emmm，这个代码块有点丑啊😂</description>
     </item>
     
   </channel>

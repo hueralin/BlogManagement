@@ -4,7 +4,7 @@
     <url>
       <loc>https://hueralin.github.io/categories/</loc>
       
-      <lastmod>2019-07-20T23:28:34+08:00</lastmod>
+      <lastmod>2019-07-21T00:19:54+08:00</lastmod>
       
       
       
@@ -16,11 +16,45 @@
     <url>
       <loc>https://hueralin.github.io/posts/</loc>
       
-      <lastmod>2019-07-20T23:28:34+08:00</lastmod>
+      <lastmod>2019-07-21T00:19:54+08:00</lastmod>
       
       
       
       <priority>0</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://hueralin.github.io/categories/react/</loc>
+      
+      <lastmod>2019-07-21T00:19:54+08:00</lastmod>
+      
+      
+      
+      <priority>0</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://hueralin.github.io/</loc>
+      
+      <lastmod>2019-07-21T00:19:54+08:00</lastmod>
+      
+      
+      
+      <priority>0</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://hueralin.github.io/2019/createreactwithwebpack/</loc>
+      
+      <lastmod>2019-07-21T00:19:54+08:00</lastmod>
+      
+      
       
       
     </url>
@@ -43,18 +77,6 @@
       <lastmod>2019-07-20T23:28:34+08:00</lastmod>
       
       
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://hueralin.github.io/</loc>
-      
-      <lastmod>2019-07-20T23:28:34+08:00</lastmod>
-      
-      
-      
-      <priority>0</priority>
       
       
     </url>
