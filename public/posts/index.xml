@@ -6,10 +6,40 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jul 2019 00:19:54 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jul 2019 14:32:37 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Git push 的使用</title>
+      <link>https://hueralin.github.io/2019/gitpush/</link>
+      <pubDate>Mon, 22 Jul 2019 14:32:37 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitpush/</guid>
+      <description>语法：git push &amp;lt;远程主机名&amp;gt; &amp;lt;本地分支名&amp;gt; ：&amp;lt;远程分支名&amp;gt;
+  git push origin master
+最常用的一个写法，忽略了远程分支名，将本地master分支推送到origin中与之有追踪关系的对应分支（通常同名），若没有则创建一个对应的远程分支。
+ git push origin :master
+忽略了本地分支名，意味着要推送一个本地的空分支到指定远程分支，即删除指定的远程分支，相当于git push origin --delete master
+ git push origin
+如果当前分支和远程分支存在对应关系，则两个分支名都可省略掉，直接推送当前分支到对应的远程分支。
+ git push
+如果只有一个远程主机，且只有一个与当前分支对应的远程分支，那么就可以全都省略，直接git push。
+ git push -u origin master
+如果对应多个远程主机，-u 则指定一个默认主机，以后就可以直接使用git push推送当前分支到远程对应分支。
+ git push &amp;ndash;all origin
+不管是否存在对应的远程分支，将本地的所有分支全部推上去。
+ git push &amp;ndash;force origin
+一般情况下本地仓库比远程仓库旧的话会要求你先git pull进行更新，而 &amp;ndash;force 表明不要更新，直接推上去。
+ git push origin &amp;ndash;tags
+不推送分支，只推送标签。
+&amp;mdash;
+关于追踪关系
+追踪即本地分支跟进远程分支的变化，用于push、pull、merge等&amp;hellip;
+追踪远程分支
+ git clone 一般克隆下来的项目将自动创建master分支，并且自动关联到远程的master分支上</description>
+    </item>
     
     <item>
       <title>用webpack搭建简易的React应用</title>

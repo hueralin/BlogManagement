@@ -9,9 +9,9 @@
   
   
   
-  <link rel="prev" href="https://hueralin.github.io/2019/life20190720/" />
-  <link rel="next" href="https://hueralin.github.io/2019/gitpush/" />
-  <link rel="canonical" href="https://hueralin.github.io/2019/createreactwithwebpack/" />
+  <link rel="prev" href="https://hueralin.github.io/2019/createreactwithwebpack/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/gitpush/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,10 +22,10 @@
   <title>
        
        
-           用webpack搭建简易的React应用 | 狐耳的雪原
+           Git push 的使用 | 狐耳的雪原
        
   </title>
-  <meta name="title" content="用webpack搭建简易的React应用 | 狐耳的雪原">
+  <meta name="title" content="Git push 的使用 | 狐耳的雪原">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "https:\/\/hueralin.github.io"
     },
     "articleSection" : "posts",
-    "name" : "用webpack搭建简易的React应用",
-    "headline" : "用webpack搭建简易的React应用",
-    "description" : "Emmm,步骤清单😂\n npm init -y\n npm i webpack webpack-cli webpack-dev-server --save\n npm i react react-dom --save\n npm i babel-core babel-preset-es2015 babel-preset-react --save-dev\n需要安装的包差不多就这些了，接下来配置webpack.config.js文件\nmodule.exports = { entry: \x26quot;.\/index.jsx\x26quot;, output: { path: __dirname \x2b \x26quot;\/public\x26quot;, filename: \x26quot;bundle.js\x26quot; }, module: { rules: [ { test: \/\\.jsx$\/, loader: \x26quot;babel-loader\x26quot; } ] }, devServer: { contentBase: \x26quot;.\/\x26quot; } }  在package.json文件中添加脚本\n5.1. \x26quot;build\x26quot;: \x26quot;webpack\x26quot;打包\n5.2. \x26quot;dev\x26quot;: \x26quot;webpack-dev-server --open --inline\x26quot;启动测试服务器\n 在package.json文件里配置\x26quot;babel\x26quot;: {\x26quot;presets\x26quot;: [\x26quot;es2015\x26quot;, \x26quot;react\x26quot;]}",
+    "name" : "Git push 的使用",
+    "headline" : "Git push 的使用",
+    "description" : "语法：git push \x26lt;远程主机名\x26gt; \x26lt;本地分支名\x26gt; ：\x26lt;远程分支名\x26gt;\n  git push origin master\n最常用的一个写法，忽略了远程分支名，将本地master分支推送到origin中与之有追踪关系的对应分支（通常同名），若没有则创建一个对应的远程分支。\n git push origin :master\n忽略了本地分支名，意味着要推送一个本地的空分支到指定远程分支，即删除指定的远程分支，相当于git push origin --delete master\n git push origin\n如果当前分支和远程分支存在对应关系，则两个分支名都可省略掉，直接推送当前分支到对应的远程分支。\n git push\n如果只有一个远程主机，且只有一个与当前分支对应的远程分支，那么就可以全都省略，直接git push。\n git push -u origin master\n如果对应多个远程主机，-u 则指定一个默认主机，以后就可以直接使用git push推送当前分支到远程对应分支。\n git push \x26ndash;all origin\n不管是否存在对应的远程分支，将本地的所有分支全部推上去。\n git push \x26ndash;force origin\n一般情况下本地仓库比远程仓库旧的话会要求你先git pull进行更新，而 \x26ndash;force 表明不要更新，直接推上去。\n git push origin \x26ndash;tags\n不推送分支，只推送标签。\n\x26mdash;\n关于追踪关系\n追踪即本地分支跟进远程分支的变化，用于push、pull、merge等\x26hellip;\n追踪远程分支\n git clone 一般克隆下来的项目将自动创建master分支，并且自动关联到远程的master分支上",
     "inLanguage" : "en-us",
     "author" : "狐耳",
     "creator" : "狐耳",
@@ -54,10 +54,10 @@
     "accountablePerson" : "狐耳",
     "copyrightHolder" : "狐耳",
     "copyrightYear" : "2019",
-    "datePublished": "2019-07-21 00:19:54 \x2b0800 CST",
-    "dateModified" : "2019-07-21 00:19:54 \x2b0800 CST",
-    "url" : "https:\/\/hueralin.github.io\/2019\/createreactwithwebpack\/",
-    "wordCount" : "69",
+    "datePublished": "2019-07-22 14:32:37 \x2b0800 CST",
+    "dateModified" : "2019-07-22 14:32:37 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/gitpush\/",
+    "wordCount" : "76",
     "keywords" : [  "狐耳的雪原"]
 }
 </script>
@@ -122,16 +122,16 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">用webpack搭建简易的React应用</h1>
+        <h1 class="post-title" itemprop="name headline">Git push 的使用</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
                 <span class="post-time">
-                on <time datetime=2019-07-21 itemprop="datePublished">July 21, 2019</time>
+                on <time datetime=2019-07-22 itemprop="datePublished">July 22, 2019</time>
                 </span>
                 in
                 <i class="iconfont icon-folder"></i>
                 <span class="post-category">
-                        <a href="https://hueralin.github.io/categories/react/"> React </a>
+                        <a href="https://hueralin.github.io/categories/git/"> Git </a>
                         
                 </span>
         </div>
@@ -152,43 +152,35 @@
           
           
 
-          <p><strong>Emmm,步骤清单😂</strong></p>
+          <blockquote>
+<p>语法：git push &lt;远程主机名&gt; &lt;本地分支名&gt; ：&lt;远程分支名&gt;</p>
+</blockquote>
 
 <ol>
-<li><code>npm init -y</code><br /></li>
-<li><code>npm i webpack webpack-cli webpack-dev-server --save</code><br /></li>
-<li><code>npm i react react-dom --save</code><br /></li>
-
-<li><p><code>npm i babel-core babel-preset-es2015 babel-preset-react --save-dev</code><br />
-需要安装的包差不多就这些了，接下来配置webpack.config.js文件</p>
-
-<pre><code>module.exports = {
-    entry: &quot;./index.jsx&quot;,
-    output: {
-        path: __dirname + &quot;/public&quot;,
-        filename: &quot;bundle.js&quot;
-    },
-    module: {
-        rules: [
-            {
-                test: /\.jsx$/,
-                loader: &quot;babel-loader&quot;
-            }
-        ]
-    },
-    devServer: {
-        contentBase: &quot;./&quot;
-    }
-}
-</code></pre></li>
-
-<li><p>在package.json文件中添加脚本<br />
-5.1. <code>&quot;build&quot;: &quot;webpack&quot;</code>打包<br />
-5.2. <code>&quot;dev&quot;: &quot;webpack-dev-server --open --inline&quot;</code>启动测试服务器</p></li>
-
-<li><p>在package.json文件里配置<code>&quot;babel&quot;: {&quot;presets&quot;: [&quot;es2015&quot;, &quot;react&quot;]}</code></p></li>
-
-<li><p>运行下试试？？？ Emmm，这个代码块有点丑啊😂</p></li>
+<li><strong>git push origin master</strong><br />
+最常用的一个写法，忽略了远程分支名，将本地master分支推送到origin中与之有追踪关系的对应分支（通常同名），若没有则创建一个对应的远程分支。<br /></li>
+<li><strong>git push origin :master</strong><br />
+忽略了本地分支名，意味着要推送一个本地的空分支到指定远程分支，即删除指定的远程分支，相当于<code>git push origin --delete master</code><br /></li>
+<li><strong>git push origin</strong><br />
+如果当前分支和远程分支存在对应关系，则两个分支名都可省略掉，直接推送当前分支到对应的远程分支。<br /></li>
+<li><strong>git push</strong><br />
+如果只有一个远程主机，且只有一个与当前分支对应的远程分支，那么就可以全都省略，直接git push。<br /></li>
+<li><strong>git push -u origin master</strong><br />
+如果对应多个远程主机，-u 则指定一个默认主机，以后就可以直接使用<code>git push</code>推送当前分支到远程对应分支。<br /></li>
+<li><strong>git push &ndash;all origin</strong><br />
+不管是否存在对应的远程分支，将本地的所有分支全部推上去。<br /></li>
+<li><strong>git push &ndash;force origin</strong><br />
+一般情况下本地仓库比远程仓库旧的话会要求你先<code>git pull</code>进行更新，而 &ndash;force 表明不要更新，直接推上去。<br /></li>
+<li><strong>git push origin &ndash;tags</strong><br />
+不推送分支，只推送标签。<br />
+&mdash;<br />
+<strong>关于追踪关系</strong><br />
+追踪即本地分支跟进远程分支的变化，用于push、pull、merge等&hellip;<br />
+<em>追踪远程分支</em><br /></li>
+<li><code>git clone</code> 一般克隆下来的项目将自动创建master分支，并且自动关联到远程的master分支上<br /></li>
+<li><code>git branch -u 远程主机/远程分支名 本地分支名</code> 设置本地分支跟踪远程分支</li>
+<li><code>git checkout -b 本地分支名 远程主机/远程分支名</code> 从远程分支中签出本地分支<br /></li>
+<li><code>git branch -vv</code> 查看本地分支和远程分支的跟踪关系</li>
 </ol>
 
     </div>
@@ -204,7 +196,7 @@
              
             <p class="copyright-item">
                     <span>Link:</span>
-                    <a href=https://hueralin.github.io/2019/createreactwithwebpack/>https://hueralin.github.io/2019/createreactwithwebpack/</span>
+                    <a href=https://hueralin.github.io/2019/gitpush/>https://hueralin.github.io/2019/gitpush/</span>
             </p>
             
              
@@ -225,10 +217,8 @@
 
     <div class="post-nav">
         
-        <a href="https://hueralin.github.io/2019/life20190720/" class="prev" rel="prev" title="搭个窝，储点儿粮，准备过冬！"><i class="iconfont icon-left"></i>&nbsp;搭个窝，储点儿粮，准备过冬！</a>
+        <a href="https://hueralin.github.io/2019/createreactwithwebpack/" class="prev" rel="prev" title="用webpack搭建简易的React应用"><i class="iconfont icon-left"></i>&nbsp;用webpack搭建简易的React应用</a>
          
-        
-        <a href="https://hueralin.github.io/2019/gitpush/" class="next" rel="next" title="Git push 的使用">Git push 的使用&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 
