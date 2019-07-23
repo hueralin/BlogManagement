@@ -9,9 +9,9 @@
   
   
   
-  <link rel="prev" href="https://hueralin.github.io/2019/gitpush/" />
-  <link rel="next" href="https://hueralin.github.io/2019/gitpull/" />
-  <link rel="canonical" href="https://hueralin.github.io/2019/fork/" />
+  <link rel="prev" href="https://hueralin.github.io/2019/fork/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/gitpull/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,10 +22,10 @@
   <title>
        
        
-           Fork工作流 | 狐耳的雪原
+           Git pull 的使用 | 狐耳的雪原
        
   </title>
-  <meta name="title" content="Fork工作流 | 狐耳的雪原">
+  <meta name="title" content="Git pull 的使用 | 狐耳的雪原">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "https:\/\/hueralin.github.io"
     },
     "articleSection" : "posts",
-    "name" : "Fork工作流",
-    "headline" : "Fork工作流",
-    "description" : "Fork工作流 实现协同开发\n作为实习新人，在参与公司项目的开发时被要求使用Fork工作流，Fork工作流实际上就是从GitHub上fork一个原仓库，并与原仓库代码保持同步的一种工作方式。\nFork工作流不再是只有一个中央代码库，而是给予每个人一个远程仓库（origin），外加一个唯一的中央仓库（upstream，或称为官方仓库）。点击Fork时就会生成一个自己的远程仓库，每次开发者提交时都会先将自己的贡献提交到origin，然后发起一个Pull Request请求给中央仓库，中央仓库的管理者会决定是否将你的代码提交到中央仓库，其他人都没这个权限。这使得管理者可以接受任何人的提交，而不需要给它们中央仓库的权限。\n具体流程\n1. 从原仓库fork到自己的origin\n2. git clone xxxxxx 将origin克隆到本地\n3. git remote add upstream xxxxx 指向上游仓库，即原仓库\n4. git checkout -b feature-xx origin\/dev 从远程分支检出本地分支进行开发\n5. 开发、修改。。。。提交。。。\n6. git push origin feature-xx 将本地feature分支push到origin\n7. 发起Pull Request请求管理员合并\n8. 上述合并可能会导致冲突，因为本地仓库可能比较旧了，需要更新\n9. git checkout dev 切回dev分支\n10. git pull upstream dev 从原仓库拉取dev分支的最新版本,更新本地的dev分支\n11. git checkout -b feature-merge-dev dev 从更新后的本地dev检出合并分支，并切换为该分支\n12. git merge feature-xx 合并你的修改，即feature-xx分支上的内容\n13. git branch -m feature-merge-dev feature-xx 将合并分支改名为feature-xx 覆盖原分支",
+    "name" : "Git pull 的使用",
+    "headline" : "Git pull 的使用",
+    "description" : "语法：git pull \x26lt;选项\x26gt; \x26lt;远程主机名\x26gt; \x26lt;远程分支名\x26gt;:\x26lt;本地分支名\x26gt;\n 注意：和git push的语法顺序稍有不同\ngit push 的语法为：git pull \x26lt;远程主机名\x26gt; \x26lt;本地分支名\x26gt;:\x26lt;远程分支名\x26gt;\ngit pull 意为从远程分支的最新版本拉取下来并于本地分支合并\n git pull origin master:dev 将origin的master分支拉取并合并到本地的dev分支\n git pull origin master 省略了本地分支名，即拉取并合并到本地分支\n git pull origin 若有 某远程分支与当前分支有追踪关系，则远程分支名也可以省略\n git pull 若只有一个远程主机，且只有一个远程分支与当前分支有追踪关系，则可以直接git pull\n  git pull相当于git fetch和git merge的简写\n比如：git pull origin dev 相当于 git fetch origin dev \x2b git merge origin\/dev\n未完待续\x26hellip;",
     "inLanguage" : "en-us",
     "author" : "狐耳",
     "creator" : "狐耳",
@@ -54,10 +54,10 @@
     "accountablePerson" : "狐耳",
     "copyrightHolder" : "狐耳",
     "copyrightYear" : "2019",
-    "datePublished": "2019-07-23 10:34:46 \x2b0800 CST",
-    "dateModified" : "2019-07-23 10:34:46 \x2b0800 CST",
-    "url" : "https:\/\/hueralin.github.io\/2019\/fork\/",
-    "wordCount" : "78",
+    "datePublished": "2019-07-23 14:37:19 \x2b0800 CST",
+    "dateModified" : "2019-07-23 14:37:19 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/gitpull\/",
+    "wordCount" : "53",
     "keywords" : [  "狐耳的雪原"]
 }
 </script>
@@ -122,7 +122,7 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">Fork工作流</h1>
+        <h1 class="post-title" itemprop="name headline">Git pull 的使用</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
                 <span class="post-time">
@@ -152,27 +152,29 @@
           
           
 
-          <p><strong>Fork工作流  实现协同开发</strong><br />
-作为实习新人，在参与公司项目的开发时被要求使用Fork工作流，Fork工作流实际上就是从GitHub上fork一个原仓库，并与原仓库代码保持同步的一种工作方式。<br />
-Fork工作流不再是只有一个中央代码库，而是给予每个人一个远程仓库（origin），外加一个唯一的中央仓库（upstream，或称为官方仓库）。点击Fork时就会生成一个自己的远程仓库，每次开发者提交时都会先将自己的贡献提交到origin，然后发起一个Pull Request请求给中央仓库，中央仓库的管理者会决定是否将你的代码提交到中央仓库，其他人都没这个权限。这使得管理者可以接受任何人的提交，而不需要给它们中央仓库的权限。</p>
+          <blockquote>
+<p>语法：git pull &lt;选项&gt; &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</p>
+</blockquote>
+
+<p>注意：和git push的语法顺序稍有不同<br />
+git push 的语法为：<code>git pull &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;</code><br />
+git pull 意为从远程分支的最新版本拉取下来并于本地分支合并</p>
 
 <hr />
 
-<p><strong>具体流程</strong><br />
-1. 从原仓库fork到自己的origin<br />
-2. <code>git clone xxxxxx</code> 将origin克隆到本地<br />
-3. <code>git remote add upstream xxxxx</code>  指向上游仓库，即原仓库<br />
-4. <code>git checkout -b feature-xx origin/dev</code> 从远程分支检出本地分支进行开发<br />
-5. 开发、修改。。。。提交。。。<br />
-6. <code>git push origin feature-xx</code> 将本地feature分支push到origin<br />
-7. 发起Pull Request请求管理员合并<br />
-8. 上述合并可能会导致冲突，因为本地仓库可能比较旧了，需要更新<br />
-9. <code>git checkout dev</code> 切回dev分支<br />
-10. <code>git pull upstream dev</code> 从原仓库拉取dev分支的最新版本,更新本地的dev分支<br />
-11. <code>git checkout -b feature-merge-dev dev</code> 从更新后的本地dev检出合并分支，并切换为该分支<br />
-12. <code>git merge feature-xx</code> 合并你的修改，即feature-xx分支上的内容<br />
-13. <code>git branch -m feature-merge-dev feature-xx</code> 将合并分支改名为feature-xx 覆盖原分支<br />
-14. <code>git push origin feature-xx</code> push后再Pull Request就不会发生冲突了</p>
+<ol>
+<li><code>git pull origin master:dev</code> 将origin的master分支拉取并合并到本地的dev分支<br /></li>
+<li><code>git pull origin master</code>  省略了本地分支名，即拉取并合并到本地分支<br /></li>
+<li><code>git pull origin</code>  若有 某远程分支与当前分支有追踪关系，则远程分支名也可以省略<br /></li>
+<li><code>git pull</code> 若只有一个远程主机，且只有一个远程分支与当前分支有追踪关系，则可以直接git pull<br /></li>
+</ol>
+
+<hr />
+
+<p>git pull相当于git fetch和git merge的简写<br />
+比如：<code>git pull origin dev</code> 相当于 <code>git fetch origin dev</code> + <code>git merge origin/dev</code></p>
+
+<p>未完待续&hellip;</p>
 
     </div>
 
@@ -187,7 +189,7 @@ Fork工作流不再是只有一个中央代码库，而是给予每个人一个�
              
             <p class="copyright-item">
                     <span>Link:</span>
-                    <a href=https://hueralin.github.io/2019/fork/>https://hueralin.github.io/2019/fork/</span>
+                    <a href=https://hueralin.github.io/2019/gitpull/>https://hueralin.github.io/2019/gitpull/</span>
             </p>
             
              
@@ -208,10 +210,8 @@ Fork工作流不再是只有一个中央代码库，而是给予每个人一个�
 
     <div class="post-nav">
         
-        <a href="https://hueralin.github.io/2019/gitpush/" class="prev" rel="prev" title="Git push 的使用"><i class="iconfont icon-left"></i>&nbsp;Git push 的使用</a>
+        <a href="https://hueralin.github.io/2019/fork/" class="prev" rel="prev" title="Fork工作流"><i class="iconfont icon-left"></i>&nbsp;Fork工作流</a>
          
-        
-        <a href="https://hueralin.github.io/2019/gitpull/" class="next" rel="next" title="Git pull 的使用">Git pull 的使用&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 
