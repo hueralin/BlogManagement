@@ -5,8 +5,38 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jul 2019 14:32:37 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jul 2019 10:34:46 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Fork工作流</title>
+      <link>https://hueralin.github.io/2019/fork/</link>
+      <pubDate>Tue, 23 Jul 2019 10:34:46 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/fork/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;Fork工作流  实现协同开发&lt;/strong&gt;&lt;br /&gt;
+作为实习新人，在参与公司项目的开发时被要求使用Fork工作流，Fork工作流实际上就是从GitHub上fork一个原仓库，并与原仓库代码保持同步的一种工作方式。&lt;br /&gt;
+Fork工作流不再是只有一个中央代码库，而是给予每个人一个远程仓库（origin），外加一个唯一的中央仓库（upstream，或称为官方仓库）。点击Fork时就会生成一个自己的远程仓库，每次开发者提交时都会先将自己的贡献提交到origin，然后发起一个Pull Request请求给中央仓库，中央仓库的管理者会决定是否将你的代码提交到中央仓库，其他人都没这个权限。这使得管理者可以接受任何人的提交，而不需要给它们中央仓库的权限。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;具体流程&lt;/strong&gt;&lt;br /&gt;
+1. 从原仓库fork到自己的origin&lt;br /&gt;
+2. &lt;code&gt;git clone xxxxxx&lt;/code&gt; 将origin克隆到本地&lt;br /&gt;
+3. &lt;code&gt;git remote add upstream xxxxx&lt;/code&gt;  指向上游仓库，即原仓库&lt;br /&gt;
+4. &lt;code&gt;git checkout -b feature-xx origin/dev&lt;/code&gt; 从远程分支检出本地分支进行开发&lt;br /&gt;
+5. 开发、修改。。。。提交。。。&lt;br /&gt;
+6. &lt;code&gt;git push origin feature-xx&lt;/code&gt; 将本地feature分支push到origin&lt;br /&gt;
+7. 发起Pull Request请求管理员合并&lt;br /&gt;
+8. 上述合并可能会导致冲突，因为本地仓库可能比较旧了，需要更新&lt;br /&gt;
+9. &lt;code&gt;git checkout dev&lt;/code&gt; 切回dev分支&lt;br /&gt;
+10. &lt;code&gt;git pull upstream dev&lt;/code&gt; 从原仓库拉取dev分支的最新版本,更新本地的dev分支&lt;br /&gt;
+11. &lt;code&gt;git checkout -b feature-merge-dev dev&lt;/code&gt; 从更新后的本地dev检出合并分支，并切换为该分支&lt;br /&gt;
+12. &lt;code&gt;git merge feature-xx&lt;/code&gt; 合并你的修改，即feature-xx分支上的内容&lt;br /&gt;
+13. &lt;code&gt;git branch -m feature-merge-dev feature-xx&lt;/code&gt; 将合并分支改名为feature-xx 覆盖原分支&lt;br /&gt;
+14. &lt;code&gt;git push origin feature-xx&lt;/code&gt; push后再Pull Request就不会发生冲突了&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Git push 的使用</title>
