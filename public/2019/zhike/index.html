@@ -9,9 +9,9 @@
   
   
   
-  <link rel="prev" href="https://hueralin.github.io/2019/life20190720/" />
-  <link rel="next" href="https://hueralin.github.io/2019/gitpush/" />
-  <link rel="canonical" href="https://hueralin.github.io/2019/createreactwithwebpack/" />
+  <link rel="prev" href="https://hueralin.github.io/2019/gitpull/" />
+  <link rel="next" href="https://hueralin.github.io/2019/gitbranch/" />
+  <link rel="canonical" href="https://hueralin.github.io/2019/zhike/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,10 +22,10 @@
   <title>
        
        
-           用webpack搭建简易的React应用 | 狐耳的雪原
+           Zhike | 狐耳的雪原
        
   </title>
-  <meta name="title" content="用webpack搭建简易的React应用 | 狐耳的雪原">
+  <meta name="title" content="Zhike | 狐耳的雪原">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "https:\/\/hueralin.github.io"
     },
     "articleSection" : "posts",
-    "name" : "用webpack搭建简易的React应用",
-    "headline" : "用webpack搭建简易的React应用",
-    "description" : "Emmm,步骤清单😂\n npm init -y\n npm i webpack webpack-cli webpack-dev-server --save-dev\n npm i react react-dom --save\n npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev\n需要安装的包差不多就这些了，接下来配置webpack.config.js文件\nmodule.exports = { entry: \x26quot;.\/index.jsx\x26quot;, output: { path: __dirname \x2b \x26quot;\/public\x26quot;, filename: \x26quot;bundle.js\x26quot; }, module: { rules: [ { test: \/\\.jsx$\/, loader: \x26quot;babel-loader\x26quot; } ] }, devServer: { contentBase: \x26quot;.\/public\x26quot; } }  在package.json文件中添加脚本\n5.1. \x26quot;build\x26quot;: \x26quot;webpack\x26quot;打包\n5.2. \x26quot;dev\x26quot;: \x26quot;webpack-dev-server --open --inline\x26quot;启动测试服务器\n 在package.",
+    "name" : "Zhike",
+    "headline" : "Zhike",
+    "description" : "线上分支：production\n测试分支：master（www.dev.xxxxxx）\n迭代分支：release-3.xxx\n在一个迭代开始后，各种开发新特性，修复BUG，当这些工作做完时，需要将所有的改动都合并到release分支上，\n作为一次迭代，再合并到master分支（dev）进行测试，测试没问题后再合并到production分支上，发布（上线）。",
     "inLanguage" : "en-us",
     "author" : "狐耳",
     "creator" : "狐耳",
@@ -54,10 +54,10 @@
     "accountablePerson" : "狐耳",
     "copyrightHolder" : "狐耳",
     "copyrightYear" : "2019",
-    "datePublished": "2019-07-21 00:19:54 \x2b0800 CST",
-    "dateModified" : "2019-07-21 00:19:54 \x2b0800 CST",
-    "url" : "https:\/\/hueralin.github.io\/2019\/createreactwithwebpack\/",
-    "wordCount" : "71",
+    "datePublished": "2019-07-26 15:48:33 \x2b0800 CST",
+    "dateModified" : "2019-07-26 15:48:33 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/zhike\/",
+    "wordCount" : "5",
     "keywords" : [  "狐耳的雪原"]
 }
 </script>
@@ -122,16 +122,16 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">用webpack搭建简易的React应用</h1>
+        <h1 class="post-title" itemprop="name headline">Zhike</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
                 <span class="post-time">
-                on <time datetime=2019-07-21 itemprop="datePublished">July 21, 2019</time>
+                on <time datetime=2019-07-26 itemprop="datePublished">July 26, 2019</time>
                 </span>
                 in
                 <i class="iconfont icon-folder"></i>
                 <span class="post-category">
-                        <a href="https://hueralin.github.io/categories/react/"> React </a>
+                        <a href="https://hueralin.github.io/categories/%E5%AE%9E%E4%B9%A0/"> 实习 </a>
                         
                 </span>
         </div>
@@ -152,46 +152,12 @@
           
           
 
-          <p><strong>Emmm,步骤清单😂</strong></p>
+          <p>线上分支：production<br />
+测试分支：master（www.dev.xxxxxx）<br />
+迭代分支：release-3.xxx</p>
 
-<ol>
-<li><code>npm init -y</code><br /></li>
-<li><code>npm i webpack webpack-cli webpack-dev-server --save-dev</code><br /></li>
-<li><code>npm i react react-dom --save</code><br /></li>
-
-<li><p><code>npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev</code><br />
-需要安装的包差不多就这些了，接下来配置webpack.config.js文件</p>
-
-<pre><code>module.exports = {
-    entry: &quot;./index.jsx&quot;,
-    output: {
-        path: __dirname + &quot;/public&quot;,
-        filename: &quot;bundle.js&quot;
-    },
-    module: {
-        rules: [
-            {
-                test: /\.jsx$/,
-                loader: &quot;babel-loader&quot;
-            }
-        ]
-    },
-    devServer: {
-        contentBase: &quot;./public&quot;
-    }
-}
-</code></pre></li>
-
-<li><p>在package.json文件中添加脚本<br />
-5.1. <code>&quot;build&quot;: &quot;webpack&quot;</code>打包<br />
-5.2. <code>&quot;dev&quot;: &quot;webpack-dev-server --open --inline&quot;</code>启动测试服务器</p></li>
-
-<li><p>在package.json文件里配置<code>&quot;babel&quot;: {&quot;presets&quot;: [&quot;es2015&quot;, &quot;react&quot;]}</code></p></li>
-
-<li><p>在public目录下创建index.html，引用同目录下的bundle.js文件</p></li>
-
-<li><p>运行下试试？？？ Emmm，这个代码块有点丑啊😂</p></li>
-</ol>
+<p>在一个迭代开始后，各种开发新特性，修复BUG，当这些工作做完时，需要将所有的改动都合并到release分支上，<br />
+作为一次迭代，再合并到master分支（dev）进行测试，测试没问题后再合并到production分支上，发布（上线）。</p>
 
     </div>
 
@@ -206,7 +172,7 @@
              
             <p class="copyright-item">
                     <span>Link:</span>
-                    <a href=https://hueralin.github.io/2019/createreactwithwebpack/>https://hueralin.github.io/2019/createreactwithwebpack/</span>
+                    <a href=https://hueralin.github.io/2019/zhike/>https://hueralin.github.io/2019/zhike/</span>
             </p>
             
              
@@ -227,10 +193,10 @@
 
     <div class="post-nav">
         
-        <a href="https://hueralin.github.io/2019/life20190720/" class="prev" rel="prev" title="搭个窝，储点儿粮，准备过冬！"><i class="iconfont icon-left"></i>&nbsp;搭个窝，储点儿粮，准备过冬！</a>
+        <a href="https://hueralin.github.io/2019/gitpull/" class="prev" rel="prev" title="Git pull 的使用"><i class="iconfont icon-left"></i>&nbsp;Git pull 的使用</a>
          
         
-        <a href="https://hueralin.github.io/2019/gitpush/" class="next" rel="next" title="Git push 的使用">Git push 的使用&nbsp;<i class="iconfont icon-right"></i></a>
+        <a href="https://hueralin.github.io/2019/gitbranch/" class="next" rel="next" title="Git分支">Git分支&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

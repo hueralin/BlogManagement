@@ -6,10 +6,39 @@
     <description>Recent content in Git on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jul 2019 14:37:19 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jul 2019 17:41:51 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/git/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Git Reset</title>
+      <link>https://hueralin.github.io/2019/gitreset/</link>
+      <pubDate>Fri, 26 Jul 2019 17:41:51 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitreset/</guid>
+      <description>惊了！本来想撤销上一次commit，但保留工作区的修改，但是手残加了 &amp;ndash;hard 参数，修改全没了！！！
+后来，运行了一遍git reflog branchName, 查看了下该分支上的历史记录，找到reset操作之前的历史，执行git reset --hard reset之前的记录点回来了！！！
+回来了！！！！ Git取消对某个文件的跟踪
+1. git rm --cached readme.md 删除readme.md的跟踪，并保留在本地。 2. git rm --f readme.md 删除readme.md的跟踪，并且删除本地文件。</description>
+    </item>
+    
+    <item>
+      <title>Git分支</title>
+      <link>https://hueralin.github.io/2019/gitbranch/</link>
+      <pubDate>Fri, 26 Jul 2019 16:45:41 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitbranch/</guid>
+      <description>分支就是一个指向单个commit的指针
+分支基本操作：
+1. 分支改名：git branch -m oldName newName
+2. 删除分支：git branch -d feature
+3. 从master签出feature：git checkout -b feature master
+4. 查看本地分支：git branch
+5. 查看远程分支：git branch -r
+6. 查看所有分支：git branch -a
+7. 合并分支：git merge B 要想将B分支合并到A分支，首先要切换回A分支，在执行merge命令</description>
+    </item>
     
     <item>
       <title>Git pull 的使用</title>

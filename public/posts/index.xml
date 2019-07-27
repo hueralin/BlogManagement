@@ -6,10 +6,91 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jul 2019 14:37:19 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jul 2019 17:21:45 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mac使用技巧</title>
+      <link>https://hueralin.github.io/2019/mactips/</link>
+      <pubDate>Sat, 27 Jul 2019 17:21:45 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/mactips/</guid>
+      <description>VSCODE使用命令行打开目录
+&amp;gt;相关知识：环境变量的设置
+环境变量的分类：系统级和用户级
+系统级：对所有用户生效的永久性变量（/etc/profile）
+用户级：对单一用户生效的永久性变量（～/.bash_profile）
+ 查看单个环境变量echo $PATH
+ 查看所有环境变量env
+ 修改环境变量PATH=&amp;quot;xxxx&amp;quot; 查看所有本地定义的shell变量set
+ 删除变量unset VNAME
+ 设置只读变量readonly VNAME  使用export指令添加环境变量：
+vim ~/.bash_profile
+输入 export JAVA_HOME=/usr/java/jdk
+输入 export PATH=$JAVA_HOME/bin:$PATH
+添加完成后新的环境变量不会立即生效，调用source ~/.bash_profile 该文件才会生效
+使用export命令添加临时环境变量：
+命令行下输入 export MALIN=&#39;malin&#39;
+使用code命令用VSCODE打开目录：
+1. 在VSCODE中 command+shift+P -&amp;gt; 输入shell command -&amp;gt; 点击提示Shell Command: Install ‘code’ command in PATH运行
+2. 在终端中使用 code 目录路径 打开目录（vscode）</description>
+    </item>
+    
+    <item>
+      <title>HOC---高阶组件</title>
+      <link>https://hueralin.github.io/2019/hoc/</link>
+      <pubDate>Sat, 27 Jul 2019 12:37:17 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/hoc/</guid>
+      <description>推荐文章：助你完全理解React高阶组件（Higher-Order Components）
+简单讲，高阶组件就是一个函数，以组件为参数，返回另一个组件。
+高阶组件的目的就是为了复用，可能有很多人不理解，“组件不就是用来复用的么，为什么还要出来一个高阶组件呢？”。
+举个例子，有这么一个需求：</description>
+    </item>
+    
+    <item>
+      <title>Git Reset</title>
+      <link>https://hueralin.github.io/2019/gitreset/</link>
+      <pubDate>Fri, 26 Jul 2019 17:41:51 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitreset/</guid>
+      <description>惊了！本来想撤销上一次commit，但保留工作区的修改，但是手残加了 &amp;ndash;hard 参数，修改全没了！！！
+后来，运行了一遍git reflog branchName, 查看了下该分支上的历史记录，找到reset操作之前的历史，执行git reset --hard reset之前的记录点回来了！！！
+回来了！！！！ Git取消对某个文件的跟踪
+1. git rm --cached readme.md 删除readme.md的跟踪，并保留在本地。 2. git rm --f readme.md 删除readme.md的跟踪，并且删除本地文件。</description>
+    </item>
+    
+    <item>
+      <title>Git分支</title>
+      <link>https://hueralin.github.io/2019/gitbranch/</link>
+      <pubDate>Fri, 26 Jul 2019 16:45:41 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitbranch/</guid>
+      <description>分支就是一个指向单个commit的指针
+分支基本操作：
+1. 分支改名：git branch -m oldName newName
+2. 删除分支：git branch -d feature
+3. 从master签出feature：git checkout -b feature master
+4. 查看本地分支：git branch
+5. 查看远程分支：git branch -r
+6. 查看所有分支：git branch -a
+7. 合并分支：git merge B 要想将B分支合并到A分支，首先要切换回A分支，在执行merge命令</description>
+    </item>
+    
+    <item>
+      <title>Zhike</title>
+      <link>https://hueralin.github.io/2019/zhike/</link>
+      <pubDate>Fri, 26 Jul 2019 15:48:33 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/zhike/</guid>
+      <description>线上分支：production
+测试分支：master（www.dev.xxxxxx）
+迭代分支：release-3.xxx
+在一个迭代开始后，各种开发新特性，修复BUG，当这些工作做完时，需要将所有的改动都合并到release分支上，
+作为一次迭代，再合并到master分支（dev）进行测试，测试没问题后再合并到production分支上，发布（上线）。</description>
+    </item>
     
     <item>
       <title>Git pull 的使用</title>
@@ -93,14 +174,14 @@ Fork工作流不再是只有一个中央代码库，而是给予每个人一个�
       <guid>https://hueralin.github.io/2019/createreactwithwebpack/</guid>
       <description>Emmm,步骤清单😂
  npm init -y
- npm i webpack webpack-cli webpack-dev-server --save
+ npm i webpack webpack-cli webpack-dev-server --save-dev
  npm i react react-dom --save
- npm i babel-core babel-preset-es2015 babel-preset-react --save-dev
+ npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev
 需要安装的包差不多就这些了，接下来配置webpack.config.js文件
-module.exports = { entry: &amp;quot;./index.jsx&amp;quot;, output: { path: __dirname + &amp;quot;/public&amp;quot;, filename: &amp;quot;bundle.js&amp;quot; }, module: { rules: [ { test: /\.jsx$/, loader: &amp;quot;babel-loader&amp;quot; } ] }, devServer: { contentBase: &amp;quot;./&amp;quot; } }  在package.json文件中添加脚本
+module.exports = { entry: &amp;quot;./index.jsx&amp;quot;, output: { path: __dirname + &amp;quot;/public&amp;quot;, filename: &amp;quot;bundle.js&amp;quot; }, module: { rules: [ { test: /\.jsx$/, loader: &amp;quot;babel-loader&amp;quot; } ] }, devServer: { contentBase: &amp;quot;./public&amp;quot; } }  在package.json文件中添加脚本
 5.1. &amp;quot;build&amp;quot;: &amp;quot;webpack&amp;quot;打包
 5.2. &amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;启动测试服务器
- 在package.json文件里配置&amp;quot;babel&amp;quot;: {&amp;quot;presets&amp;quot;: [&amp;quot;es2015&amp;quot;, &amp;quot;react&amp;quot;]}</description>
+ 在package.</description>
     </item>
     
     <item>

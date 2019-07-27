@@ -9,9 +9,9 @@
   
   
   
-  <link rel="prev" href="https://hueralin.github.io/2019/life20190720/" />
-  <link rel="next" href="https://hueralin.github.io/2019/gitpush/" />
-  <link rel="canonical" href="https://hueralin.github.io/2019/createreactwithwebpack/" />
+  <link rel="prev" href="https://hueralin.github.io/2019/hoc/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/mactips/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,10 +22,10 @@
   <title>
        
        
-           用webpack搭建简易的React应用 | 狐耳的雪原
+           Mac使用技巧 | 狐耳的雪原
        
   </title>
-  <meta name="title" content="用webpack搭建简易的React应用 | 狐耳的雪原">
+  <meta name="title" content="Mac使用技巧 | 狐耳的雪原">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "https:\/\/hueralin.github.io"
     },
     "articleSection" : "posts",
-    "name" : "用webpack搭建简易的React应用",
-    "headline" : "用webpack搭建简易的React应用",
-    "description" : "Emmm,步骤清单😂\n npm init -y\n npm i webpack webpack-cli webpack-dev-server --save-dev\n npm i react react-dom --save\n npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev\n需要安装的包差不多就这些了，接下来配置webpack.config.js文件\nmodule.exports = { entry: \x26quot;.\/index.jsx\x26quot;, output: { path: __dirname \x2b \x26quot;\/public\x26quot;, filename: \x26quot;bundle.js\x26quot; }, module: { rules: [ { test: \/\\.jsx$\/, loader: \x26quot;babel-loader\x26quot; } ] }, devServer: { contentBase: \x26quot;.\/public\x26quot; } }  在package.json文件中添加脚本\n5.1. \x26quot;build\x26quot;: \x26quot;webpack\x26quot;打包\n5.2. \x26quot;dev\x26quot;: \x26quot;webpack-dev-server --open --inline\x26quot;启动测试服务器\n 在package.",
+    "name" : "Mac使用技巧",
+    "headline" : "Mac使用技巧",
+    "description" : "VSCODE使用命令行打开目录\n\x26gt;相关知识：环境变量的设置\n环境变量的分类：系统级和用户级\n系统级：对所有用户生效的永久性变量（\/etc\/profile）\n用户级：对单一用户生效的永久性变量（～\/.bash_profile）\n 查看单个环境变量echo $PATH\n 查看所有环境变量env\n 修改环境变量PATH=\x26quot;xxxx\x26quot; 查看所有本地定义的shell变量set\n 删除变量unset VNAME\n 设置只读变量readonly VNAME  使用export指令添加环境变量：\nvim ~\/.bash_profile\n输入 export JAVA_HOME=\/usr\/java\/jdk\n输入 export PATH=$JAVA_HOME\/bin:$PATH\n添加完成后新的环境变量不会立即生效，调用source ~\/.bash_profile 该文件才会生效\n使用export命令添加临时环境变量：\n命令行下输入 export MALIN=\x27malin\x27\n使用code命令用VSCODE打开目录：\n1. 在VSCODE中 command\x2bshift\x2bP -\x26gt; 输入shell command -\x26gt; 点击提示Shell Command: Install ‘code’ command in PATH运行\n2. 在终端中使用 code 目录路径 打开目录（vscode）",
     "inLanguage" : "en-us",
     "author" : "狐耳",
     "creator" : "狐耳",
@@ -54,10 +54,10 @@
     "accountablePerson" : "狐耳",
     "copyrightHolder" : "狐耳",
     "copyrightYear" : "2019",
-    "datePublished": "2019-07-21 00:19:54 \x2b0800 CST",
-    "dateModified" : "2019-07-21 00:19:54 \x2b0800 CST",
-    "url" : "https:\/\/hueralin.github.io\/2019\/createreactwithwebpack\/",
-    "wordCount" : "71",
+    "datePublished": "2019-07-27 17:21:45 \x2b0800 CST",
+    "dateModified" : "2019-07-27 17:21:45 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/mactips\/",
+    "wordCount" : "50",
     "keywords" : [  "狐耳的雪原"]
 }
 </script>
@@ -122,16 +122,16 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">用webpack搭建简易的React应用</h1>
+        <h1 class="post-title" itemprop="name headline">Mac使用技巧</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
                 <span class="post-time">
-                on <time datetime=2019-07-21 itemprop="datePublished">July 21, 2019</time>
+                on <time datetime=2019-07-27 itemprop="datePublished">July 27, 2019</time>
                 </span>
                 in
                 <i class="iconfont icon-folder"></i>
                 <span class="post-category">
-                        <a href="https://hueralin.github.io/categories/react/"> React </a>
+                        <a href="https://hueralin.github.io/categories/mac/"> Mac </a>
                         
                 </span>
         </div>
@@ -152,46 +152,34 @@
           
           
 
-          <p><strong>Emmm,步骤清单😂</strong></p>
+          <p><strong>VSCODE使用命令行打开目录</strong><br />
+&gt;相关知识：环境变量的设置</p>
+
+<p>环境变量的分类：系统级和用户级<br />
+系统级：对所有用户生效的永久性变量（/etc/profile）<br />
+用户级：对单一用户生效的永久性变量（～/.bash_profile）</p>
 
 <ol>
-<li><code>npm init -y</code><br /></li>
-<li><code>npm i webpack webpack-cli webpack-dev-server --save-dev</code><br /></li>
-<li><code>npm i react react-dom --save</code><br /></li>
-
-<li><p><code>npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev</code><br />
-需要安装的包差不多就这些了，接下来配置webpack.config.js文件</p>
-
-<pre><code>module.exports = {
-    entry: &quot;./index.jsx&quot;,
-    output: {
-        path: __dirname + &quot;/public&quot;,
-        filename: &quot;bundle.js&quot;
-    },
-    module: {
-        rules: [
-            {
-                test: /\.jsx$/,
-                loader: &quot;babel-loader&quot;
-            }
-        ]
-    },
-    devServer: {
-        contentBase: &quot;./public&quot;
-    }
-}
-</code></pre></li>
-
-<li><p>在package.json文件中添加脚本<br />
-5.1. <code>&quot;build&quot;: &quot;webpack&quot;</code>打包<br />
-5.2. <code>&quot;dev&quot;: &quot;webpack-dev-server --open --inline&quot;</code>启动测试服务器</p></li>
-
-<li><p>在package.json文件里配置<code>&quot;babel&quot;: {&quot;presets&quot;: [&quot;es2015&quot;, &quot;react&quot;]}</code></p></li>
-
-<li><p>在public目录下创建index.html，引用同目录下的bundle.js文件</p></li>
-
-<li><p>运行下试试？？？ Emmm，这个代码块有点丑啊😂</p></li>
+<li>查看单个环境变量<code>echo $PATH</code><br /></li>
+<li>查看所有环境变量<code>env</code><br /></li>
+<li>修改环境变量<code>PATH=&quot;xxxx&quot;</code></li>
+<li>查看所有本地定义的shell变量<code>set</code><br /></li>
+<li>删除变量<code>unset VNAME</code><br /></li>
+<li>设置只读变量<code>readonly VNAME</code></li>
 </ol>
+
+<p>使用export指令添加环境变量：<br />
+<code>vim ~/.bash_profile</code><br />
+<code>输入 export JAVA_HOME=/usr/java/jdk</code><br />
+<code>输入 export PATH=$JAVA_HOME/bin:$PATH</code><br />
+添加完成后新的环境变量不会立即生效，调用source ~/.bash_profile 该文件才会生效</p>
+
+<p>使用export命令添加临时环境变量：<br />
+<code>命令行下输入 export MALIN='malin'</code></p>
+
+<p>使用code命令用VSCODE打开目录：<br />
+1. 在VSCODE中 command+shift+P -&gt; 输入shell command -&gt; 点击提示Shell Command: Install ‘code’ command in PATH运行<br />
+2. 在终端中使用 code 目录路径 打开目录（vscode）</p>
 
     </div>
 
@@ -206,7 +194,7 @@
              
             <p class="copyright-item">
                     <span>Link:</span>
-                    <a href=https://hueralin.github.io/2019/createreactwithwebpack/>https://hueralin.github.io/2019/createreactwithwebpack/</span>
+                    <a href=https://hueralin.github.io/2019/mactips/>https://hueralin.github.io/2019/mactips/</span>
             </p>
             
              
@@ -227,10 +215,8 @@
 
     <div class="post-nav">
         
-        <a href="https://hueralin.github.io/2019/life20190720/" class="prev" rel="prev" title="搭个窝，储点儿粮，准备过冬！"><i class="iconfont icon-left"></i>&nbsp;搭个窝，储点儿粮，准备过冬！</a>
+        <a href="https://hueralin.github.io/2019/hoc/" class="prev" rel="prev" title="HOC---高阶组件"><i class="iconfont icon-left"></i>&nbsp;HOC---高阶组件</a>
          
-        
-        <a href="https://hueralin.github.io/2019/gitpush/" class="next" rel="next" title="Git push 的使用">Git push 的使用&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

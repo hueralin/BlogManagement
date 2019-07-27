@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>实习 on 狐耳的雪原</title>
+    <link>https://hueralin.github.io/categories/%E5%AE%9E%E4%B9%A0/</link>
+    <description>Recent content in 实习 on 狐耳的雪原</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 26 Jul 2019 15:48:33 +0800</lastBuildDate>
+    
+	<atom:link href="https://hueralin.github.io/categories/%E5%AE%9E%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Zhike</title>
+      <link>https://hueralin.github.io/2019/zhike/</link>
+      <pubDate>Fri, 26 Jul 2019 15:48:33 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/zhike/</guid>
+      <description>线上分支：production
+测试分支：master（www.dev.xxxxxx）
+迭代分支：release-3.xxx
+在一个迭代开始后，各种开发新特性，修复BUG，当这些工作做完时，需要将所有的改动都合并到release分支上，
+作为一次迭代，再合并到master分支（dev）进行测试，测试没问题后再合并到production分支上，发布（上线）。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -5,8 +5,115 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jul 2019 14:37:19 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jul 2019 17:21:45 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Mac使用技巧</title>
+      <link>https://hueralin.github.io/2019/mactips/</link>
+      <pubDate>Sat, 27 Jul 2019 17:21:45 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/mactips/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;VSCODE使用命令行打开目录&lt;/strong&gt;&lt;br /&gt;
+&amp;gt;相关知识：环境变量的设置&lt;/p&gt;
+
+&lt;p&gt;环境变量的分类：系统级和用户级&lt;br /&gt;
+系统级：对所有用户生效的永久性变量（/etc/profile）&lt;br /&gt;
+用户级：对单一用户生效的永久性变量（～/.bash_profile）&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;查看单个环境变量&lt;code&gt;echo $PATH&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;查看所有环境变量&lt;code&gt;env&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;修改环境变量&lt;code&gt;PATH=&amp;quot;xxxx&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;查看所有本地定义的shell变量&lt;code&gt;set&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;删除变量&lt;code&gt;unset VNAME&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;设置只读变量&lt;code&gt;readonly VNAME&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;使用export指令添加环境变量：&lt;br /&gt;
+&lt;code&gt;vim ~/.bash_profile&lt;/code&gt;&lt;br /&gt;
+&lt;code&gt;输入 export JAVA_HOME=/usr/java/jdk&lt;/code&gt;&lt;br /&gt;
+&lt;code&gt;输入 export PATH=$JAVA_HOME/bin:$PATH&lt;/code&gt;&lt;br /&gt;
+添加完成后新的环境变量不会立即生效，调用source ~/.bash_profile 该文件才会生效&lt;/p&gt;
+
+&lt;p&gt;使用export命令添加临时环境变量：&lt;br /&gt;
+&lt;code&gt;命令行下输入 export MALIN=&#39;malin&#39;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;使用code命令用VSCODE打开目录：&lt;br /&gt;
+1. 在VSCODE中 command+shift+P -&amp;gt; 输入shell command -&amp;gt; 点击提示Shell Command: Install ‘code’ command in PATH运行&lt;br /&gt;
+2. 在终端中使用 code 目录路径 打开目录（vscode）&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>HOC---高阶组件</title>
+      <link>https://hueralin.github.io/2019/hoc/</link>
+      <pubDate>Sat, 27 Jul 2019 12:37:17 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/hoc/</guid>
+      <description>&lt;p&gt;推荐文章：&lt;a href=&#34;https://github.com/brickspert/blog/issues/2&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;助你完全理解React高阶组件（Higher-Order Components）&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;简单讲，高阶组件就是一个函数，以组件为参数，返回另一个组件。&lt;/p&gt;
+
+&lt;p&gt;高阶组件的目的就是为了复用，可能有很多人不理解，“组件不就是用来复用的么，为什么还要出来一个高阶组件呢？”。&lt;/p&gt;
+
+&lt;p&gt;举个例子，有这么一个需求：&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Git Reset</title>
+      <link>https://hueralin.github.io/2019/gitreset/</link>
+      <pubDate>Fri, 26 Jul 2019 17:41:51 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitreset/</guid>
+      <description>
+
+&lt;p&gt;惊了！本来想撤销上一次commit，但保留工作区的修改，但是手残加了 &amp;ndash;hard 参数，修改全没了！！！&lt;br /&gt;
+后来，运行了一遍&lt;code&gt;git reflog branchName&lt;/code&gt;, 查看了下该分支上的历史记录，找到reset操作之前的历史，执行&lt;code&gt;git reset --hard reset之前的记录点&lt;/code&gt;回来了！！！&lt;/p&gt;
+
+&lt;h1 id=&#34;回来了&#34;&gt;回来了！！！！&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Git取消对某个文件的跟踪&lt;/strong&gt;&lt;br /&gt;
+1. &lt;code&gt;git rm --cached readme.md&lt;/code&gt;    删除readme.md的跟踪，并保留在本地。
+2. &lt;code&gt;git rm --f readme.md&lt;/code&gt;    删除readme.md的跟踪，并且删除本地文件。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Git分支</title>
+      <link>https://hueralin.github.io/2019/gitbranch/</link>
+      <pubDate>Fri, 26 Jul 2019 16:45:41 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitbranch/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;分支就是一个指向单个commit的指针&lt;/strong&gt;&lt;br /&gt;
+&lt;img src=&#34;https://hueralin.github.io/img/posts/fork-commit.jpg&#34; alt=&#34;分支指向单个commit&#34; title=&#34;&#39;fork-commit&#39;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;分支基本操作：&lt;br /&gt;
+1. 分支改名：&lt;code&gt;git branch -m oldName newName&lt;/code&gt;&lt;br /&gt;
+2. 删除分支：&lt;code&gt;git branch -d feature&lt;/code&gt;&lt;br /&gt;
+3. 从master签出feature：&lt;code&gt;git checkout -b feature master&lt;/code&gt;&lt;br /&gt;
+4. 查看本地分支：&lt;code&gt;git branch&lt;/code&gt;&lt;br /&gt;
+5. 查看远程分支：&lt;code&gt;git branch -r&lt;/code&gt;&lt;br /&gt;
+6. 查看所有分支：&lt;code&gt;git branch -a&lt;/code&gt;&lt;br /&gt;
+7. 合并分支：&lt;code&gt;git merge B&lt;/code&gt; 要想将B分支合并到A分支，首先要切换回A分支，在执行merge命令&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Zhike</title>
+      <link>https://hueralin.github.io/2019/zhike/</link>
+      <pubDate>Fri, 26 Jul 2019 15:48:33 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/zhike/</guid>
+      <description>&lt;p&gt;线上分支：production&lt;br /&gt;
+测试分支：master（www.dev.xxxxxx）&lt;br /&gt;
+迭代分支：release-3.xxx&lt;/p&gt;
+
+&lt;p&gt;在一个迭代开始后，各种开发新特性，修复BUG，当这些工作做完时，需要将所有的改动都合并到release分支上，&lt;br /&gt;
+作为一次迭代，再合并到master分支（dev）进行测试，测试没问题后再合并到production分支上，发布（上线）。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Git pull 的使用</title>
@@ -119,10 +226,10 @@ Fork工作流不再是只有一个中央代码库，而是给予每个人一个�
 
 &lt;ol&gt;
 &lt;li&gt;&lt;code&gt;npm init -y&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;npm i webpack webpack-cli webpack-dev-server --save&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;npm i webpack webpack-cli webpack-dev-server --save-dev&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;npm i react react-dom --save&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;code&gt;npm i babel-core babel-preset-es2015 babel-preset-react --save-dev&lt;/code&gt;&lt;br /&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev&lt;/code&gt;&lt;br /&gt;
 需要安装的包差不多就这些了，接下来配置webpack.config.js文件&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;module.exports = {
@@ -140,7 +247,7 @@ Fork工作流不再是只有一个中央代码库，而是给予每个人一个�
         ]
     },
     devServer: {
-        contentBase: &amp;quot;./&amp;quot;
+        contentBase: &amp;quot;./public&amp;quot;
     }
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
@@ -150,6 +257,8 @@ Fork工作流不再是只有一个中央代码库，而是给予每个人一个�
 5.2. &lt;code&gt;&amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;&lt;/code&gt;启动测试服务器&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;在package.json文件里配置&lt;code&gt;&amp;quot;babel&amp;quot;: {&amp;quot;presets&amp;quot;: [&amp;quot;es2015&amp;quot;, &amp;quot;react&amp;quot;]}&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在public目录下创建index.html，引用同目录下的bundle.js文件&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;运行下试试？？？ Emmm，这个代码块有点丑啊😂&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;

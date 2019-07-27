@@ -6,26 +6,44 @@
     <description>Recent content in Categories on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jul 2019 14:37:19 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jul 2019 17:21:45 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Git</title>
-      <link>https://hueralin.github.io/categories/git/</link>
-      <pubDate>Tue, 23 Jul 2019 14:37:19 +0800</pubDate>
+      <title>Mac</title>
+      <link>https://hueralin.github.io/categories/mac/</link>
+      <pubDate>Sat, 27 Jul 2019 17:21:45 +0800</pubDate>
       
-      <guid>https://hueralin.github.io/categories/git/</guid>
+      <guid>https://hueralin.github.io/categories/mac/</guid>
       <description></description>
     </item>
     
     <item>
       <title>React</title>
       <link>https://hueralin.github.io/categories/react/</link>
-      <pubDate>Sun, 21 Jul 2019 00:19:54 +0800</pubDate>
+      <pubDate>Sat, 27 Jul 2019 12:37:17 +0800</pubDate>
       
       <guid>https://hueralin.github.io/categories/react/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Git</title>
+      <link>https://hueralin.github.io/categories/git/</link>
+      <pubDate>Fri, 26 Jul 2019 17:41:51 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/categories/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>实习</title>
+      <link>https://hueralin.github.io/categories/%E5%AE%9E%E4%B9%A0/</link>
+      <pubDate>Fri, 26 Jul 2019 15:48:33 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/categories/%E5%AE%9E%E4%B9%A0/</guid>
       <description></description>
     </item>
     
