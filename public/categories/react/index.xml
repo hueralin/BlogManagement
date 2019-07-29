@@ -35,10 +35,9 @@
  npm i react react-dom --save
  npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev
 需要安装的包差不多就这些了，接下来配置webpack.config.js文件
-module.exports = { entry: &amp;quot;./index.jsx&amp;quot;, output: { path: __dirname + &amp;quot;/public&amp;quot;, filename: &amp;quot;bundle.js&amp;quot; }, module: { rules: [ { test: /\.jsx$/, loader: &amp;quot;babel-loader&amp;quot; } ] }, devServer: { contentBase: &amp;quot;./public&amp;quot; } }  在package.json文件中添加脚本
+  module.exports = { entry: &amp;quot;./index.jsx&amp;quot;, output: { path: __dirname + &amp;quot;/public&amp;quot;, filename: &amp;quot;bundle.js&amp;quot; }, module: { rules: [ { test: /\.jsx$/, loader: &amp;quot;babel-loader&amp;quot; } ] }, devServer: { contentBase: &amp;quot;./public&amp;quot; } }   在package.json文件中添加脚本
 5.1. &amp;quot;build&amp;quot;: &amp;quot;webpack&amp;quot;打包
-5.2. &amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;启动测试服务器
- 在package.</description>
+5.2. &amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;启动测试服务器</description>
     </item>
     
   </channel>

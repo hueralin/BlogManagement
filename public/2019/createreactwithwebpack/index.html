@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "用webpack搭建简易的React应用",
     "headline" : "用webpack搭建简易的React应用",
-    "description" : "Emmm,步骤清单😂\n npm init -y\n npm i webpack webpack-cli webpack-dev-server --save-dev\n npm i react react-dom --save\n npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev\n需要安装的包差不多就这些了，接下来配置webpack.config.js文件\nmodule.exports = { entry: \x26quot;.\/index.jsx\x26quot;, output: { path: __dirname \x2b \x26quot;\/public\x26quot;, filename: \x26quot;bundle.js\x26quot; }, module: { rules: [ { test: \/\\.jsx$\/, loader: \x26quot;babel-loader\x26quot; } ] }, devServer: { contentBase: \x26quot;.\/public\x26quot; } }  在package.json文件中添加脚本\n5.1. \x26quot;build\x26quot;: \x26quot;webpack\x26quot;打包\n5.2. \x26quot;dev\x26quot;: \x26quot;webpack-dev-server --open --inline\x26quot;启动测试服务器\n 在package.",
+    "description" : "Emmm,步骤清单😂\n npm init -y\n npm i webpack webpack-cli webpack-dev-server --save-dev\n npm i react react-dom --save\n npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev\n需要安装的包差不多就这些了，接下来配置webpack.config.js文件\n  module.exports = { entry: \x26quot;.\/index.jsx\x26quot;, output: { path: __dirname \x2b \x26quot;\/public\x26quot;, filename: \x26quot;bundle.js\x26quot; }, module: { rules: [ { test: \/\\.jsx$\/, loader: \x26quot;babel-loader\x26quot; } ] }, devServer: { contentBase: \x26quot;.\/public\x26quot; } }   在package.json文件中添加脚本\n5.1. \x26quot;build\x26quot;: \x26quot;webpack\x26quot;打包\n5.2. \x26quot;dev\x26quot;: \x26quot;webpack-dev-server --open --inline\x26quot;启动测试服务器",
     "inLanguage" : "en-us",
     "author" : "狐耳",
     "creator" : "狐耳",
@@ -158,11 +158,11 @@
 <li><code>npm init -y</code><br /></li>
 <li><code>npm i webpack webpack-cli webpack-dev-server --save-dev</code><br /></li>
 <li><code>npm i react react-dom --save</code><br /></li>
+<li><code>npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev</code><br />
+需要安装的包差不多就这些了，接下来配置webpack.config.js文件<br /></li>
+</ol>
 
-<li><p><code>npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev</code><br />
-需要安装的包差不多就这些了，接下来配置webpack.config.js文件</p>
-
-<pre><code>module.exports = {
+<pre><code class="language-javascript">module.exports = {
     entry: &quot;./index.jsx&quot;,
     output: {
         path: __dirname + &quot;/public&quot;,
@@ -180,17 +180,15 @@
         contentBase: &quot;./public&quot;
     }
 }
-</code></pre></li>
+</code></pre>
 
-<li><p>在package.json文件中添加脚本<br />
+<ol>
+<li>在package.json文件中添加脚本<br />
 5.1. <code>&quot;build&quot;: &quot;webpack&quot;</code>打包<br />
-5.2. <code>&quot;dev&quot;: &quot;webpack-dev-server --open --inline&quot;</code>启动测试服务器</p></li>
-
-<li><p>在package.json文件里配置<code>&quot;babel&quot;: {&quot;presets&quot;: [&quot;es2015&quot;, &quot;react&quot;]}</code></p></li>
-
-<li><p>在public目录下创建index.html，引用同目录下的bundle.js文件</p></li>
-
-<li><p>运行下试试？？？ Emmm，这个代码块有点丑啊😂</p></li>
+5.2. <code>&quot;dev&quot;: &quot;webpack-dev-server --open --inline&quot;</code>启动测试服务器<br /></li>
+<li>在package.json文件里配置<code>&quot;babel&quot;: {&quot;presets&quot;: [&quot;es2015&quot;, &quot;react&quot;]}</code></li>
+<li>在public目录下创建index.html，引用同目录下的bundle.js文件<br /></li>
+<li>运行下试试？？？ Emmm，这个代码块有点丑啊😂</li>
 </ol>
 
     </div>

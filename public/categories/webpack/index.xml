@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Webpack on 狐耳的雪原</title>
+    <link>https://hueralin.github.io/categories/webpack/</link>
+    <description>Recent content in Webpack on 狐耳的雪原</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 29 Jul 2019 18:54:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://hueralin.github.io/categories/webpack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Webpack4 配置文件解析</title>
+      <link>https://hueralin.github.io/2019/webpack4/</link>
+      <pubDate>Mon, 29 Jul 2019 18:54:31 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/webpack4/</guid>
+      <description>let path = require(&#39;path&#39;) // 创建HTML模板的插件 let HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;) // 抽离CSS样式为单独文件的插件（原来都是将CSS样式全部放进了style里面） let MiniCssExtractPlugin = require(&#39;mini-css-extract-plugin&#39;) // 优化CSS的插件（压缩CSS文件） let OptimizeCss = require(&#39;optimize-css-assets-webpack-plugin&#39;) // 用了上面优化CSS的插件，就得使用下面这个插件来优化JS（压缩JS文件） let UglifyJsWebpackPlugin = require(&#39;uglifyjs-webpack-plugin&#39;) module.exports = { // 优化CSS和JS // 优化项 optimization: { // 压缩 minimizer: [ new UglifyJsWebpackPlugin({ cache: true, // 缓存 parallel: true, // 并发压缩 sourceMap: true // }), new OptimizeCss() ] }, // 模式：开发和生产模式两种 mode: &#39;development&#39;, entry: &#39;./src/index.js&#39;, output: { // path 必须是绝对路径 // path.</description>
+    </item>
+    
+  </channel>
+</rss>

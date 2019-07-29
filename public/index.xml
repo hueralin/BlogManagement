@@ -5,8 +5,211 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jul 2019 17:21:45 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jul 2019 18:54:31 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Webpack4 配置文件解析</title>
+      <link>https://hueralin.github.io/2019/webpack4/</link>
+      <pubDate>Mon, 29 Jul 2019 18:54:31 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/webpack4/</guid>
+      <description>&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;let path = require(&#39;path&#39;)
+// 创建HTML模板的插件
+let HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;)
+// 抽离CSS样式为单独文件的插件（原来都是将CSS样式全部放进了style里面）
+let MiniCssExtractPlugin = require(&#39;mini-css-extract-plugin&#39;)
+// 优化CSS的插件（压缩CSS文件）
+let OptimizeCss = require(&#39;optimize-css-assets-webpack-plugin&#39;)
+// 用了上面优化CSS的插件，就得使用下面这个插件来优化JS（压缩JS文件）
+let UglifyJsWebpackPlugin = require(&#39;uglifyjs-webpack-plugin&#39;)
+
+module.exports = {
+
+    // 优化CSS和JS
+    // 优化项
+    optimization: {
+        // 压缩
+        minimizer: [
+            new UglifyJsWebpackPlugin({
+                cache: true,    // 缓存
+                parallel: true, // 并发压缩
+                sourceMap: true // 
+            }),
+            new OptimizeCss()
+        ]
+    },
+
+    // 模式：开发和生产模式两种
+    mode: &#39;development&#39;,
+    entry: &#39;./src/index.js&#39;,
+    output: {
+        // path 必须是绝对路径
+        // path.resolve()可以将相对路径解析为绝对路径
+        // __dirname 是当前目录
+        path: path.resolve(__dirname, &#39;build&#39;),
+        // 加上hash，每次都生成一个新的文件(不重复 ，防止出现缓存或覆盖的问题)（8位hash值）
+        filename: &#39;bundle.[hash:8].js&#39;
+
+    },
+    devServer: {
+        port: 3000,
+        // 显示进度条
+        progress: true,
+        //  以build目录为静态服务的根目录(所有被服务的内容都来自这里)
+        contentBase: &#39;./build&#39;,
+        // 启动时自动打开浏览器
+        open: true,
+        // 使用gzip压缩所有被服务的文件
+        compress: true
+    },
+    plugins: [
+        // 这个插件可以按照模板生成一个index.html文件，并插入打包后的bundle.js文件
+        new HtmlWebpackPlugin({
+            // 指定模板文件
+            template: &#39;./src/index.html&#39;,
+            // 打包后的文件名
+            filename: &#39;index.html&#39;,
+            // 上线时的压缩操作
+            minify: {
+                // 去掉属性的引号
+                removeAttributeQuotes: true,
+                // （压缩）变成单行
+                collapseWhitespace: true,
+            },
+            // 在引用文件名尾部加一个hash串
+            hash: true
+        }),
+        new MiniCssExtractPlugin({
+            // 抽离出来的CSS文件的名字
+            filename: &#39;main.css&#39;
+        })
+    ],
+    module: {   // 模块
+        rules: [    // 规则
+            {
+                // css-loader是来处理 css文件中@import语法的
+                // style-loader 是来将css文件插入到html中的style标签里去的
+                // 使用单个loader只需要一个字符串表示，
+                // 使用多个loader需要用数组
+                // loader的顺序，从右向左执行
+
+                // loader还可以用对象表示法（ 即数组元素为对象而不是字符串），该方法下可以传个option
+                test: /\.css$/,
+                use: [
+                    // {
+                    //     loader: &#39;style-loader&#39;,
+                    //     options: {
+                    //         // 将CSS文件插入到模板HTML自定义样式的上方
+                    //         insertAt: &#39;top&#39;
+                    //     }
+                    // }
+                    // 使用MiniCssExtractPlugin插件的loader，通过link引用CSS文件
+                    MiniCssExtractPlugin.loader
+                    , &#39;css-loader&#39;
+                    , {
+                        loader: &#39;postcss-loader&#39;,
+                        options: {
+                            plugins: [
+                                require(&#39;autoprefixer&#39;)
+                            ]
+                        }
+                    }]     // 自动加前缀，兼容浏览器
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    MiniCssExtractPlugin.loader
+                    , &#39;css-loader&#39;
+                    ,  {
+                        loader: &#39;postcss-loader&#39;,
+                        options: {
+                            plugins: [
+                                require(&#39;autoprefixer&#39;)
+                            ]
+                        }
+                    } // 加前缀
+                    ,  &#39;less-loader&#39;    // 处理less文件   
+                ]      
+            }
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>汉服那么美，为何现在流行不起来</title>
+      <link>https://hueralin.github.io/2019/hjjh-02/</link>
+      <pubDate>Sun, 28 Jul 2019 12:27:50 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/hjjh-02/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;出行不便（生活节奏）&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;价格昂贵（手工刺绣，配饰）&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;身材和气质（汉服对这两点要求有点高）&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;普及范围狭窄（汉服知识？恐怕得考古好久）&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;服装和文化一样，要与时俱进。要想发扬汉服文化，让汉服流行起来，不能一味的追求历史（此言不当，不知如何表述），应该结合当下的形式，做出一些改进，这算不上“取其精华，去其糟粕”，古代的穿衣礼节，穿衣过程确有其繁琐的地方，放到现代来确实让人难以接受，这也是汉服流行不起来的原因之一。我们不能一味的遵从汉服文化而渐渐变得复古，这也是不可能的。最近在相关贴吧上看到过这样一个帖子，有个小姐姐晒出汉服写真却被一群大叔嘲讽，不懂汉服历史，穿着不伦不类，不认同这是汉服，戏称为“花衣服”。大叔们有这种想法也无可厚非，毕竟现在的穿汉服的人多多少少也搭配着一些现代的服饰，比如手表、小白鞋，还有大叔们嘲讽的丝袜，小姐姐面对嘲讽也是欲哭无泪&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;小姐姐错了么？大叔们错了么？&lt;/p&gt;
+
+&lt;p&gt;在我看来，此事无关对错。现在的年轻人穿汉服无非两个原因，其一是服饰着实好看，其二是想为发扬中国传统文化献上一份力量。曾经抖音上的一个短视频对我产生了一丝丝触动，一个女孩儿边哭变向床上扔着一件件汉服，边扔边说“我穿汉服上街怎么了？我喜欢汉服，这有错么，碍着你们了？一个个用异样的眼光看我，甚至还嘲讽我穿着奇装异服”，“在日本韩国，这在他们看来是很正常不过的事情，为什么在国内穿传统服装却被看作异类”（Emmm，原话忘了，大体这个意思吧）这段话引起了我的思考&lt;/p&gt;
+
+&lt;p&gt;至于思考了啥？晚上回去再说，学习！😂&lt;/p&gt;
+
+&lt;p&gt;to be continue&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>汉家江湖-起源</title>
+      <link>https://hueralin.github.io/2019/hjjh-01/</link>
+      <pubDate>Sun, 28 Jul 2019 12:22:08 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/hjjh-01/</guid>
+      <description>&lt;p&gt;不知何时起，对汉服有了兴趣～&lt;/p&gt;
+
+&lt;p&gt;能做什么？
+1. 维护一个像B站二次元的网站（搞活动）
+2. 汉服实体店
+3. 联动武侠IP，电影？动漫？
+4. 侠客栈（民宿）
+5. IP手办？&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>实习项目的Header结构解析</title>
+      <link>https://hueralin.github.io/2019/zkheader/</link>
+      <pubDate>Sun, 28 Jul 2019 00:07:10 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/zkheader/</guid>
+      <description>&lt;p&gt;最近在做公司的项目，更改移动端Header的现有布局。&lt;br /&gt;
+Header是React组件，点击按钮出现侧边栏导航。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;下面简单来介绍一下Header的结构：&lt;/strong&gt;&lt;br /&gt;
+Header接受了3个props，分别是“userInfo”、“changeNavState”、“style”。&lt;br /&gt;
+userInfo是用户信息，changeNavState是用来更改侧边导航状态的函数，style是一个类样式。&lt;/p&gt;
+
+&lt;p&gt;以上几个props都交由PropTypes来验证参数的合法性。&lt;br /&gt;
+该Header组件内仅维护了一个状态，那就是 subNav，即侧边导航栏的显示与否，changeNavState函数改变的就是它。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;在render渲染函数中：&lt;/strong&gt;&lt;br /&gt;
+&lt;code&gt;const { userInfo, style } = this.props&lt;/code&gt;&lt;br /&gt;
+根据是否有userInfo.avatar属性来初始化headUrl变量（有则赋值为用户头像URL，无则赋值为默认头像URL）&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;接下来return一个JSX，&lt;/strong&gt;&lt;br /&gt;
+首先判断subNav是否为真，真则显示侧边导航。&lt;br /&gt;
+然后是左右布局，左边是点击显示侧边导航的下拉按钮和点击能返回主页的LOGO，右边是用户头像。&lt;br /&gt;
+左边的导航按钮添加点击事件（调用changeNavState函数），通过控制subNav状态来显示和隐藏侧边导航。&lt;br /&gt;
+右边判断userInfo.id属性，有则根据headeUrl显示用户头像，否则显示默认头像。默认头像图标添加点击跳转登录事件。&lt;/p&gt;
+
+&lt;p&gt;其中userInfo属性是由connect函数连接的， userInfo来自于Redux的State。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Mac使用技巧</title>
@@ -228,11 +431,11 @@ Fork工作流不再是只有一个中央代码库，而是给予每个人一个�
 &lt;li&gt;&lt;code&gt;npm init -y&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;npm i webpack webpack-cli webpack-dev-server --save-dev&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;npm i react react-dom --save&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev&lt;/code&gt;&lt;br /&gt;
+需要安装的包差不多就这些了，接下来配置webpack.config.js文件&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;code&gt;npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev&lt;/code&gt;&lt;br /&gt;
-需要安装的包差不多就这些了，接下来配置webpack.config.js文件&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;module.exports = {
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;module.exports = {
     entry: &amp;quot;./index.jsx&amp;quot;,
     output: {
         path: __dirname + &amp;quot;/public&amp;quot;,
@@ -250,17 +453,15 @@ Fork工作流不再是只有一个中央代码库，而是给予每个人一个�
         contentBase: &amp;quot;./public&amp;quot;
     }
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;li&gt;&lt;p&gt;在package.json文件中添加脚本&lt;br /&gt;
+&lt;ol&gt;
+&lt;li&gt;在package.json文件中添加脚本&lt;br /&gt;
 5.1. &lt;code&gt;&amp;quot;build&amp;quot;: &amp;quot;webpack&amp;quot;&lt;/code&gt;打包&lt;br /&gt;
-5.2. &lt;code&gt;&amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;&lt;/code&gt;启动测试服务器&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;在package.json文件里配置&lt;code&gt;&amp;quot;babel&amp;quot;: {&amp;quot;presets&amp;quot;: [&amp;quot;es2015&amp;quot;, &amp;quot;react&amp;quot;]}&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;在public目录下创建index.html，引用同目录下的bundle.js文件&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;运行下试试？？？ Emmm，这个代码块有点丑啊😂&lt;/p&gt;&lt;/li&gt;
+5.2. &lt;code&gt;&amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;&lt;/code&gt;启动测试服务器&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;在package.json文件里配置&lt;code&gt;&amp;quot;babel&amp;quot;: {&amp;quot;presets&amp;quot;: [&amp;quot;es2015&amp;quot;, &amp;quot;react&amp;quot;]}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在public目录下创建index.html，引用同目录下的bundle.js文件&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;运行下试试？？？ Emmm，这个代码块有点丑啊😂&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>

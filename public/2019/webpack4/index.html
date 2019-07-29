@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/hjjh-02/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/webpack4/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Webpack4 配置文件解析 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="Webpack4 配置文件解析 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Webpack4 配置文件解析",
+    "headline" : "Webpack4 配置文件解析",
+    "description" : "let path = require(\x27path\x27) \/\/ 创建HTML模板的插件 let HtmlWebpackPlugin = require(\x27html-webpack-plugin\x27) \/\/ 抽离CSS样式为单独文件的插件（原来都是将CSS样式全部放进了style里面） let MiniCssExtractPlugin = require(\x27mini-css-extract-plugin\x27) \/\/ 优化CSS的插件（压缩CSS文件） let OptimizeCss = require(\x27optimize-css-assets-webpack-plugin\x27) \/\/ 用了上面优化CSS的插件，就得使用下面这个插件来优化JS（压缩JS文件） let UglifyJsWebpackPlugin = require(\x27uglifyjs-webpack-plugin\x27) module.exports = { \/\/ 优化CSS和JS \/\/ 优化项 optimization: { \/\/ 压缩 minimizer: [ new UglifyJsWebpackPlugin({ cache: true, \/\/ 缓存 parallel: true, \/\/ 并发压缩 sourceMap: true \/\/ }), new OptimizeCss() ] }, \/\/ 模式：开发和生产模式两种 mode: \x27development\x27, entry: \x27.\/src\/index.js\x27, output: { \/\/ path 必须是绝对路径 \/\/ path.",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-07-29 18:54:31 \x2b0800 CST",
+    "dateModified" : "2019-07-29 18:54:31 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/webpack4\/",
+    "wordCount" : "242",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                &lt;-
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+                ->
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Webpack4 配置文件解析</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-07-29 itemprop="datePublished">July 29, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/webpack/"> Webpack </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <pre><code class="language-javascript">let path = require('path')
+// 创建HTML模板的插件
+let HtmlWebpackPlugin = require('html-webpack-plugin')
+// 抽离CSS样式为单独文件的插件（原来都是将CSS样式全部放进了style里面）
+let MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// 优化CSS的插件（压缩CSS文件）
+let OptimizeCss = require('optimize-css-assets-webpack-plugin')
+// 用了上面优化CSS的插件，就得使用下面这个插件来优化JS（压缩JS文件）
+let UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin')
+
+module.exports = {
+
+    // 优化CSS和JS
+    // 优化项
+    optimization: {
+        // 压缩
+        minimizer: [
+            new UglifyJsWebpackPlugin({
+                cache: true,    // 缓存
+                parallel: true, // 并发压缩
+                sourceMap: true // 
+            }),
+            new OptimizeCss()
+        ]
+    },
+
+    // 模式：开发和生产模式两种
+    mode: 'development',
+    entry: './src/index.js',
+    output: {
+        // path 必须是绝对路径
+        // path.resolve()可以将相对路径解析为绝对路径
+        // __dirname 是当前目录
+        path: path.resolve(__dirname, 'build'),
+        // 加上hash，每次都生成一个新的文件(不重复 ，防止出现缓存或覆盖的问题)（8位hash值）
+        filename: 'bundle.[hash:8].js'
+
+    },
+    devServer: {
+        port: 3000,
+        // 显示进度条
+        progress: true,
+        //  以build目录为静态服务的根目录(所有被服务的内容都来自这里)
+        contentBase: './build',
+        // 启动时自动打开浏览器
+        open: true,
+        // 使用gzip压缩所有被服务的文件
+        compress: true
+    },
+    plugins: [
+        // 这个插件可以按照模板生成一个index.html文件，并插入打包后的bundle.js文件
+        new HtmlWebpackPlugin({
+            // 指定模板文件
+            template: './src/index.html',
+            // 打包后的文件名
+            filename: 'index.html',
+            // 上线时的压缩操作
+            minify: {
+                // 去掉属性的引号
+                removeAttributeQuotes: true,
+                // （压缩）变成单行
+                collapseWhitespace: true,
+            },
+            // 在引用文件名尾部加一个hash串
+            hash: true
+        }),
+        new MiniCssExtractPlugin({
+            // 抽离出来的CSS文件的名字
+            filename: 'main.css'
+        })
+    ],
+    module: {   // 模块
+        rules: [    // 规则
+            {
+                // css-loader是来处理 css文件中@import语法的
+                // style-loader 是来将css文件插入到html中的style标签里去的
+                // 使用单个loader只需要一个字符串表示，
+                // 使用多个loader需要用数组
+                // loader的顺序，从右向左执行
+
+                // loader还可以用对象表示法（ 即数组元素为对象而不是字符串），该方法下可以传个option
+                test: /\.css$/,
+                use: [
+                    // {
+                    //     loader: 'style-loader',
+                    //     options: {
+                    //         // 将CSS文件插入到模板HTML自定义样式的上方
+                    //         insertAt: 'top'
+                    //     }
+                    // }
+                    // 使用MiniCssExtractPlugin插件的loader，通过link引用CSS文件
+                    MiniCssExtractPlugin.loader
+                    , 'css-loader'
+                    , {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                require('autoprefixer')
+                            ]
+                        }
+                    }]     // 自动加前缀，兼容浏览器
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    MiniCssExtractPlugin.loader
+                    , 'css-loader'
+                    ,  {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                require('autoprefixer')
+                            ]
+                        }
+                    } // 加前缀
+                    ,  'less-loader'    // 处理less文件   
+                ]      
+            }
+        ]
+    }
+}
+</code></pre>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/webpack4/>https://hueralin.github.io/2019/webpack4/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/hjjh-02/" class="prev" rel="prev" title="汉服那么美，为何现在流行不起来"><i class="iconfont icon-left"></i>&nbsp;汉服那么美，为何现在流行不起来</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        
+        <span itemprop="copyrightYear">2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

@@ -6,10 +6,70 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jul 2019 17:21:45 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jul 2019 18:54:31 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Webpack4 配置文件解析</title>
+      <link>https://hueralin.github.io/2019/webpack4/</link>
+      <pubDate>Mon, 29 Jul 2019 18:54:31 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/webpack4/</guid>
+      <description>let path = require(&#39;path&#39;) // 创建HTML模板的插件 let HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;) // 抽离CSS样式为单独文件的插件（原来都是将CSS样式全部放进了style里面） let MiniCssExtractPlugin = require(&#39;mini-css-extract-plugin&#39;) // 优化CSS的插件（压缩CSS文件） let OptimizeCss = require(&#39;optimize-css-assets-webpack-plugin&#39;) // 用了上面优化CSS的插件，就得使用下面这个插件来优化JS（压缩JS文件） let UglifyJsWebpackPlugin = require(&#39;uglifyjs-webpack-plugin&#39;) module.exports = { // 优化CSS和JS // 优化项 optimization: { // 压缩 minimizer: [ new UglifyJsWebpackPlugin({ cache: true, // 缓存 parallel: true, // 并发压缩 sourceMap: true // }), new OptimizeCss() ] }, // 模式：开发和生产模式两种 mode: &#39;development&#39;, entry: &#39;./src/index.js&#39;, output: { // path 必须是绝对路径 // path.</description>
+    </item>
+    
+    <item>
+      <title>汉服那么美，为何现在流行不起来</title>
+      <link>https://hueralin.github.io/2019/hjjh-02/</link>
+      <pubDate>Sun, 28 Jul 2019 12:27:50 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/hjjh-02/</guid>
+      <description>出行不便（生活节奏）
+ 价格昂贵（手工刺绣，配饰）
+ 身材和气质（汉服对这两点要求有点高）
+ 普及范围狭窄（汉服知识？恐怕得考古好久）
+  服装和文化一样，要与时俱进。要想发扬汉服文化，让汉服流行起来，不能一味的追求历史（此言不当，不知如何表述），应该结合当下的形式，做出一些改进，这算不上“取其精华，去其糟粕”，古代的穿衣礼节，穿衣过程确有其繁琐的地方，放到现代来确实让人难以接受，这也是汉服流行不起来的原因之一。我们不能一味的遵从汉服文化而渐渐变得复古，这也是不可能的。最近在相关贴吧上看到过这样一个帖子，有个小姐姐晒出汉服写真却被一群大叔嘲讽，不懂汉服历史，穿着不伦不类，不认同这是汉服，戏称为“花衣服”。大叔们有这种想法也无可厚非，毕竟现在的穿汉服的人多多少少也搭配着一些现代的服饰，比如手表、小白鞋，还有大叔们嘲讽的丝袜，小姐姐面对嘲讽也是欲哭无泪&amp;hellip;
+小姐姐错了么？大叔们错了么？
+在我看来，此事无关对错。现在的年轻人穿汉服无非两个原因，其一是服饰着实好看，其二是想为发扬中国传统文化献上一份力量。曾经抖音上的一个短视频对我产生了一丝丝触动，一个女孩儿边哭变向床上扔着一件件汉服，边扔边说“我穿汉服上街怎么了？我喜欢汉服，这有错么，碍着你们了？一个个用异样的眼光看我，甚至还嘲讽我穿着奇装异服”，“在日本韩国，这在他们看来是很正常不过的事情，为什么在国内穿传统服装却被看作异类”（Emmm，原话忘了，大体这个意思吧）这段话引起了我的思考
+至于思考了啥？晚上回去再说，学习！😂
+to be continue&amp;hellip;</description>
+    </item>
+    
+    <item>
+      <title>汉家江湖-起源</title>
+      <link>https://hueralin.github.io/2019/hjjh-01/</link>
+      <pubDate>Sun, 28 Jul 2019 12:22:08 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/hjjh-01/</guid>
+      <description>不知何时起，对汉服有了兴趣～
+能做什么？ 1. 维护一个像B站二次元的网站（搞活动） 2. 汉服实体店 3. 联动武侠IP，电影？动漫？ 4. 侠客栈（民宿） 5. IP手办？</description>
+    </item>
+    
+    <item>
+      <title>实习项目的Header结构解析</title>
+      <link>https://hueralin.github.io/2019/zkheader/</link>
+      <pubDate>Sun, 28 Jul 2019 00:07:10 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/zkheader/</guid>
+      <description>最近在做公司的项目，更改移动端Header的现有布局。
+Header是React组件，点击按钮出现侧边栏导航。
+下面简单来介绍一下Header的结构：
+Header接受了3个props，分别是“userInfo”、“changeNavState”、“style”。
+userInfo是用户信息，changeNavState是用来更改侧边导航状态的函数，style是一个类样式。
+以上几个props都交由PropTypes来验证参数的合法性。
+该Header组件内仅维护了一个状态，那就是 subNav，即侧边导航栏的显示与否，changeNavState函数改变的就是它。
+在render渲染函数中：
+const { userInfo, style } = this.props
+根据是否有userInfo.avatar属性来初始化headUrl变量（有则赋值为用户头像URL，无则赋值为默认头像URL）
+接下来return一个JSX，
+首先判断subNav是否为真，真则显示侧边导航。
+然后是左右布局，左边是点击显示侧边导航的下拉按钮和点击能返回主页的LOGO，右边是用户头像。
+左边的导航按钮添加点击事件（调用changeNavState函数），通过控制subNav状态来显示和隐藏侧边导航。
+右边判断userInfo.id属性，有则根据headeUrl显示用户头像，否则显示默认头像。默认头像图标添加点击跳转登录事件。
+其中userInfo属性是由connect函数连接的， userInfo来自于Redux的State。</description>
+    </item>
     
     <item>
       <title>Mac使用技巧</title>
@@ -178,10 +238,9 @@ Fork工作流不再是只有一个中央代码库，而是给予每个人一个�
  npm i react react-dom --save
  npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev
 需要安装的包差不多就这些了，接下来配置webpack.config.js文件
-module.exports = { entry: &amp;quot;./index.jsx&amp;quot;, output: { path: __dirname + &amp;quot;/public&amp;quot;, filename: &amp;quot;bundle.js&amp;quot; }, module: { rules: [ { test: /\.jsx$/, loader: &amp;quot;babel-loader&amp;quot; } ] }, devServer: { contentBase: &amp;quot;./public&amp;quot; } }  在package.json文件中添加脚本
+  module.exports = { entry: &amp;quot;./index.jsx&amp;quot;, output: { path: __dirname + &amp;quot;/public&amp;quot;, filename: &amp;quot;bundle.js&amp;quot; }, module: { rules: [ { test: /\.jsx$/, loader: &amp;quot;babel-loader&amp;quot; } ] }, devServer: { contentBase: &amp;quot;./public&amp;quot; } }   在package.json文件中添加脚本
 5.1. &amp;quot;build&amp;quot;: &amp;quot;webpack&amp;quot;打包
-5.2. &amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;启动测试服务器
- 在package.</description>
+5.2. &amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;启动测试服务器</description>
     </item>
     
     <item>

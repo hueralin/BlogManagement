@@ -9,9 +9,9 @@
   
   
   
-  <link rel="prev" href="https://hueralin.github.io/2019/hoc/" />
-  <link rel="next" href="https://hueralin.github.io/2019/zkheader/" />
-  <link rel="canonical" href="https://hueralin.github.io/2019/mactips/" />
+  <link rel="prev" href="https://hueralin.github.io/2019/mactips/" />
+  <link rel="next" href="https://hueralin.github.io/2019/hjjh-01/" />
+  <link rel="canonical" href="https://hueralin.github.io/2019/zkheader/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,10 +22,10 @@
   <title>
        
        
-           Mac使用技巧 | 狐耳的雪原
+           实习项目的Header结构解析 | 狐耳的雪原
        
   </title>
-  <meta name="title" content="Mac使用技巧 | 狐耳的雪原">
+  <meta name="title" content="实习项目的Header结构解析 | 狐耳的雪原">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "https:\/\/hueralin.github.io"
     },
     "articleSection" : "posts",
-    "name" : "Mac使用技巧",
-    "headline" : "Mac使用技巧",
-    "description" : "VSCODE使用命令行打开目录\n\x26gt;相关知识：环境变量的设置\n环境变量的分类：系统级和用户级\n系统级：对所有用户生效的永久性变量（\/etc\/profile）\n用户级：对单一用户生效的永久性变量（～\/.bash_profile）\n 查看单个环境变量echo $PATH\n 查看所有环境变量env\n 修改环境变量PATH=\x26quot;xxxx\x26quot; 查看所有本地定义的shell变量set\n 删除变量unset VNAME\n 设置只读变量readonly VNAME  使用export指令添加环境变量：\nvim ~\/.bash_profile\n输入 export JAVA_HOME=\/usr\/java\/jdk\n输入 export PATH=$JAVA_HOME\/bin:$PATH\n添加完成后新的环境变量不会立即生效，调用source ~\/.bash_profile 该文件才会生效\n使用export命令添加临时环境变量：\n命令行下输入 export MALIN=\x27malin\x27\n使用code命令用VSCODE打开目录：\n1. 在VSCODE中 command\x2bshift\x2bP -\x26gt; 输入shell command -\x26gt; 点击提示Shell Command: Install ‘code’ command in PATH运行\n2. 在终端中使用 code 目录路径 打开目录（vscode）",
+    "name" : "实习项目的Header结构解析",
+    "headline" : "实习项目的Header结构解析",
+    "description" : "最近在做公司的项目，更改移动端Header的现有布局。\nHeader是React组件，点击按钮出现侧边栏导航。\n下面简单来介绍一下Header的结构：\nHeader接受了3个props，分别是“userInfo”、“changeNavState”、“style”。\nuserInfo是用户信息，changeNavState是用来更改侧边导航状态的函数，style是一个类样式。\n以上几个props都交由PropTypes来验证参数的合法性。\n该Header组件内仅维护了一个状态，那就是 subNav，即侧边导航栏的显示与否，changeNavState函数改变的就是它。\n在render渲染函数中：\nconst { userInfo, style } = this.props\n根据是否有userInfo.avatar属性来初始化headUrl变量（有则赋值为用户头像URL，无则赋值为默认头像URL）\n接下来return一个JSX，\n首先判断subNav是否为真，真则显示侧边导航。\n然后是左右布局，左边是点击显示侧边导航的下拉按钮和点击能返回主页的LOGO，右边是用户头像。\n左边的导航按钮添加点击事件（调用changeNavState函数），通过控制subNav状态来显示和隐藏侧边导航。\n右边判断userInfo.id属性，有则根据headeUrl显示用户头像，否则显示默认头像。默认头像图标添加点击跳转登录事件。\n其中userInfo属性是由connect函数连接的， userInfo来自于Redux的State。",
     "inLanguage" : "en-us",
     "author" : "狐耳",
     "creator" : "狐耳",
@@ -54,10 +54,10 @@
     "accountablePerson" : "狐耳",
     "copyrightHolder" : "狐耳",
     "copyrightYear" : "2019",
-    "datePublished": "2019-07-27 17:21:45 \x2b0800 CST",
-    "dateModified" : "2019-07-27 17:21:45 \x2b0800 CST",
-    "url" : "https:\/\/hueralin.github.io\/2019\/mactips\/",
-    "wordCount" : "50",
+    "datePublished": "2019-07-28 00:07:10 \x2b0800 CST",
+    "dateModified" : "2019-07-28 00:07:10 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/zkheader\/",
+    "wordCount" : "24",
     "keywords" : [  "狐耳的雪原"]
 }
 </script>
@@ -122,16 +122,16 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">Mac使用技巧</h1>
+        <h1 class="post-title" itemprop="name headline">实习项目的Header结构解析</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
                 <span class="post-time">
-                on <time datetime=2019-07-27 itemprop="datePublished">July 27, 2019</time>
+                on <time datetime=2019-07-28 itemprop="datePublished">July 28, 2019</time>
                 </span>
                 in
                 <i class="iconfont icon-folder"></i>
                 <span class="post-category">
-                        <a href="https://hueralin.github.io/categories/mac/"> Mac </a>
+                        <a href="https://hueralin.github.io/categories/%E5%AE%9E%E4%B9%A0/"> 实习 </a>
                         
                 </span>
         </div>
@@ -152,34 +152,27 @@
           
           
 
-          <p><strong>VSCODE使用命令行打开目录</strong><br />
-&gt;相关知识：环境变量的设置</p>
+          <p>最近在做公司的项目，更改移动端Header的现有布局。<br />
+Header是React组件，点击按钮出现侧边栏导航。</p>
 
-<p>环境变量的分类：系统级和用户级<br />
-系统级：对所有用户生效的永久性变量（/etc/profile）<br />
-用户级：对单一用户生效的永久性变量（～/.bash_profile）</p>
+<p><strong>下面简单来介绍一下Header的结构：</strong><br />
+Header接受了3个props，分别是“userInfo”、“changeNavState”、“style”。<br />
+userInfo是用户信息，changeNavState是用来更改侧边导航状态的函数，style是一个类样式。</p>
 
-<ol>
-<li>查看单个环境变量<code>echo $PATH</code><br /></li>
-<li>查看所有环境变量<code>env</code><br /></li>
-<li>修改环境变量<code>PATH=&quot;xxxx&quot;</code></li>
-<li>查看所有本地定义的shell变量<code>set</code><br /></li>
-<li>删除变量<code>unset VNAME</code><br /></li>
-<li>设置只读变量<code>readonly VNAME</code></li>
-</ol>
+<p>以上几个props都交由PropTypes来验证参数的合法性。<br />
+该Header组件内仅维护了一个状态，那就是 subNav，即侧边导航栏的显示与否，changeNavState函数改变的就是它。</p>
 
-<p>使用export指令添加环境变量：<br />
-<code>vim ~/.bash_profile</code><br />
-<code>输入 export JAVA_HOME=/usr/java/jdk</code><br />
-<code>输入 export PATH=$JAVA_HOME/bin:$PATH</code><br />
-添加完成后新的环境变量不会立即生效，调用source ~/.bash_profile 该文件才会生效</p>
+<p><strong>在render渲染函数中：</strong><br />
+<code>const { userInfo, style } = this.props</code><br />
+根据是否有userInfo.avatar属性来初始化headUrl变量（有则赋值为用户头像URL，无则赋值为默认头像URL）</p>
 
-<p>使用export命令添加临时环境变量：<br />
-<code>命令行下输入 export MALIN='malin'</code></p>
+<p><strong>接下来return一个JSX，</strong><br />
+首先判断subNav是否为真，真则显示侧边导航。<br />
+然后是左右布局，左边是点击显示侧边导航的下拉按钮和点击能返回主页的LOGO，右边是用户头像。<br />
+左边的导航按钮添加点击事件（调用changeNavState函数），通过控制subNav状态来显示和隐藏侧边导航。<br />
+右边判断userInfo.id属性，有则根据headeUrl显示用户头像，否则显示默认头像。默认头像图标添加点击跳转登录事件。</p>
 
-<p>使用code命令用VSCODE打开目录：<br />
-1. 在VSCODE中 command+shift+P -&gt; 输入shell command -&gt; 点击提示Shell Command: Install ‘code’ command in PATH运行<br />
-2. 在终端中使用 code 目录路径 打开目录（vscode）</p>
+<p>其中userInfo属性是由connect函数连接的， userInfo来自于Redux的State。</p>
 
     </div>
 
@@ -194,7 +187,7 @@
              
             <p class="copyright-item">
                     <span>Link:</span>
-                    <a href=https://hueralin.github.io/2019/mactips/>https://hueralin.github.io/2019/mactips/</span>
+                    <a href=https://hueralin.github.io/2019/zkheader/>https://hueralin.github.io/2019/zkheader/</span>
             </p>
             
              
@@ -215,10 +208,10 @@
 
     <div class="post-nav">
         
-        <a href="https://hueralin.github.io/2019/hoc/" class="prev" rel="prev" title="HOC---高阶组件"><i class="iconfont icon-left"></i>&nbsp;HOC---高阶组件</a>
+        <a href="https://hueralin.github.io/2019/mactips/" class="prev" rel="prev" title="Mac使用技巧"><i class="iconfont icon-left"></i>&nbsp;Mac使用技巧</a>
          
         
-        <a href="https://hueralin.github.io/2019/zkheader/" class="next" rel="next" title="实习项目的Header结构解析">实习项目的Header结构解析&nbsp;<i class="iconfont icon-right"></i></a>
+        <a href="https://hueralin.github.io/2019/hjjh-01/" class="next" rel="next" title="汉家江湖-起源">汉家江湖-起源&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 
