@@ -6,10 +6,37 @@
     <description>Recent content in Categories on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jul 2019 18:54:31 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Aug 2019 11:56:42 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>JavaScript新特性</title>
+      <link>https://hueralin.github.io/categories/javascript%E6%96%B0%E7%89%B9%E6%80%A7/</link>
+      <pubDate>Tue, 06 Aug 2019 11:56:42 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/categories/javascript%E6%96%B0%E7%89%B9%E6%80%A7/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>React</title>
+      <link>https://hueralin.github.io/categories/react/</link>
+      <pubDate>Mon, 05 Aug 2019 14:24:46 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/categories/react/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>敏捷开发</title>
+      <link>https://hueralin.github.io/categories/%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Thu, 01 Aug 2019 17:10:22 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/categories/%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Webpack</title>
@@ -44,15 +71,6 @@
       <pubDate>Sat, 27 Jul 2019 17:21:45 +0800</pubDate>
       
       <guid>https://hueralin.github.io/categories/mac/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>React</title>
-      <link>https://hueralin.github.io/categories/react/</link>
-      <pubDate>Sat, 27 Jul 2019 12:37:17 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/categories/react/</guid>
       <description></description>
     </item>
     

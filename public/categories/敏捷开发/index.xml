@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>敏捷开发 on 狐耳的雪原</title>
+    <link>https://hueralin.github.io/categories/%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91/</link>
+    <description>Recent content in 敏捷开发 on 狐耳的雪原</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 Aug 2019 17:10:22 +0800</lastBuildDate>
+    
+	<atom:link href="https://hueralin.github.io/categories/%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>敏捷开发</title>
+      <link>https://hueralin.github.io/2019/mjkf/</link>
+      <pubDate>Thu, 01 Aug 2019 17:10:22 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/mjkf/</guid>
+      <description>敏捷宣言
+12条原则
+Scrum
+XP(极限编程)
+1. 结对编程
+2. 测试驱动开发：单元测试，重构
+3. 持续集成
+4. 代码集体所有（统一规范，任何人写的代码，任何人都能维护）
+5. 现场客户
+精益思维
+1. 消除浪费
+2. 增强学习
+3. 尽量延迟决定
+4. 尽快发布
+5. 下放权力
+6. 嵌入质量
+7. 全局优化
+FDD-特性驱动开发
+看板（白板）
+MoSCoW
+估算
+估算纸牌（数字高代表能力强，数字代表和参照物相比该任务的复杂度，每个人对同一个任务的估算是不同的）
+技术债务
+迭代开发 增量交付 自组织团队 高价值的优先级排序</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -5,8 +5,292 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jul 2019 18:54:31 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Aug 2019 11:56:42 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>ES2016/2017新特性</title>
+      <link>https://hueralin.github.io/2019/es20162017etc/</link>
+      <pubDate>Tue, 06 Aug 2019 11:56:42 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/es20162017etc/</guid>
+      <description>
+
+&lt;h3 id=&#34;es2016-es7&#34;&gt;ES2016(ES7)&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Array.prototype.includes(value): 判断一个元素是否在数组中&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;let a = [1,2,3,4,5,6]  
+a.includes(4)   // true  
+a.includes(7)   // false  
+
+// 功能类似于 xxx.indexOf(y) &amp;gt; -1, 但有不同  
+// includes可以检测Nan  (indexO不可以)
+[NaN].includes(NaN) // true
+
+// 不区分 -0 +0 （indexOf也可以）
+[-0].includes(+0)   // true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;求幂运算&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;let a = 3
+a ** 2      // 9
+// 相当于 Math.pow(a, 2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;es2017-es8&#34;&gt;ES2017(ES8)&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;String.prototype.padStart / String.prototype.padEnd（字符串填充）&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;功能：返回指定长度的填充后的字符串  
+语法：str.padStart(len [, padStr])  // len 指定长度 padStr 填充字符串  
+let str = &#39;huer&#39;  
+// 1. 指定长度小于原字符串长度，则返回原字符串    
+str.padStart(2)  // &#39;huer&#39;
+// 2. 指定长度大于原字符串长度，则返回填充字符串（默认为空格）+原字符串  
+str.padStart(5)  // &#39; huer&#39;  
+// 3. 原字符串 &amp;lt; 指定长度 &amp;lt; 填充字符串 + 原字符串，则从填充字符串的右侧截取  
+str.padStart(7, &#39;malin&#39;)    // &#39;malhuer&#39;  
+// 4. 指定长度 &amp;gt; 填充字符串 + 原字符串, 重复填充字符串，使其达到指定长度  
+str.padStart(10, &#39;a&#39;)       // &#39;aaaaaahuer&#39;  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Object.values / Object.entries&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Object.values(obj): 返回obj的可遍历属性的 ‘属性值’ 数组&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Object.entries(obj): 返回obj的可遍历属性的 ‘键值对’ 数组&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Object.getOwnPropertyDescriptors&lt;/strong&gt;&lt;br /&gt;
+该函数返回对象的属性描述符&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;函数定义和函数调用的参数列表最后面的尾逗号&lt;/strong&gt;&lt;br /&gt;
+Emmmm，就是说下面这种情况不会报错，有什么作用？？？&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;function Func(a,b,) {xxx}
+Func(1,2,)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;异步函数 async/await&lt;/strong&gt;&lt;br /&gt;
+to be continued&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>React_router配置</title>
+      <link>https://hueralin.github.io/2019/react_router/</link>
+      <pubDate>Mon, 05 Aug 2019 14:24:46 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/react_router/</guid>
+      <description>
+
+&lt;p&gt;最近在学习React-router遇到了一些问题，在此记录一下：&lt;br /&gt;
+目前成功的配置为：&lt;br /&gt;
+&lt;strong&gt;app.jsx&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import React from &#39;react&#39;
+import ReactDOM from &#39;react-dom&#39;
+import { HashRouter as Router, Route } from &#39;react-router-dom&#39;
+import Content from &#39;./components/Content.jsx&#39;
+import About from &#39;./components/About.jsx&#39;
+import Posts from &#39;./components/Posts.jsx&#39;
+import Post from &#39;./components/Post.jsx&#39;
+
+ReactDOM.render(
+    &amp;lt;Router&amp;gt;
+        &amp;lt;Content&amp;gt;
+            &amp;lt;Route path=&#39;/about&#39; component={About}&amp;gt;&amp;lt;/Route&amp;gt;
+            &amp;lt;Route path=&#39;/posts&#39; component={Posts}&amp;gt;&amp;lt;/Route&amp;gt;
+            &amp;lt;Route path=&#39;/posts/:id&#39; component={Post}&amp;gt;&amp;lt;/Route&amp;gt;
+        &amp;lt;/Content&amp;gt;
+    &amp;lt;/Router&amp;gt;,
+    document.getElementById(&#39;app&#39;)
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Content.jsx&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import React from &#39;react&#39;
+import { Link } from &#39;react-router-dom&#39;
+
+class Content extends React.Component {
+    render () {
+        return &amp;lt;div&amp;gt;
+            &amp;lt;ul&amp;gt;
+                &amp;lt;li&amp;gt;&amp;lt;Link to=&#39;/&#39;&amp;gt;主页&amp;lt;/Link&amp;gt;&amp;lt;/li&amp;gt;
+                &amp;lt;li&amp;gt;&amp;lt;Link to=&#39;/posts&#39;&amp;gt;博文&amp;lt;/Link&amp;gt;&amp;lt;/li&amp;gt;
+                &amp;lt;li&amp;gt;&amp;lt;Link to=&#39;/about&#39;&amp;gt;关于&amp;lt;/Link&amp;gt;&amp;lt;/li&amp;gt;
+            &amp;lt;/ul&amp;gt;
+            {this.props.children}
+        &amp;lt;/div&amp;gt;
+    }
+}
+
+export default Content
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以看到，这里是用的是 react-router-dom（v5.0.1），而不是react-router&lt;/p&gt;
+
+&lt;h3 id=&#34;react-router-dom的三个基本组件&#34;&gt;react-router-dom的三个基本组件&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Router Component&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Route matching Component&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Navigation Component&lt;br /&gt;
+这三个组件都必须从 react-router-dom中导入&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;router-component&#34;&gt;Router Component&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;BrowserRouter&amp;gt;&lt;/code&gt;：用于使用服务器来处理请求的情况&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;HashRouter&amp;gt;&lt;/code&gt;：用于静态文件服务&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;HashRouter&lt;/strong&gt;&lt;br /&gt;
+哈希路由用来兼容传统浏览器&lt;br /&gt;
+HashRouter几个常见的参数：&lt;br /&gt;
+1. &lt;code&gt;basename&lt;/code&gt; 用来指定统一的前缀&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;&amp;lt;HashRouter basename=&#39;/huer&#39;&amp;gt;
+    &amp;lt;Link to=&#39;/about&#39;&amp;gt;狐耳&amp;lt;/Link&amp;gt;
+&amp;lt;/HashRouter&amp;gt;
+// 即&#39;#/huer/login&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;route-matching-component&#34;&gt;Route Matching Component&lt;/h3&gt;
+
+&lt;p&gt;路由匹配组件主要是用来根据不同的path来显示不同的component的，如果一个路由匹配组件没有设置path路径，那么它总会被匹配到。当一个Route的path匹配到当前的location&amp;rsquo;s pathname，就会渲染component属性所对应的内容，若没有匹配到，就会render null。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// when location = { pathname: &#39;/about&#39; }
+&amp;lt;Route path=&#39;/about&#39; component={About}/&amp;gt; // renders &amp;lt;About/&amp;gt;
+&amp;lt;Route path=&#39;/contact&#39; component={Contact}/&amp;gt; // renders null
+&amp;lt;Route component={Always}/&amp;gt; // renders &amp;lt;Always/&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;Route&lt;/code&gt;：&lt;code&gt;&amp;lt;Route path=&#39;/user&#39; component={User}&amp;gt;&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Switch&lt;/code&gt;：&lt;code&gt;&amp;lt;Switch&amp;gt;一组&amp;lt;Route&amp;gt;&amp;lt;/Switch&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;一个Switch组件包含一组Route组件，但并不是必须的。Switch组件会迭代它的子Route组件，并且只渲染第一个匹配到的Route，这在许多Route组件匹配到同一个pathname时非常有用。在没有匹配到合适的pathname时，它可以在最下面设置一个无path的Route组件，表示匹配不到时的组件，例如404页面。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;&amp;lt;Switch&amp;gt;
+  &amp;lt;Route exact path=&amp;quot;/&amp;quot; component={Home} /&amp;gt;
+  &amp;lt;Route path=&amp;quot;/about&amp;quot; component={About} /&amp;gt;
+  &amp;lt;Route path=&amp;quot;/contact&amp;quot; component={Contact} /&amp;gt;
+  {/* when none of the above match, &amp;lt;NoMatch&amp;gt; will be rendered */}
+  &amp;lt;Route component={NoMatch} /&amp;gt;
+&amp;lt;/Switch&amp;gt;
+
+// 当前位置：/about ，那么About User NoMatch都会被渲染
+&amp;lt;Route path=&amp;quot;/about&amp;quot; component={About}/&amp;gt;
+&amp;lt;Route path=&amp;quot;/:user&amp;quot; component={User}/&amp;gt;
+&amp;lt;Route component={NoMatch}/&amp;gt;
+// 若使用Switch包裹起来，则匹配到第一个何时的就结束了，不会继续向下匹配
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;navigation&#34;&gt;Navigation&lt;/h3&gt;
+
+&lt;p&gt;导航链接组件，有三种：&lt;br /&gt;
+&lt;code&gt;&amp;lt;Link&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// to: string  
+&amp;lt;Link to=&amp;quot;/courses?sort=name&amp;quot; /&amp;gt;  
+// to: object  
+&amp;lt;Link
+  to={{
+    pathname: &amp;quot;/courses&amp;quot;,           // 路径名
+    search: &amp;quot;?sort=name&amp;quot;,           // 查询字符串
+    hash: &amp;quot;#the-hash&amp;quot;,              // 锚点
+    state: { fromDashboard: true }  // 保留到该位置的状态
+  }}
+/&amp;gt;
+// to: func  
+&amp;lt;Link to={location =&amp;gt; ({ ...location, pathname: &amp;quot;/courses&amp;quot; })} /&amp;gt;  
+&amp;lt;Link to={location =&amp;gt; `${location.pathname}?sort=name`} /&amp;gt;  
+// 其实返回对象或字符串，即上面两种用法  
+// replce  当值为true时，替换历史记录栈而不是新增一个记录
+&amp;lt;Link to=&#39;/login&#39; replace&amp;gt;&amp;lt;/Link&amp;gt;  
+// exact代表当前路由path的路径采用精确匹配,不然像下面的代码（若没有exact），匹配/时也会渲染about
+// 嵌套路由不要加exact属性
+&amp;lt;Link exact to=&#39;/&#39;&amp;gt;&amp;lt;/Link&amp;gt;
+&amp;lt;Link to=&#39;/about&#39;&amp;gt;&amp;lt;/Link&amp;gt;
+// 其他的属性，例如title,id,className等也可以加上
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;&amp;lt;NavLink&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// activeClassName  被选中时应用该样式  
+&amp;lt;NavLink to=&amp;quot;/faq&amp;quot; activeClassName=&amp;quot;selected&amp;quot;&amp;gt;FAQs&amp;lt;/NavLink&amp;gt;
+// activeStyle 同理，接受一个对象  
+// isActive：func 匹配时执行的回调函数
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;&amp;lt;Redirect&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 重定向本来就是定向到其他URL，本质上就是replace，现有 ‘push’ 属性，代表想历史记录栈中加入一条历史记录，而不是替换。  
+&amp;lt;Redirect push to=&#39;/about&#39;/&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;match&lt;/strong&gt;&lt;br /&gt;
+match对象包含一些路由匹配的信息，match对象从this.props.match中获取&lt;br /&gt;
+它包含以下四个属性：&lt;br /&gt;
+1. params：&lt;br /&gt;
+2. isExact：是否精确匹配&lt;br /&gt;
+3. path：即写在Route中的path匹配模式&lt;br /&gt;
+4. url：实际的path&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>敏捷开发</title>
+      <link>https://hueralin.github.io/2019/mjkf/</link>
+      <pubDate>Thu, 01 Aug 2019 17:10:22 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/mjkf/</guid>
+      <description>&lt;p&gt;敏捷宣言&lt;/p&gt;
+
+&lt;p&gt;12条原则&lt;/p&gt;
+
+&lt;p&gt;Scrum&lt;/p&gt;
+
+&lt;p&gt;XP(极限编程)&lt;br /&gt;
+1. 结对编程&lt;br /&gt;
+2. 测试驱动开发：单元测试，重构&lt;br /&gt;
+3. 持续集成&lt;br /&gt;
+4. 代码集体所有（统一规范，任何人写的代码，任何人都能维护）&lt;br /&gt;
+5. 现场客户&lt;/p&gt;
+
+&lt;p&gt;精益思维&lt;br /&gt;
+1. 消除浪费&lt;br /&gt;
+2. 增强学习&lt;br /&gt;
+3. 尽量延迟决定&lt;br /&gt;
+4. 尽快发布&lt;br /&gt;
+5. 下放权力&lt;br /&gt;
+6. 嵌入质量&lt;br /&gt;
+7. 全局优化&lt;/p&gt;
+
+&lt;p&gt;FDD-特性驱动开发&lt;/p&gt;
+
+&lt;p&gt;看板（白板）&lt;/p&gt;
+
+&lt;p&gt;MoSCoW&lt;/p&gt;
+
+&lt;p&gt;估算&lt;br /&gt;
+估算纸牌（数字高代表能力强，数字代表和参照物相比该任务的复杂度，每个人对同一个任务的估算是不同的）&lt;/p&gt;
+
+&lt;p&gt;技术债务&lt;/p&gt;
+
+&lt;p&gt;迭代开发 增量交付 自组织团队 高价值的优先级排序&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Webpack4 配置文件解析</title>
@@ -416,64 +700,6 @@ Fork工作流不再是只有一个中央代码库，而是给予每个人一个�
 &lt;li&gt;&lt;code&gt;git checkout -b 本地分支名 远程主机/远程分支名&lt;/code&gt; 从远程分支中签出本地分支&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;git branch -vv&lt;/code&gt; 查看本地分支和远程分支的跟踪关系&lt;/li&gt;
 &lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>用webpack搭建简易的React应用</title>
-      <link>https://hueralin.github.io/2019/createreactwithwebpack/</link>
-      <pubDate>Sun, 21 Jul 2019 00:19:54 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/createreactwithwebpack/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;Emmm,步骤清单😂&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;npm init -y&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;npm i webpack webpack-cli webpack-dev-server --save-dev&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;npm i react react-dom --save&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;npm i babel-core babel-loader@7 babel-preset-es2015 babel-preset-react --save-dev&lt;/code&gt;&lt;br /&gt;
-需要安装的包差不多就这些了，接下来配置webpack.config.js文件&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;module.exports = {
-    entry: &amp;quot;./index.jsx&amp;quot;,
-    output: {
-        path: __dirname + &amp;quot;/public&amp;quot;,
-        filename: &amp;quot;bundle.js&amp;quot;
-    },
-    module: {
-        rules: [
-            {
-                test: /\.jsx$/,
-                loader: &amp;quot;babel-loader&amp;quot;
-            }
-        ]
-    },
-    devServer: {
-        contentBase: &amp;quot;./public&amp;quot;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ol&gt;
-&lt;li&gt;在package.json文件中添加脚本&lt;br /&gt;
-5.1. &lt;code&gt;&amp;quot;build&amp;quot;: &amp;quot;webpack&amp;quot;&lt;/code&gt;打包&lt;br /&gt;
-5.2. &lt;code&gt;&amp;quot;dev&amp;quot;: &amp;quot;webpack-dev-server --open --inline&amp;quot;&lt;/code&gt;启动测试服务器&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;在package.json文件里配置&lt;code&gt;&amp;quot;babel&amp;quot;: {&amp;quot;presets&amp;quot;: [&amp;quot;es2015&amp;quot;, &amp;quot;react&amp;quot;]}&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;在public目录下创建index.html，引用同目录下的bundle.js文件&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;运行下试试？？？ Emmm，这个代码块有点丑啊😂&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>搭个窝，储点儿粮，准备过冬！</title>
-      <link>https://hueralin.github.io/2019/life20190720/</link>
-      <pubDate>Sat, 20 Jul 2019 23:28:34 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/life20190720/</guid>
-      <description>&lt;p&gt;今天总算把我的小窝搭建起来了，hugo + github pages 还真不错，感谢该hugo主题的作者，UI很好看。
-为什么要放在GiHub上而不是自己前后端+服务器啥的一通瞎搞呢？记得有人说过，刚开始做博客的时候大包大揽，前后端都自己做，确实考验技术也很有成就感，或许也是一时兴起，刚接触博客，饶有趣味，可后来操心太多，可能还会修复bug，还不时续费维护，那时才想起来，”我就是要发篇博客嘛，那么麻烦干什么，都不能专心写作了“，于是github静态博客成了首选（毕竟CSDN、博客园、简书啥的不能定制），通过简单的Markdown语法+GitHub基础就可以发布一篇博客了，岂不美哉～ 可以在该博客上发发技术文章，也可以记录学习和生活，简简单单，专心写作。今天也算是里程碑的一天吧，有此博客就像在北京有了一套房（哈哈哈😂，有些夸张～），实习的日子，加油！&lt;/p&gt;
 </description>
     </item>
     

@@ -6,10 +6,67 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jul 2019 18:54:31 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Aug 2019 11:56:42 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ES2016/2017新特性</title>
+      <link>https://hueralin.github.io/2019/es20162017etc/</link>
+      <pubDate>Tue, 06 Aug 2019 11:56:42 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/es20162017etc/</guid>
+      <description>ES2016(ES7) Array.prototype.includes(value): 判断一个元素是否在数组中
+let a = [1,2,3,4,5,6] a.includes(4) // true a.includes(7) // false // 功能类似于 xxx.indexOf(y) &amp;gt; -1, 但有不同 // includes可以检测Nan (indexO不可以) [NaN].includes(NaN) // true // 不区分 -0 +0 （indexOf也可以） [-0].includes(+0) // true  求幂运算
+let a = 3 a ** 2 // 9 // 相当于 Math.pow(a, 2)  ES2017(ES8) String.prototype.padStart / String.prototype.padEnd（字符串填充）
+功能：返回指定长度的填充后的字符串 语法：str.padStart(len [, padStr]) // len 指定长度 padStr 填充字符串 let str = &#39;huer&#39; // 1. 指定长度小于原字符串长度，则返回原字符串 str.</description>
+    </item>
+    
+    <item>
+      <title>React_router配置</title>
+      <link>https://hueralin.github.io/2019/react_router/</link>
+      <pubDate>Mon, 05 Aug 2019 14:24:46 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/react_router/</guid>
+      <description>最近在学习React-router遇到了一些问题，在此记录一下：
+目前成功的配置为：
+app.jsx
+import React from &#39;react&#39; import ReactDOM from &#39;react-dom&#39; import { HashRouter as Router, Route } from &#39;react-router-dom&#39; import Content from &#39;./components/Content.jsx&#39; import About from &#39;./components/About.jsx&#39; import Posts from &#39;./components/Posts.jsx&#39; import Post from &#39;./components/Post.jsx&#39; ReactDOM.render( &amp;lt;Router&amp;gt; &amp;lt;Content&amp;gt; &amp;lt;Route path=&#39;/about&#39; component={About}&amp;gt;&amp;lt;/Route&amp;gt; &amp;lt;Route path=&#39;/posts&#39; component={Posts}&amp;gt;&amp;lt;/Route&amp;gt; &amp;lt;Route path=&#39;/posts/:id&#39; component={Post}&amp;gt;&amp;lt;/Route&amp;gt; &amp;lt;/Content&amp;gt; &amp;lt;/Router&amp;gt;, document.getElementById(&#39;app&#39;) )  Content.jsx
+import React from &#39;react&#39; import { Link } from &#39;react-router-dom&#39; class Content extends React.Component { render () { return &amp;lt;div&amp;gt; &amp;lt;ul&amp;gt; &amp;lt;li&amp;gt;&amp;lt;Link to=&#39;/&#39;&amp;gt;主页&amp;lt;/Link&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;Link to=&#39;/posts&#39;&amp;gt;博文&amp;lt;/Link&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;Link to=&#39;/about&#39;&amp;gt;关于&amp;lt;/Link&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; {this.</description>
+    </item>
+    
+    <item>
+      <title>敏捷开发</title>
+      <link>https://hueralin.github.io/2019/mjkf/</link>
+      <pubDate>Thu, 01 Aug 2019 17:10:22 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/mjkf/</guid>
+      <description>敏捷宣言
+12条原则
+Scrum
+XP(极限编程)
+1. 结对编程
+2. 测试驱动开发：单元测试，重构
+3. 持续集成
+4. 代码集体所有（统一规范，任何人写的代码，任何人都能维护）
+5. 现场客户
+精益思维
+1. 消除浪费
+2. 增强学习
+3. 尽量延迟决定
+4. 尽快发布
+5. 下放权力
+6. 嵌入质量
+7. 全局优化
+FDD-特性驱动开发
+看板（白板）
+MoSCoW
+估算
+估算纸牌（数字高代表能力强，数字代表和参照物相比该任务的复杂度，每个人对同一个任务的估算是不同的）
+技术债务
+迭代开发 增量交付 自组织团队 高价值的优先级排序</description>
+    </item>
     
     <item>
       <title>Webpack4 配置文件解析</title>

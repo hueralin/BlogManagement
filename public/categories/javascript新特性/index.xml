@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JavaScript新特性 on 狐耳的雪原</title>
+    <link>https://hueralin.github.io/categories/javascript%E6%96%B0%E7%89%B9%E6%80%A7/</link>
+    <description>Recent content in JavaScript新特性 on 狐耳的雪原</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 06 Aug 2019 11:56:42 +0800</lastBuildDate>
+    
+	<atom:link href="https://hueralin.github.io/categories/javascript%E6%96%B0%E7%89%B9%E6%80%A7/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ES2016/2017新特性</title>
+      <link>https://hueralin.github.io/2019/es20162017etc/</link>
+      <pubDate>Tue, 06 Aug 2019 11:56:42 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/es20162017etc/</guid>
+      <description>ES2016(ES7) Array.prototype.includes(value): 判断一个元素是否在数组中
+let a = [1,2,3,4,5,6] a.includes(4) // true a.includes(7) // false // 功能类似于 xxx.indexOf(y) &amp;gt; -1, 但有不同 // includes可以检测Nan (indexO不可以) [NaN].includes(NaN) // true // 不区分 -0 +0 （indexOf也可以） [-0].includes(+0) // true  求幂运算
+let a = 3 a ** 2 // 9 // 相当于 Math.pow(a, 2)  ES2017(ES8) String.prototype.padStart / String.prototype.padEnd（字符串填充）
+功能：返回指定长度的填充后的字符串 语法：str.padStart(len [, padStr]) // len 指定长度 padStr 填充字符串 let str = &#39;huer&#39; // 1. 指定长度小于原字符串长度，则返回原字符串 str.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/mjkf/" />
+  <link rel="next" href="https://hueralin.github.io/2019/es20162017etc/" />
+  <link rel="canonical" href="https://hueralin.github.io/2019/react_router/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           React_router配置 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="React_router配置 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "React_router配置",
+    "headline" : "React_router配置",
+    "description" : "最近在学习React-router遇到了一些问题，在此记录一下：\n目前成功的配置为：\napp.jsx\nimport React from \x27react\x27 import ReactDOM from \x27react-dom\x27 import { HashRouter as Router, Route } from \x27react-router-dom\x27 import Content from \x27.\/components\/Content.jsx\x27 import About from \x27.\/components\/About.jsx\x27 import Posts from \x27.\/components\/Posts.jsx\x27 import Post from \x27.\/components\/Post.jsx\x27 ReactDOM.render( \x26lt;Router\x26gt; \x26lt;Content\x26gt; \x26lt;Route path=\x27\/about\x27 component={About}\x26gt;\x26lt;\/Route\x26gt; \x26lt;Route path=\x27\/posts\x27 component={Posts}\x26gt;\x26lt;\/Route\x26gt; \x26lt;Route path=\x27\/posts\/:id\x27 component={Post}\x26gt;\x26lt;\/Route\x26gt; \x26lt;\/Content\x26gt; \x26lt;\/Router\x26gt;, document.getElementById(\x27app\x27) )  Content.jsx\nimport React from \x27react\x27 import { Link } from \x27react-router-dom\x27 class Content extends React.Component { render () { return \x26lt;div\x26gt; \x26lt;ul\x26gt; \x26lt;li\x26gt;\x26lt;Link to=\x27\/\x27\x26gt;主页\x26lt;\/Link\x26gt;\x26lt;\/li\x26gt; \x26lt;li\x26gt;\x26lt;Link to=\x27\/posts\x27\x26gt;博文\x26lt;\/Link\x26gt;\x26lt;\/li\x26gt; \x26lt;li\x26gt;\x26lt;Link to=\x27\/about\x27\x26gt;关于\x26lt;\/Link\x26gt;\x26lt;\/li\x26gt; \x26lt;\/ul\x26gt; {this.",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-08-05 14:24:46 \x2b0800 CST",
+    "dateModified" : "2019-08-05 14:24:46 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/react_router\/",
+    "wordCount" : "301",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                &lt;-
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+                ->
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">React_router配置</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-08-05 itemprop="datePublished">August 5, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/react/"> React </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<p>最近在学习React-router遇到了一些问题，在此记录一下：<br />
+目前成功的配置为：<br />
+<strong>app.jsx</strong></p>
+
+<pre><code class="language-javascript">import React from 'react'
+import ReactDOM from 'react-dom'
+import { HashRouter as Router, Route } from 'react-router-dom'
+import Content from './components/Content.jsx'
+import About from './components/About.jsx'
+import Posts from './components/Posts.jsx'
+import Post from './components/Post.jsx'
+
+ReactDOM.render(
+    &lt;Router&gt;
+        &lt;Content&gt;
+            &lt;Route path='/about' component={About}&gt;&lt;/Route&gt;
+            &lt;Route path='/posts' component={Posts}&gt;&lt;/Route&gt;
+            &lt;Route path='/posts/:id' component={Post}&gt;&lt;/Route&gt;
+        &lt;/Content&gt;
+    &lt;/Router&gt;,
+    document.getElementById('app')
+)
+</code></pre>
+
+<p><strong>Content.jsx</strong></p>
+
+<pre><code class="language-javascript">import React from 'react'
+import { Link } from 'react-router-dom'
+
+class Content extends React.Component {
+    render () {
+        return &lt;div&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;Link to='/'&gt;主页&lt;/Link&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;Link to='/posts'&gt;博文&lt;/Link&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;Link to='/about'&gt;关于&lt;/Link&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+            {this.props.children}
+        &lt;/div&gt;
+    }
+}
+
+export default Content
+</code></pre>
+
+<p>可以看到，这里是用的是 react-router-dom（v5.0.1），而不是react-router</p>
+
+<h3 id="react-router-dom的三个基本组件">react-router-dom的三个基本组件</h3>
+
+<ol>
+<li>Router Component<br /></li>
+<li>Route matching Component<br /></li>
+<li>Navigation Component<br />
+这三个组件都必须从 react-router-dom中导入<br /></li>
+</ol>
+
+<h3 id="router-component">Router Component</h3>
+
+<ol>
+<li><code>&lt;BrowserRouter&gt;</code>：用于使用服务器来处理请求的情况<br /></li>
+<li><code>&lt;HashRouter&gt;</code>：用于静态文件服务<br /></li>
+</ol>
+
+<blockquote>
+<p><strong>HashRouter</strong><br />
+哈希路由用来兼容传统浏览器<br />
+HashRouter几个常见的参数：<br />
+1. <code>basename</code> 用来指定统一的前缀</p>
+
+<pre><code class="language-javascript">&lt;HashRouter basename='/huer'&gt;
+    &lt;Link to='/about'&gt;狐耳&lt;/Link&gt;
+&lt;/HashRouter&gt;
+// 即'#/huer/login'
+</code></pre>
+</blockquote>
+
+<h3 id="route-matching-component">Route Matching Component</h3>
+
+<p>路由匹配组件主要是用来根据不同的path来显示不同的component的，如果一个路由匹配组件没有设置path路径，那么它总会被匹配到。当一个Route的path匹配到当前的location&rsquo;s pathname，就会渲染component属性所对应的内容，若没有匹配到，就会render null。</p>
+
+<pre><code class="language-javascript">// when location = { pathname: '/about' }
+&lt;Route path='/about' component={About}/&gt; // renders &lt;About/&gt;
+&lt;Route path='/contact' component={Contact}/&gt; // renders null
+&lt;Route component={Always}/&gt; // renders &lt;Always/&gt;
+</code></pre>
+
+<ol>
+<li><code>Route</code>：<code>&lt;Route path='/user' component={User}&gt;</code><br /></li>
+<li><code>Switch</code>：<code>&lt;Switch&gt;一组&lt;Route&gt;&lt;/Switch&gt;</code></li>
+</ol>
+
+<p>一个Switch组件包含一组Route组件，但并不是必须的。Switch组件会迭代它的子Route组件，并且只渲染第一个匹配到的Route，这在许多Route组件匹配到同一个pathname时非常有用。在没有匹配到合适的pathname时，它可以在最下面设置一个无path的Route组件，表示匹配不到时的组件，例如404页面。</p>
+
+<pre><code class="language-javascript">&lt;Switch&gt;
+  &lt;Route exact path=&quot;/&quot; component={Home} /&gt;
+  &lt;Route path=&quot;/about&quot; component={About} /&gt;
+  &lt;Route path=&quot;/contact&quot; component={Contact} /&gt;
+  {/* when none of the above match, &lt;NoMatch&gt; will be rendered */}
+  &lt;Route component={NoMatch} /&gt;
+&lt;/Switch&gt;
+
+// 当前位置：/about ，那么About User NoMatch都会被渲染
+&lt;Route path=&quot;/about&quot; component={About}/&gt;
+&lt;Route path=&quot;/:user&quot; component={User}/&gt;
+&lt;Route component={NoMatch}/&gt;
+// 若使用Switch包裹起来，则匹配到第一个何时的就结束了，不会继续向下匹配
+</code></pre>
+
+<h3 id="navigation">Navigation</h3>
+
+<p>导航链接组件，有三种：<br />
+<code>&lt;Link&gt;</code></p>
+
+<pre><code class="language-javascript">// to: string  
+&lt;Link to=&quot;/courses?sort=name&quot; /&gt;  
+// to: object  
+&lt;Link
+  to={{
+    pathname: &quot;/courses&quot;,           // 路径名
+    search: &quot;?sort=name&quot;,           // 查询字符串
+    hash: &quot;#the-hash&quot;,              // 锚点
+    state: { fromDashboard: true }  // 保留到该位置的状态
+  }}
+/&gt;
+// to: func  
+&lt;Link to={location =&gt; ({ ...location, pathname: &quot;/courses&quot; })} /&gt;  
+&lt;Link to={location =&gt; `${location.pathname}?sort=name`} /&gt;  
+// 其实返回对象或字符串，即上面两种用法  
+// replce  当值为true时，替换历史记录栈而不是新增一个记录
+&lt;Link to='/login' replace&gt;&lt;/Link&gt;  
+// exact代表当前路由path的路径采用精确匹配,不然像下面的代码（若没有exact），匹配/时也会渲染about
+// 嵌套路由不要加exact属性
+&lt;Link exact to='/'&gt;&lt;/Link&gt;
+&lt;Link to='/about'&gt;&lt;/Link&gt;
+// 其他的属性，例如title,id,className等也可以加上
+</code></pre>
+
+<p><code>&lt;NavLink&gt;</code></p>
+
+<pre><code class="language-javascript">// activeClassName  被选中时应用该样式  
+&lt;NavLink to=&quot;/faq&quot; activeClassName=&quot;selected&quot;&gt;FAQs&lt;/NavLink&gt;
+// activeStyle 同理，接受一个对象  
+// isActive：func 匹配时执行的回调函数
+</code></pre>
+
+<p><code>&lt;Redirect&gt;</code></p>
+
+<pre><code class="language-javascript">// 重定向本来就是定向到其他URL，本质上就是replace，现有 ‘push’ 属性，代表想历史记录栈中加入一条历史记录，而不是替换。  
+&lt;Redirect push to='/about'/&gt;
+</code></pre>
+
+<blockquote>
+<p><strong>match</strong><br />
+match对象包含一些路由匹配的信息，match对象从this.props.match中获取<br />
+它包含以下四个属性：<br />
+1. params：<br />
+2. isExact：是否精确匹配<br />
+3. path：即写在Route中的path匹配模式<br />
+4. url：实际的path</p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/react_router/>https://hueralin.github.io/2019/react_router/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/mjkf/" class="prev" rel="prev" title="敏捷开发"><i class="iconfont icon-left"></i>&nbsp;敏捷开发</a>
+         
+        
+        <a href="https://hueralin.github.io/2019/es20162017etc/" class="next" rel="next" title="ES2016/2017新特性">ES2016/2017新特性&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        
+        <span itemprop="copyrightYear">2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

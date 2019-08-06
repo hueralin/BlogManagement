@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/react_router/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/es20162017etc/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           ES2016/2017新特性 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="ES2016/2017新特性 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "ES2016\/2017新特性",
+    "headline" : "ES2016\/2017新特性",
+    "description" : "ES2016(ES7) Array.prototype.includes(value): 判断一个元素是否在数组中\nlet a = [1,2,3,4,5,6] a.includes(4) \/\/ true a.includes(7) \/\/ false \/\/ 功能类似于 xxx.indexOf(y) \x26gt; -1, 但有不同 \/\/ includes可以检测Nan (indexO不可以) [NaN].includes(NaN) \/\/ true \/\/ 不区分 -0 \x2b0 （indexOf也可以） [-0].includes(\x2b0) \/\/ true  求幂运算\nlet a = 3 a ** 2 \/\/ 9 \/\/ 相当于 Math.pow(a, 2)  ES2017(ES8) String.prototype.padStart \/ String.prototype.padEnd（字符串填充）\n功能：返回指定长度的填充后的字符串 语法：str.padStart(len [, padStr]) \/\/ len 指定长度 padStr 填充字符串 let str = \x27huer\x27 \/\/ 1. 指定长度小于原字符串长度，则返回原字符串 str.",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-08-06 11:56:42 \x2b0800 CST",
+    "dateModified" : "2019-08-06 11:56:42 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/es20162017etc\/",
+    "wordCount" : "126",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                &lt;-
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+                ->
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">ES2016/2017新特性</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-08-06 itemprop="datePublished">August 6, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/javascript%E6%96%B0%E7%89%B9%E6%80%A7/"> JavaScript新特性 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<h3 id="es2016-es7">ES2016(ES7)</h3>
+
+<p><strong>Array.prototype.includes(value): 判断一个元素是否在数组中</strong></p>
+
+<pre><code class="language-javascript">let a = [1,2,3,4,5,6]  
+a.includes(4)   // true  
+a.includes(7)   // false  
+
+// 功能类似于 xxx.indexOf(y) &gt; -1, 但有不同  
+// includes可以检测Nan  (indexO不可以)
+[NaN].includes(NaN) // true
+
+// 不区分 -0 +0 （indexOf也可以）
+[-0].includes(+0)   // true
+</code></pre>
+
+<p><strong>求幂运算</strong></p>
+
+<pre><code class="language-javascript">let a = 3
+a ** 2      // 9
+// 相当于 Math.pow(a, 2)
+</code></pre>
+
+<h3 id="es2017-es8">ES2017(ES8)</h3>
+
+<p><strong>String.prototype.padStart / String.prototype.padEnd（字符串填充）</strong></p>
+
+<pre><code class="language-javascript">功能：返回指定长度的填充后的字符串  
+语法：str.padStart(len [, padStr])  // len 指定长度 padStr 填充字符串  
+let str = 'huer'  
+// 1. 指定长度小于原字符串长度，则返回原字符串    
+str.padStart(2)  // 'huer'
+// 2. 指定长度大于原字符串长度，则返回填充字符串（默认为空格）+原字符串  
+str.padStart(5)  // ' huer'  
+// 3. 原字符串 &lt; 指定长度 &lt; 填充字符串 + 原字符串，则从填充字符串的右侧截取  
+str.padStart(7, 'malin')    // 'malhuer'  
+// 4. 指定长度 &gt; 填充字符串 + 原字符串, 重复填充字符串，使其达到指定长度  
+str.padStart(10, 'a')       // 'aaaaaahuer'  
+</code></pre>
+
+<p><strong>Object.values / Object.entries</strong></p>
+
+<ol>
+<li>Object.values(obj): 返回obj的可遍历属性的 ‘属性值’ 数组<br /></li>
+<li>Object.entries(obj): 返回obj的可遍历属性的 ‘键值对’ 数组<br /></li>
+</ol>
+
+<p><strong>Object.getOwnPropertyDescriptors</strong><br />
+该函数返回对象的属性描述符</p>
+
+<p><strong>函数定义和函数调用的参数列表最后面的尾逗号</strong><br />
+Emmmm，就是说下面这种情况不会报错，有什么作用？？？</p>
+
+<pre><code class="language-javascript">function Func(a,b,) {xxx}
+Func(1,2,)
+</code></pre>
+
+<p><strong>异步函数 async/await</strong><br />
+to be continued&hellip;</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/es20162017etc/>https://hueralin.github.io/2019/es20162017etc/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/react_router/" class="prev" rel="prev" title="React_router配置"><i class="iconfont icon-left"></i>&nbsp;React_router配置</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        
+        <span itemprop="copyrightYear">2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

@@ -6,10 +6,23 @@
     <description>Recent content in React on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jul 2019 12:37:17 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Aug 2019 14:24:46 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/react/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>React_router配置</title>
+      <link>https://hueralin.github.io/2019/react_router/</link>
+      <pubDate>Mon, 05 Aug 2019 14:24:46 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/react_router/</guid>
+      <description>最近在学习React-router遇到了一些问题，在此记录一下：
+目前成功的配置为：
+app.jsx
+import React from &#39;react&#39; import ReactDOM from &#39;react-dom&#39; import { HashRouter as Router, Route } from &#39;react-router-dom&#39; import Content from &#39;./components/Content.jsx&#39; import About from &#39;./components/About.jsx&#39; import Posts from &#39;./components/Posts.jsx&#39; import Post from &#39;./components/Post.jsx&#39; ReactDOM.render( &amp;lt;Router&amp;gt; &amp;lt;Content&amp;gt; &amp;lt;Route path=&#39;/about&#39; component={About}&amp;gt;&amp;lt;/Route&amp;gt; &amp;lt;Route path=&#39;/posts&#39; component={Posts}&amp;gt;&amp;lt;/Route&amp;gt; &amp;lt;Route path=&#39;/posts/:id&#39; component={Post}&amp;gt;&amp;lt;/Route&amp;gt; &amp;lt;/Content&amp;gt; &amp;lt;/Router&amp;gt;, document.getElementById(&#39;app&#39;) )  Content.jsx
+import React from &#39;react&#39; import { Link } from &#39;react-router-dom&#39; class Content extends React.Component { render () { return &amp;lt;div&amp;gt; &amp;lt;ul&amp;gt; &amp;lt;li&amp;gt;&amp;lt;Link to=&#39;/&#39;&amp;gt;主页&amp;lt;/Link&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;Link to=&#39;/posts&#39;&amp;gt;博文&amp;lt;/Link&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;Link to=&#39;/about&#39;&amp;gt;关于&amp;lt;/Link&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; {this.</description>
+    </item>
     
     <item>
       <title>HOC---高阶组件</title>
