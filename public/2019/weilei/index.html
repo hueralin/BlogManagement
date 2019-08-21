@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/bind/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/weilei/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           伪类 与 伪元素 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="伪类 与 伪元素 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "伪类 与 伪元素",
+    "headline" : "伪类 与 伪元素",
+    "description" : "“请说一下伪类和伪元素的区别”，之前的面试中遇到过这个问题，当初表示只见过伪类，回答的基本上都是:hover之流，这道题就挂了\x26hellip;\x26hellip;\n 如今，在实习中遇到了相关的需求，看来是时候深入学习一下了。其实，区分伪类和伪元素并不难，它俩最大的区别就在于应用场景。\n伪类 顾名思义，它相当于一个类，是用来设置样式的；当你需要让一个元素在某种特殊状态下显示特殊的样式时（如：按钮悬浮特效），就该使用伪类。 下面我们来实现一下伪类：\n需求：实现消息列表悬浮特效\n\x26lt;!-- 需求很明确，li元素在悬浮情况下应用样式 --\x26gt; \x26lt;ul\x26gt; \x26lt;li\x26gt;\x26lt;a href=\x26quot;#\x26quot;\x26gt;React\x26lt;\/a\x26gt;\x26lt;\/li\x26gt; \x26lt;li\x26gt;\x26lt;a href=\x26quot;#\x26quot;\x26gt;Vue\x26lt;\/a\x26gt;\x26lt;\/li\x26gt; \x26lt;li\x26gt;\x26lt;a href=\x26quot;#\x26quot;\x26gt;Angular\x26lt;\/a\x26gt;\x26lt;\/li\x26gt; \x26lt;li\x26gt;\x26lt;a href=\x26quot;#\x26quot;\x26gt;jQuery\x26lt;\/a\x26gt;\x26lt;\/li\x26gt; \x26lt;li\x26gt;\x26lt;a href=\x26quot;#\x26quot;\x26gt;Webpack\x26lt;\/a\x26gt;\x26lt;\/li\x26gt; \x26lt;li\x26gt;\x26lt;a href=\x26quot;#\x26quot;\x26gt;NPM\x26lt;\/a\x26gt;\x26lt;\/li\x26gt; \x26lt;\/ul\x26gt; li:hover { background: #eee; } \x26lt;!-- 再简单不过了，当然也可以设置奇偶行样式不一 --\x26gt;  其他的伪类：\n:active :empty :enabled :first :first-child :first-child :first-of-type :focus :hover :visited :nth-child :nth-of-type :link  伪元素 顾名思义，它是一个元素，可以是现有的元素，也可以是新增的元素，这些元素往往有自己的特殊位置（如：段落首字母突出样式）往往被作为附加的标记。 下面我们来实现一下伪元素\n需求：表单必填项前面加一个标识（这也是我这次的需求）\n\x26lt;label\x26gt;页面地址\x26lt;\/label\x26gt; \x26lt;input type=\x27text\x27 placeholder=\x26quot;请输入页面地址\x26quot;\/\x26gt; label::before { content: \x27*\x27; color: red; }  效果：伪元素并不多：\n1. ::before\n2. ::after",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-08-21 15:17:26 \x2b0800 CST",
+    "dateModified" : "2019-08-21 15:17:26 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/weilei\/",
+    "wordCount" : "109",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                &lt;-
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+                ->
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">伪类 与 伪元素</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-08-21 itemprop="datePublished">August 21, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/css/"> CSS </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<blockquote>
+<p>“请说一下伪类和伪元素的区别”，之前的面试中遇到过这个问题，当初表示只见过伪类，回答的基本上都是:hover之流，这道题就挂了&hellip;&hellip;</p>
+</blockquote>
+
+<p>如今，在实习中遇到了相关的需求，看来是时候深入学习一下了。其实，区分伪类和伪元素并不难，它俩最大的区别就在于应用场景。</p>
+
+<h3 id="伪类">伪类</h3>
+
+<h4 id="顾名思义-它相当于一个类-是用来设置样式的-当你需要让一个元素在某种特殊状态下显示特殊的样式时-如-按钮悬浮特效-就该使用伪类">顾名思义，它相当于一个类，是用来设置样式的；当你需要让一个元素在某种特殊状态下显示特殊的样式时（如：按钮悬浮特效），就该使用伪类。</h4>
+
+<p><strong>下面我们来实现一下伪类：</strong></p>
+
+<p>需求：实现消息列表悬浮特效</p>
+
+<pre><code class="language-html">&lt;!-- 需求很明确，li元素在悬浮情况下应用样式 --&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;React&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Vue&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Angular&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;jQuery&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Webpack&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;NPM&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+li:hover {
+    background: #eee;
+}
+&lt;!-- 再简单不过了，当然也可以设置奇偶行样式不一 --&gt;
+</code></pre>
+
+<p>其他的伪类：</p>
+
+<pre><code class="language-css">:active :empty  :enabled    :first  :first-child    :first-child  
+:first-of-type  :focus  :hover  :visited    :nth-child  :nth-of-type    :link
+</code></pre>
+
+<h3 id="伪元素">伪元素</h3>
+
+<h4 id="顾名思义-它是一个元素-可以是现有的元素-也可以是新增的元素-这些元素往往有自己的特殊位置-如-段落首字母突出样式-往往被作为附加的标记">顾名思义，它是一个元素，可以是现有的元素，也可以是新增的元素，这些元素往往有自己的特殊位置（如：段落首字母突出样式）往往被作为附加的标记。</h4>
+
+<p><strong>下面我们来实现一下伪元素</strong></p>
+
+<p>需求：表单必填项前面加一个标识（这也是我这次的需求）</p>
+
+<pre><code class="language-html">&lt;label&gt;页面地址&lt;/label&gt;
+&lt;input type='text' placeholder=&quot;请输入页面地址&quot;/&gt;
+label::before {
+    content: '*';
+    color: red;
+}
+</code></pre>
+
+<p>效果：<figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/xinghao.jpg" alt="必填项前加星号" class="lazyload"><figcaption class="image-caption">必填项前加星号</figcaption></figure></p>
+
+<p>伪元素并不多：<br />
+1. ::before<br />
+2. ::after<br />
+3. ::first-letter 段落首字母<br />
+4. ::first-line 段落首行<br />
+5. ::selection 这个很有意思，代表被用户高亮的部分（例如鼠标选中）</p>
+
+<h3 id="before-和-after">::before 和 ::after</h3>
+
+<p>这两个伪元素比较特殊，属于扩增原元素一类（我自己瞎起的名字）<br />
+::before 创建一个伪元素，并作为匹配元素的第一个子元素，::after则相反；这个新增的元素默认为“行内元素”<br />
+语法参照<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/::before" rel="nofollow noreferrer" target="_blank">MDN</a></p>
+
+<pre><code class="language-css">/* CSS3 语法 */
+element::before { 样式 }  
+/* （单冒号）CSS2 过时语法 (仅用来支持 IE8) */
+element:before  { 样式 }  
+/* 在每一个p元素前插入内容 */
+p::before { content: &quot;Hello world!&quot;; } 
+</code></pre>
+
+<p>MDN上关于这一节的最后一个例子不错，大家可以尝试一下！</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/weilei/>https://hueralin.github.io/2019/weilei/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/bind/" class="prev" rel="prev" title="React组件中的函数this绑定"><i class="iconfont icon-left"></i>&nbsp;React组件中的函数this绑定</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        
+        <span itemprop="copyrightYear">2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

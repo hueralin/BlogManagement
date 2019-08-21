@@ -9,9 +9,9 @@
   
   
   
-  <link rel="prev" href="https://hueralin.github.io/2019/react_router/" />
-  <link rel="next" href="https://hueralin.github.io/2019/athene/" />
-  <link rel="canonical" href="https://hueralin.github.io/2019/es20162017etc/" />
+  <link rel="prev" href="https://hueralin.github.io/2019/es20162017etc/" />
+  <link rel="next" href="https://hueralin.github.io/2019/array/" />
+  <link rel="canonical" href="https://hueralin.github.io/2019/athene/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,10 +22,10 @@
   <title>
        
        
-           ES2016/2017新特性 | 狐耳的雪原
+           后台管理系统 | 狐耳的雪原
        
   </title>
-  <meta name="title" content="ES2016/2017新特性 | 狐耳的雪原">
+  <meta name="title" content="后台管理系统 | 狐耳的雪原">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "https:\/\/hueralin.github.io"
     },
     "articleSection" : "posts",
-    "name" : "ES2016\/2017新特性",
-    "headline" : "ES2016\/2017新特性",
-    "description" : "ES2016(ES7) Array.prototype.includes(value): 判断一个元素是否在数组中\nlet a = [1,2,3,4,5,6] a.includes(4) \/\/ true a.includes(7) \/\/ false \/\/ 功能类似于 xxx.indexOf(y) \x26gt; -1, 但有不同 \/\/ includes可以检测Nan (indexO不可以) [NaN].includes(NaN) \/\/ true \/\/ 不区分 -0 \x2b0 （indexOf也可以） [-0].includes(\x2b0) \/\/ true  求幂运算\nlet a = 3 a ** 2 \/\/ 9 \/\/ 相当于 Math.pow(a, 2)  ES2017(ES8) String.prototype.padStart \/ String.prototype.padEnd（字符串填充）\n功能：返回指定长度的填充后的字符串 语法：str.padStart(len [, padStr]) \/\/ len 指定长度 padStr 填充字符串 let str = \x27huer\x27 \/\/ 1. 指定长度小于原字符串长度，则返回原字符串 str.",
+    "name" : "后台管理系统",
+    "headline" : "后台管理系统",
+    "description" : "这是实习期一个后台管理的项目 目前正在熟悉该项目，边熟悉，边做一些记录\n先来看一下大体的框架：\n顶层容器\n在container目录下的index.js文件中，有一个IndexContainer组件，该组件中的render函数是这么写的\nrender () { let { permission } = this.props return ( \x26lt;div\x26gt; \x26lt;Header params={this.props.params} username={permission.username} \/\x26gt; \x26lt;div className=\x27main-content\x27\x26gt; \x26lt;SideNav routes={this.props.routes} permissions={permission.permission} \/\x26gt; \x26lt;div\x26gt; {this.props.children} \x26lt;\/div\x26gt; \x26lt;\/div\x26gt; \x26lt;\/div\x26gt; ) }  可以看出该系统采用了非常常见的布局，即‘顶部导航\x2b左侧导航\x2b右侧内容’\n路由配置\n因为路由比较多，所有路由配置分为两个路由文件：\n外层路由文件\n\/\/ 这里引入了内层路由文件 import routers from \x27.\/routers\x27 module.exports = ( \x26lt;Router history={browserHistory}\x26gt; \x26lt;Route path=\x27\/\x27 \/\x26gt; \x26lt;Route path=\x27\/xxx\x27 component={xxx} \/\x26gt; \x26lt;Route path=\x27\/xx\/xx\x27 component={xx} \/\x26gt; ...... \x26lt;Route path=\x27\x27 component={Container} onEnter={handleEnterSystem}\x26gt; {\/* 嵌套路由，内层路由文件里的Route渲染的组件都是Container容器下的子组件，在this.props.children处渲染*\/} { routers } \x26lt;\/Route\x26gt; \x26lt;Redirect from=\x27*\x27 to=\x27\/error\/404.",
     "inLanguage" : "en-us",
     "author" : "狐耳",
     "creator" : "狐耳",
@@ -54,10 +54,10 @@
     "accountablePerson" : "狐耳",
     "copyrightHolder" : "狐耳",
     "copyrightYear" : "2019",
-    "datePublished": "2019-08-06 11:56:42 \x2b0800 CST",
-    "dateModified" : "2019-08-06 11:56:42 \x2b0800 CST",
-    "url" : "https:\/\/hueralin.github.io\/2019\/es20162017etc\/",
-    "wordCount" : "126",
+    "datePublished": "2019-08-07 10:49:37 \x2b0800 CST",
+    "dateModified" : "2019-08-07 10:49:37 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/athene\/",
+    "wordCount" : "105",
     "keywords" : [  "狐耳的雪原"]
 }
 </script>
@@ -122,16 +122,16 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">ES2016/2017新特性</h1>
+        <h1 class="post-title" itemprop="name headline">后台管理系统</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
                 <span class="post-time">
-                on <time datetime=2019-08-06 itemprop="datePublished">August 6, 2019</time>
+                on <time datetime=2019-08-07 itemprop="datePublished">August 7, 2019</time>
                 </span>
                 in
                 <i class="iconfont icon-folder"></i>
                 <span class="post-category">
-                        <a href="https://hueralin.github.io/categories/javascript%E6%96%B0%E7%89%B9%E6%80%A7/"> JavaScript新特性 </a>
+                        <a href="https://hueralin.github.io/categories/%E5%AE%9E%E4%B9%A0/"> 实习 </a>
                         
                 </span>
         </div>
@@ -154,65 +154,66 @@
 
           
 
-<h3 id="es2016-es7">ES2016(ES7)</h3>
+<h3 id="这是实习期一个后台管理的项目">这是实习期一个后台管理的项目</h3>
 
-<p><strong>Array.prototype.includes(value): 判断一个元素是否在数组中</strong></p>
+<p>目前正在熟悉该项目，边熟悉，边做一些记录</p>
 
-<pre><code class="language-javascript">let a = [1,2,3,4,5,6]  
-a.includes(4)   // true  
-a.includes(7)   // false  
+<p>先来看一下大体的框架：<br />
+<strong>顶层容器</strong><br />
+在container目录下的index.js文件中，有一个IndexContainer组件，该组件中的render函数是这么写的</p>
 
-// 功能类似于 xxx.indexOf(y) &gt; -1, 但有不同  
-// includes可以检测Nan  (indexO不可以)
-[NaN].includes(NaN) // true
-
-// 不区分 -0 +0 （indexOf也可以）
-[-0].includes(+0)   // true
+<pre><code class="language-javascript">render () {
+    let { permission } = this.props
+    return (
+        &lt;div&gt;
+        &lt;Header params={this.props.params} username={permission.username} /&gt;
+        &lt;div className='main-content'&gt;
+            &lt;SideNav routes={this.props.routes} permissions={permission.permission} /&gt;
+            &lt;div&gt;
+            {this.props.children}
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;
+    )
+}
 </code></pre>
 
-<p><strong>求幂运算</strong></p>
+<p>可以看出该系统采用了非常常见的布局，即‘顶部导航+左侧导航+右侧内容’</p>
 
-<pre><code class="language-javascript">let a = 3
-a ** 2      // 9
-// 相当于 Math.pow(a, 2)
+<p><strong>路由配置</strong><br />
+因为路由比较多，所有路由配置分为两个路由文件：<br />
+<em>外层路由文件</em></p>
+
+<pre><code class="language-javascript">// 这里引入了内层路由文件  
+import routers from './routers'
+module.exports = (
+  &lt;Router history={browserHistory}&gt;
+    &lt;Route path='/' /&gt;
+    &lt;Route path='/xxx' component={xxx} /&gt;
+    &lt;Route path='/xx/xx' component={xx} /&gt;
+    ......
+    &lt;Route path='' component={Container} onEnter={handleEnterSystem}&gt;
+      {/* 嵌套路由，内层路由文件里的Route渲染的组件都是Container容器下的子组件，在this.props.children处渲染*/}
+      { routers }
+    &lt;/Route&gt;
+    &lt;Redirect from='*' to='/error/404.html' /&gt;
+  &lt;/Router&gt;
+)
 </code></pre>
 
-<h3 id="es2017-es8">ES2017(ES8)</h3>
+<p><em>内层路由组件</em></p>
 
-<p><strong>String.prototype.padStart / String.prototype.padEnd（字符串填充）</strong></p>
-
-<pre><code class="language-javascript">功能：返回指定长度的填充后的字符串  
-语法：str.padStart(len [, padStr])  // len 指定长度 padStr 填充字符串  
-let str = 'huer'  
-// 1. 指定长度小于原字符串长度，则返回原字符串    
-str.padStart(2)  // 'huer'
-// 2. 指定长度大于原字符串长度，则返回填充字符串（默认为空格）+原字符串  
-str.padStart(5)  // ' huer'  
-// 3. 原字符串 &lt; 指定长度 &lt; 填充字符串 + 原字符串，则从填充字符串的右侧截取  
-str.padStart(7, 'malin')    // 'malhuer'  
-// 4. 指定长度 &gt; 填充字符串 + 原字符串, 重复填充字符串，使其达到指定长度  
-str.padStart(10, 'a')       // 'aaaaaahuer'  
+<pre><code class="language-javascript">const Router = (
+  &lt;Route path='/xxx'&gt;
+    &lt;IndexRoute component={Page} /&gt;
+    &lt;Route path='yyy/product' component={ProductList} /&gt;
+    &lt;Route path='yyy/product/:id' component={Product} /&gt;
+    &lt;Route path='yyy/users/:id' component={Users} /&gt;
+    ......
+  &lt;/Route&gt;
+)
+module.exports = Router
 </code></pre>
-
-<p><strong>Object.values / Object.entries</strong></p>
-
-<ol>
-<li>Object.values(obj): 返回obj的可遍历属性的 ‘属性值’ 数组<br /></li>
-<li>Object.entries(obj): 返回obj的可遍历属性的 ‘键值对’ 数组<br /></li>
-</ol>
-
-<p><strong>Object.getOwnPropertyDescriptors</strong><br />
-该函数返回对象的属性描述符</p>
-
-<p><strong>函数定义和函数调用的参数列表最后面的尾逗号</strong><br />
-Emmmm，就是说下面这种情况不会报错，有什么作用？？？</p>
-
-<pre><code class="language-javascript">function Func(a,b,) {xxx}
-Func(1,2,)
-</code></pre>
-
-<p><strong>异步函数 async/await</strong><br />
-to be continued&hellip;</p>
 
     </div>
 
@@ -227,7 +228,7 @@ to be continued&hellip;</p>
              
             <p class="copyright-item">
                     <span>Link:</span>
-                    <a href=https://hueralin.github.io/2019/es20162017etc/>https://hueralin.github.io/2019/es20162017etc/</span>
+                    <a href=https://hueralin.github.io/2019/athene/>https://hueralin.github.io/2019/athene/</span>
             </p>
             
              
@@ -248,10 +249,10 @@ to be continued&hellip;</p>
 
     <div class="post-nav">
         
-        <a href="https://hueralin.github.io/2019/react_router/" class="prev" rel="prev" title="React_router配置"><i class="iconfont icon-left"></i>&nbsp;React_router配置</a>
+        <a href="https://hueralin.github.io/2019/es20162017etc/" class="prev" rel="prev" title="ES2016/2017新特性"><i class="iconfont icon-left"></i>&nbsp;ES2016/2017新特性</a>
          
         
-        <a href="https://hueralin.github.io/2019/athene/" class="next" rel="next" title="后台管理系统">后台管理系统&nbsp;<i class="iconfont icon-right"></i></a>
+        <a href="https://hueralin.github.io/2019/array/" class="next" rel="next" title="Array">Array&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

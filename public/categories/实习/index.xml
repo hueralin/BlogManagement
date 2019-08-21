@@ -6,10 +6,27 @@
     <description>Recent content in 实习 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jul 2019 00:07:10 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 07 Aug 2019 10:49:37 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/%E5%AE%9E%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>后台管理系统</title>
+      <link>https://hueralin.github.io/2019/athene/</link>
+      <pubDate>Wed, 07 Aug 2019 10:49:37 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/athene/</guid>
+      <description>这是实习期一个后台管理的项目 目前正在熟悉该项目，边熟悉，边做一些记录
+先来看一下大体的框架：
+顶层容器
+在container目录下的index.js文件中，有一个IndexContainer组件，该组件中的render函数是这么写的
+render () { let { permission } = this.props return ( &amp;lt;div&amp;gt; &amp;lt;Header params={this.props.params} username={permission.username} /&amp;gt; &amp;lt;div className=&#39;main-content&#39;&amp;gt; &amp;lt;SideNav routes={this.props.routes} permissions={permission.permission} /&amp;gt; &amp;lt;div&amp;gt; {this.props.children} &amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; ) }  可以看出该系统采用了非常常见的布局，即‘顶部导航+左侧导航+右侧内容’
+路由配置
+因为路由比较多，所有路由配置分为两个路由文件：
+外层路由文件
+// 这里引入了内层路由文件 import routers from &#39;./routers&#39; module.exports = ( &amp;lt;Router history={browserHistory}&amp;gt; &amp;lt;Route path=&#39;/&#39; /&amp;gt; &amp;lt;Route path=&#39;/xxx&#39; component={xxx} /&amp;gt; &amp;lt;Route path=&#39;/xx/xx&#39; component={xx} /&amp;gt; ...... &amp;lt;Route path=&#39;&#39; component={Container} onEnter={handleEnterSystem}&amp;gt; {/* 嵌套路由，内层路由文件里的Route渲染的组件都是Container容器下的子组件，在this.props.children处渲染*/} { routers } &amp;lt;/Route&amp;gt; &amp;lt;Redirect from=&#39;*&#39; to=&#39;/error/404.</description>
+    </item>
     
     <item>
       <title>实习项目的Header结构解析</title>

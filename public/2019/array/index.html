@@ -9,9 +9,9 @@
   
   
   
-  <link rel="prev" href="https://hueralin.github.io/2019/react_router/" />
-  <link rel="next" href="https://hueralin.github.io/2019/athene/" />
-  <link rel="canonical" href="https://hueralin.github.io/2019/es20162017etc/" />
+  <link rel="prev" href="https://hueralin.github.io/2019/athene/" />
+  <link rel="next" href="https://hueralin.github.io/2019/bind/" />
+  <link rel="canonical" href="https://hueralin.github.io/2019/array/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,10 +22,10 @@
   <title>
        
        
-           ES2016/2017新特性 | 狐耳的雪原
+           Array | 狐耳的雪原
        
   </title>
-  <meta name="title" content="ES2016/2017新特性 | 狐耳的雪原">
+  <meta name="title" content="Array | 狐耳的雪原">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "https:\/\/hueralin.github.io"
     },
     "articleSection" : "posts",
-    "name" : "ES2016\/2017新特性",
-    "headline" : "ES2016\/2017新特性",
-    "description" : "ES2016(ES7) Array.prototype.includes(value): 判断一个元素是否在数组中\nlet a = [1,2,3,4,5,6] a.includes(4) \/\/ true a.includes(7) \/\/ false \/\/ 功能类似于 xxx.indexOf(y) \x26gt; -1, 但有不同 \/\/ includes可以检测Nan (indexO不可以) [NaN].includes(NaN) \/\/ true \/\/ 不区分 -0 \x2b0 （indexOf也可以） [-0].includes(\x2b0) \/\/ true  求幂运算\nlet a = 3 a ** 2 \/\/ 9 \/\/ 相当于 Math.pow(a, 2)  ES2017(ES8) String.prototype.padStart \/ String.prototype.padEnd（字符串填充）\n功能：返回指定长度的填充后的字符串 语法：str.padStart(len [, padStr]) \/\/ len 指定长度 padStr 填充字符串 let str = \x27huer\x27 \/\/ 1. 指定长度小于原字符串长度，则返回原字符串 str.",
+    "name" : "Array",
+    "headline" : "Array",
+    "description" : "Array Emmmm, Array的函数不少，至少我觉的是这样。随着ES的发展，Array多了许多奇奇怪怪的函数。\n虽说奇怪\x26hellip;.但用起来超爽的啊！！！！\n什么？想要查找数组中的某个元素？ Array.find() 拿走不送！\n该函数接受两个参数：callback、thisObj\n在回调函数中return符合查找条件的元素，若查找成功则直接返回该元素的值，否则返回undefined，并且不会改变原素组，简直不要太爽！\n如果想要查找某个元素的索引的话，可以使用 Array.findIndex() 函数，找不到的话返回-1。",
     "inLanguage" : "en-us",
     "author" : "狐耳",
     "creator" : "狐耳",
@@ -54,10 +54,10 @@
     "accountablePerson" : "狐耳",
     "copyrightHolder" : "狐耳",
     "copyrightYear" : "2019",
-    "datePublished": "2019-08-06 11:56:42 \x2b0800 CST",
-    "dateModified" : "2019-08-06 11:56:42 \x2b0800 CST",
-    "url" : "https:\/\/hueralin.github.io\/2019\/es20162017etc\/",
-    "wordCount" : "126",
+    "datePublished": "2019-08-19 15:46:37 \x2b0800 CST",
+    "dateModified" : "2019-08-19 15:46:37 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/array\/",
+    "wordCount" : "12",
     "keywords" : [  "狐耳的雪原"]
 }
 </script>
@@ -122,16 +122,16 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">ES2016/2017新特性</h1>
+        <h1 class="post-title" itemprop="name headline">Array</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
                 <span class="post-time">
-                on <time datetime=2019-08-06 itemprop="datePublished">August 6, 2019</time>
+                on <time datetime=2019-08-19 itemprop="datePublished">August 19, 2019</time>
                 </span>
                 in
                 <i class="iconfont icon-folder"></i>
                 <span class="post-category">
-                        <a href="https://hueralin.github.io/categories/javascript%E6%96%B0%E7%89%B9%E6%80%A7/"> JavaScript新特性 </a>
+                        <a href="https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/"> 随便学学 </a>
                         
                 </span>
         </div>
@@ -154,65 +154,17 @@
 
           
 
-<h3 id="es2016-es7">ES2016(ES7)</h3>
+<h1 id="array">Array</h1>
 
-<p><strong>Array.prototype.includes(value): 判断一个元素是否在数组中</strong></p>
+<p>Emmmm, Array的函数不少，至少我觉的是这样。随着ES的发展，Array多了许多奇奇怪怪的函数。<br />
+虽说奇怪&hellip;.但用起来超爽的啊！！！！</p>
 
-<pre><code class="language-javascript">let a = [1,2,3,4,5,6]  
-a.includes(4)   // true  
-a.includes(7)   // false  
+<h3 id="什么-想要查找数组中的某个元素">什么？想要查找数组中的某个元素？</h3>
 
-// 功能类似于 xxx.indexOf(y) &gt; -1, 但有不同  
-// includes可以检测Nan  (indexO不可以)
-[NaN].includes(NaN) // true
-
-// 不区分 -0 +0 （indexOf也可以）
-[-0].includes(+0)   // true
-</code></pre>
-
-<p><strong>求幂运算</strong></p>
-
-<pre><code class="language-javascript">let a = 3
-a ** 2      // 9
-// 相当于 Math.pow(a, 2)
-</code></pre>
-
-<h3 id="es2017-es8">ES2017(ES8)</h3>
-
-<p><strong>String.prototype.padStart / String.prototype.padEnd（字符串填充）</strong></p>
-
-<pre><code class="language-javascript">功能：返回指定长度的填充后的字符串  
-语法：str.padStart(len [, padStr])  // len 指定长度 padStr 填充字符串  
-let str = 'huer'  
-// 1. 指定长度小于原字符串长度，则返回原字符串    
-str.padStart(2)  // 'huer'
-// 2. 指定长度大于原字符串长度，则返回填充字符串（默认为空格）+原字符串  
-str.padStart(5)  // ' huer'  
-// 3. 原字符串 &lt; 指定长度 &lt; 填充字符串 + 原字符串，则从填充字符串的右侧截取  
-str.padStart(7, 'malin')    // 'malhuer'  
-// 4. 指定长度 &gt; 填充字符串 + 原字符串, 重复填充字符串，使其达到指定长度  
-str.padStart(10, 'a')       // 'aaaaaahuer'  
-</code></pre>
-
-<p><strong>Object.values / Object.entries</strong></p>
-
-<ol>
-<li>Object.values(obj): 返回obj的可遍历属性的 ‘属性值’ 数组<br /></li>
-<li>Object.entries(obj): 返回obj的可遍历属性的 ‘键值对’ 数组<br /></li>
-</ol>
-
-<p><strong>Object.getOwnPropertyDescriptors</strong><br />
-该函数返回对象的属性描述符</p>
-
-<p><strong>函数定义和函数调用的参数列表最后面的尾逗号</strong><br />
-Emmmm，就是说下面这种情况不会报错，有什么作用？？？</p>
-
-<pre><code class="language-javascript">function Func(a,b,) {xxx}
-Func(1,2,)
-</code></pre>
-
-<p><strong>异步函数 async/await</strong><br />
-to be continued&hellip;</p>
+<p><strong>Array.find()</strong> 拿走不送！<br />
+该函数接受两个参数：callback、thisObj<br />
+在回调函数中return符合查找条件的元素，若查找成功则直接返回该元素的值，否则返回undefined，并且不会改变原素组，简直不要太爽！<br />
+如果想要查找某个元素的索引的话，可以使用 Array.findIndex() 函数，找不到的话返回-1。</p>
 
     </div>
 
@@ -227,7 +179,7 @@ to be continued&hellip;</p>
              
             <p class="copyright-item">
                     <span>Link:</span>
-                    <a href=https://hueralin.github.io/2019/es20162017etc/>https://hueralin.github.io/2019/es20162017etc/</span>
+                    <a href=https://hueralin.github.io/2019/array/>https://hueralin.github.io/2019/array/</span>
             </p>
             
              
@@ -248,10 +200,10 @@ to be continued&hellip;</p>
 
     <div class="post-nav">
         
-        <a href="https://hueralin.github.io/2019/react_router/" class="prev" rel="prev" title="React_router配置"><i class="iconfont icon-left"></i>&nbsp;React_router配置</a>
+        <a href="https://hueralin.github.io/2019/athene/" class="prev" rel="prev" title="后台管理系统"><i class="iconfont icon-left"></i>&nbsp;后台管理系统</a>
          
         
-        <a href="https://hueralin.github.io/2019/athene/" class="next" rel="next" title="后台管理系统">后台管理系统&nbsp;<i class="iconfont icon-right"></i></a>
+        <a href="https://hueralin.github.io/2019/bind/" class="next" rel="next" title="React组件中的函数this绑定">React组件中的函数this绑定&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

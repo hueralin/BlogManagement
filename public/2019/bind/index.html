@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/array/" />
+  <link rel="next" href="https://hueralin.github.io/2019/weilei/" />
+  <link rel="canonical" href="https://hueralin.github.io/2019/bind/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           React组件中的函数this绑定 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="React组件中的函数this绑定 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "React组件中的函数this绑定",
+    "headline" : "React组件中的函数this绑定",
+    "description" : "实习项目遇到的问题 关于函数this绑定！ 最近在React项目中遇到了关于函数this绑定的问题，因为在普通函数（诸如:function(){xxx}）中，this的绑定是动态的，在被执行时才会确定。若这些普通函数在自身组件内使用一般不会有太大的问题，然而一旦被当作参数（例如事件处理函数）传递到其他组件时，this就会绑定为其他组件的实例，在获取原实例的状态时就会发生错误。\n箭头函数的this绑定和普通函数不一样，它是静态绑定的，也就是说箭头函数的this绑定是在定义时绑定的，即定义箭头函数时所处的作用域的this。所以说如果React组件中的函数是用箭头函数的形式定义的话，就不用担心this绑定的问题。\n假如你的onClick事件处理函数在被触发时需要传参，如果直接 onClick={this.handleClick(xxx)} 话，onClick得到的就不是函数，而是函数返回的结果，所以应使用 onClick={() =\x26gt; this.handleClick(xxx)} ，即给onClick一个箭头函数作为事件处理函数，那么this就绑定为了当前组件的实例，调用的普通函数也不用做特殊的处理。\n我犯了一个最基础也最致命的问题，在渲染中进行了状态的改变！按理说我不应该会犯这种错误，我犯这种错误的原因就是我将箭头函数和普通函数结合使用（模仿的项目中的老代码）：\nhandleInput(key) { return (e) =\x26gt; { let inputValue = {} inputValue[key] = e.target.value this.setState({ data: Object.assign({}, this.state.data, inputValue) }) } } onChange={this.handleInput(xxx)}  看出和之前 onClick={() =\x26gt; this.handleClick(xxx)} 的不同了么？\n这里是由普通函数将箭头函数return了出来，所以函数渲染时立即执行handleInput，并将执行后的箭头函数传给onChange，顺便完成this绑定，Emmmm，秀啊！可惜当初我没搞懂这个用意，将handleInput彻底改成了普通函数，导致在渲染时执行了this.setState()，浏览器不停的改变状态和渲染，瞬间报错0～20000\x2b，不得不强制杀死浏览器进程\x26hellip;\x26hellip;\n总结React组件中的函数this绑定的几种方法 一、每当作为事件处理函数时，例如：onClick onChange 等，都手动绑定一次\n\/\/ 这种方法的好处是在绑定this的同时能传递参数 onClick={this.handleClick.bind(this, args)} \/\/ 缺点是，每次都得手动调用bind()  二、在构造函数中绑定一次，一劳永逸\n\/\/ 缺点是不能传递参数 this.handleCLick = this.handleClick.bind(this)  三、React组件的函数直接定义成箭头函数\nhandleClick = (args) =\x26gt; {xxxxx} \/\/ 缺点也是不能传递参数   上述三个做法有个矛盾，就是“一次绑定”和“传递参数”不能兼顾",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-08-20 11:04:35 \x2b0800 CST",
+    "dateModified" : "2019-08-20 11:04:35 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/bind\/",
+    "wordCount" : "92",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                &lt;-
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+                ->
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">React组件中的函数this绑定</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-08-20 itemprop="datePublished">August 20, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/react/"> React </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<h2 id="实习项目遇到的问题">实习项目遇到的问题</h2>
+
+<h3 id="关于函数this绑定">关于函数this绑定！</h3>
+
+<p>最近在React项目中遇到了关于函数this绑定的问题，因为在普通函数（诸如:function(){xxx}）中，this的绑定是动态的，在被执行时才会确定。若这些普通函数在自身组件内使用一般不会有太大的问题，然而一旦被当作参数（例如事件处理函数）传递到其他组件时，this就会绑定为其他组件的实例，在获取原实例的状态时就会发生错误。</p>
+
+<p>箭头函数的this绑定和普通函数不一样，它是静态绑定的，也就是说箭头函数的this绑定是在定义时绑定的，即定义箭头函数时所处的作用域的this。所以说如果React组件中的函数是用箭头函数的形式定义的话，就不用担心this绑定的问题。</p>
+
+<p>假如你的onClick事件处理函数在被触发时需要传参，如果直接 <code>onClick={this.handleClick(xxx)}</code> 话，onClick得到的就不是函数，而是函数返回的结果，所以应使用 <code>onClick={() =&gt; this.handleClick(xxx)}</code> ，即给onClick一个箭头函数作为事件处理函数，那么this就绑定为了当前组件的实例，调用的普通函数也不用做特殊的处理。</p>
+
+<p>我犯了一个最基础也最致命的问题，在渲染中进行了状态的改变！按理说我不应该会犯这种错误，我犯这种错误的原因就是我将箭头函数和普通函数结合使用（模仿的项目中的老代码）：</p>
+
+<pre><code class="language-javascript">handleInput(key) {
+  return (e) =&gt; {
+      let inputValue = {}
+      inputValue[key] = e.target.value
+      this.setState({
+      data: Object.assign({}, this.state.data, inputValue)
+      })
+  }
+}
+onChange={this.handleInput(xxx)}
+</code></pre>
+
+<p>看出和之前 <code>onClick={() =&gt; this.handleClick(xxx)}</code> 的不同了么？<br />
+这里是由普通函数将箭头函数return了出来，所以函数渲染时立即执行handleInput，并将执行后的箭头函数传给onChange，顺便完成this绑定，Emmmm，秀啊！可惜当初我没搞懂这个用意，将handleInput彻底改成了普通函数，导致在渲染时执行了this.setState()，浏览器不停的改变状态和渲染，瞬间报错0～20000+，不得不强制杀死浏览器进程&hellip;&hellip;</p>
+
+<h3 id="总结react组件中的函数this绑定的几种方法">总结React组件中的函数this绑定的几种方法</h3>
+
+<p>一、每当作为事件处理函数时，例如：<code>onClick onChange</code> 等，都手动绑定一次</p>
+
+<pre><code class="language-javascript">// 这种方法的好处是在绑定this的同时能传递参数
+onClick={this.handleClick.bind(this, args)}
+// 缺点是，每次都得手动调用bind()
+</code></pre>
+
+<p>二、在构造函数中绑定一次，一劳永逸</p>
+
+<pre><code class="language-javascript">// 缺点是不能传递参数
+this.handleCLick = this.handleClick.bind(this)
+</code></pre>
+
+<p>三、React组件的函数直接定义成箭头函数</p>
+
+<pre><code class="language-javascript">handleClick = (args) =&gt; {xxxxx}
+// 缺点也是不能传递参数
+</code></pre>
+
+<blockquote>
+<p>上述三个做法有个矛盾，就是“一次绑定”和“传递参数”不能兼顾<br />
+对于二、三方法，要实现传递参数，就得使用箭头函数，即<br />
+<code>onClick = {() =&gt; this.handleClick(args)}</code><br />
+既然使用了箭头函数，那么二三方法中的绑定就没有必要了，这虽然是个好方法，但是看书写的代码量和第一种方法又有什么区别呢？</p>
+</blockquote>
+
+<p>四、普通函数返回一个箭头函数</p>
+
+<pre><code class="language-javascript">// 这是在实习期做项目时前辈的一个做法，感觉还不错
+// 这种方法的原理就是在普通函数中返回一个箭头函数，  
+// 在渲染时立即执行该函数，接收箭头函数作为事件处理函数，完成绑定的同时又传递了参数  
+handleClick (args) {
+  return () =&gt; {
+    balabalabala...
+  }
+}
+onClick = {this.handleClick(args)}
+</code></pre>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/bind/>https://hueralin.github.io/2019/bind/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/array/" class="prev" rel="prev" title="Array"><i class="iconfont icon-left"></i>&nbsp;Array</a>
+         
+        
+        <a href="https://hueralin.github.io/2019/weilei/" class="next" rel="next" title="伪类 与 伪元素">伪类 与 伪元素&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        
+        <span itemprop="copyrightYear">2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

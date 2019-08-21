@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>随便学学 on 狐耳的雪原</title>
+    <link>https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/</link>
+    <description>Recent content in 随便学学 on 狐耳的雪原</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 19 Aug 2019 15:46:37 +0800</lastBuildDate>
+    
+	<atom:link href="https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Array</title>
+      <link>https://hueralin.github.io/2019/array/</link>
+      <pubDate>Mon, 19 Aug 2019 15:46:37 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/array/</guid>
+      <description>Array Emmmm, Array的函数不少，至少我觉的是这样。随着ES的发展，Array多了许多奇奇怪怪的函数。
+虽说奇怪&amp;hellip;.但用起来超爽的啊！！！！
+什么？想要查找数组中的某个元素？ Array.find() 拿走不送！
+该函数接受两个参数：callback、thisObj
+在回调函数中return符合查找条件的元素，若查找成功则直接返回该元素的值，否则返回undefined，并且不会改变原素组，简直不要太爽！
+如果想要查找某个元素的索引的话，可以使用 Array.findIndex() 函数，找不到的话返回-1。</description>
+    </item>
+    
+  </channel>
+</rss>

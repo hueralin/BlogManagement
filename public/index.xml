@@ -5,8 +5,265 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Aug 2019 11:56:42 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Aug 2019 15:17:26 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>伪类 与 伪元素</title>
+      <link>https://hueralin.github.io/2019/weilei/</link>
+      <pubDate>Wed, 21 Aug 2019 15:17:26 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/weilei/</guid>
+      <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;“请说一下伪类和伪元素的区别”，之前的面试中遇到过这个问题，当初表示只见过伪类，回答的基本上都是:hover之流，这道题就挂了&amp;hellip;&amp;hellip;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;如今，在实习中遇到了相关的需求，看来是时候深入学习一下了。其实，区分伪类和伪元素并不难，它俩最大的区别就在于应用场景。&lt;/p&gt;
+
+&lt;h3 id=&#34;伪类&#34;&gt;伪类&lt;/h3&gt;
+
+&lt;h4 id=&#34;顾名思义-它相当于一个类-是用来设置样式的-当你需要让一个元素在某种特殊状态下显示特殊的样式时-如-按钮悬浮特效-就该使用伪类&#34;&gt;顾名思义，它相当于一个类，是用来设置样式的；当你需要让一个元素在某种特殊状态下显示特殊的样式时（如：按钮悬浮特效），就该使用伪类。&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;下面我们来实现一下伪类：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;需求：实现消息列表悬浮特效&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;!-- 需求很明确，li元素在悬浮情况下应用样式 --&amp;gt;
+&amp;lt;ul&amp;gt;
+  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;React&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Vue&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Angular&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;jQuery&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Webpack&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;NPM&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;
+li:hover {
+    background: #eee;
+}
+&amp;lt;!-- 再简单不过了，当然也可以设置奇偶行样式不一 --&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其他的伪类：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;:active :empty  :enabled    :first  :first-child    :first-child  
+:first-of-type  :focus  :hover  :visited    :nth-child  :nth-of-type    :link
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;伪元素&#34;&gt;伪元素&lt;/h3&gt;
+
+&lt;h4 id=&#34;顾名思义-它是一个元素-可以是现有的元素-也可以是新增的元素-这些元素往往有自己的特殊位置-如-段落首字母突出样式-往往被作为附加的标记&#34;&gt;顾名思义，它是一个元素，可以是现有的元素，也可以是新增的元素，这些元素往往有自己的特殊位置（如：段落首字母突出样式）往往被作为附加的标记。&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;下面我们来实现一下伪元素&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;需求：表单必填项前面加一个标识（这也是我这次的需求）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;label&amp;gt;页面地址&amp;lt;/label&amp;gt;
+&amp;lt;input type=&#39;text&#39; placeholder=&amp;quot;请输入页面地址&amp;quot;/&amp;gt;
+label::before {
+    content: &#39;*&#39;;
+    color: red;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;效果：&lt;img src=&#34;https://hueralin.github.io/img/posts/xinghao.jpg&#34; alt=&#34;必填项前加星号&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;伪元素并不多：&lt;br /&gt;
+1. ::before&lt;br /&gt;
+2. ::after&lt;br /&gt;
+3. ::first-letter 段落首字母&lt;br /&gt;
+4. ::first-line 段落首行&lt;br /&gt;
+5. ::selection 这个很有意思，代表被用户高亮的部分（例如鼠标选中）&lt;/p&gt;
+
+&lt;h3 id=&#34;before-和-after&#34;&gt;::before 和 ::after&lt;/h3&gt;
+
+&lt;p&gt;这两个伪元素比较特殊，属于扩增原元素一类（我自己瞎起的名字）&lt;br /&gt;
+::before 创建一个伪元素，并作为匹配元素的第一个子元素，::after则相反；这个新增的元素默认为“行内元素”&lt;br /&gt;
+语法参照&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/::before&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;MDN&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;/* CSS3 语法 */
+element::before { 样式 }  
+/* （单冒号）CSS2 过时语法 (仅用来支持 IE8) */
+element:before  { 样式 }  
+/* 在每一个p元素前插入内容 */
+p::before { content: &amp;quot;Hello world!&amp;quot;; } 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;MDN上关于这一节的最后一个例子不错，大家可以尝试一下！&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>React组件中的函数this绑定</title>
+      <link>https://hueralin.github.io/2019/bind/</link>
+      <pubDate>Tue, 20 Aug 2019 11:04:35 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/bind/</guid>
+      <description>
+
+&lt;h2 id=&#34;实习项目遇到的问题&#34;&gt;实习项目遇到的问题&lt;/h2&gt;
+
+&lt;h3 id=&#34;关于函数this绑定&#34;&gt;关于函数this绑定！&lt;/h3&gt;
+
+&lt;p&gt;最近在React项目中遇到了关于函数this绑定的问题，因为在普通函数（诸如:function(){xxx}）中，this的绑定是动态的，在被执行时才会确定。若这些普通函数在自身组件内使用一般不会有太大的问题，然而一旦被当作参数（例如事件处理函数）传递到其他组件时，this就会绑定为其他组件的实例，在获取原实例的状态时就会发生错误。&lt;/p&gt;
+
+&lt;p&gt;箭头函数的this绑定和普通函数不一样，它是静态绑定的，也就是说箭头函数的this绑定是在定义时绑定的，即定义箭头函数时所处的作用域的this。所以说如果React组件中的函数是用箭头函数的形式定义的话，就不用担心this绑定的问题。&lt;/p&gt;
+
+&lt;p&gt;假如你的onClick事件处理函数在被触发时需要传参，如果直接 &lt;code&gt;onClick={this.handleClick(xxx)}&lt;/code&gt; 话，onClick得到的就不是函数，而是函数返回的结果，所以应使用 &lt;code&gt;onClick={() =&amp;gt; this.handleClick(xxx)}&lt;/code&gt; ，即给onClick一个箭头函数作为事件处理函数，那么this就绑定为了当前组件的实例，调用的普通函数也不用做特殊的处理。&lt;/p&gt;
+
+&lt;p&gt;我犯了一个最基础也最致命的问题，在渲染中进行了状态的改变！按理说我不应该会犯这种错误，我犯这种错误的原因就是我将箭头函数和普通函数结合使用（模仿的项目中的老代码）：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;handleInput(key) {
+  return (e) =&amp;gt; {
+      let inputValue = {}
+      inputValue[key] = e.target.value
+      this.setState({
+      data: Object.assign({}, this.state.data, inputValue)
+      })
+  }
+}
+onChange={this.handleInput(xxx)}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;看出和之前 &lt;code&gt;onClick={() =&amp;gt; this.handleClick(xxx)}&lt;/code&gt; 的不同了么？&lt;br /&gt;
+这里是由普通函数将箭头函数return了出来，所以函数渲染时立即执行handleInput，并将执行后的箭头函数传给onChange，顺便完成this绑定，Emmmm，秀啊！可惜当初我没搞懂这个用意，将handleInput彻底改成了普通函数，导致在渲染时执行了this.setState()，浏览器不停的改变状态和渲染，瞬间报错0～20000+，不得不强制杀死浏览器进程&amp;hellip;&amp;hellip;&lt;/p&gt;
+
+&lt;h3 id=&#34;总结react组件中的函数this绑定的几种方法&#34;&gt;总结React组件中的函数this绑定的几种方法&lt;/h3&gt;
+
+&lt;p&gt;一、每当作为事件处理函数时，例如：&lt;code&gt;onClick onChange&lt;/code&gt; 等，都手动绑定一次&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 这种方法的好处是在绑定this的同时能传递参数
+onClick={this.handleClick.bind(this, args)}
+// 缺点是，每次都得手动调用bind()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;二、在构造函数中绑定一次，一劳永逸&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 缺点是不能传递参数
+this.handleCLick = this.handleClick.bind(this)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;三、React组件的函数直接定义成箭头函数&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;handleClick = (args) =&amp;gt; {xxxxx}
+// 缺点也是不能传递参数
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;上述三个做法有个矛盾，就是“一次绑定”和“传递参数”不能兼顾&lt;br /&gt;
+对于二、三方法，要实现传递参数，就得使用箭头函数，即&lt;br /&gt;
+&lt;code&gt;onClick = {() =&amp;gt; this.handleClick(args)}&lt;/code&gt;&lt;br /&gt;
+既然使用了箭头函数，那么二三方法中的绑定就没有必要了，这虽然是个好方法，但是看书写的代码量和第一种方法又有什么区别呢？&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;四、普通函数返回一个箭头函数&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 这是在实习期做项目时前辈的一个做法，感觉还不错
+// 这种方法的原理就是在普通函数中返回一个箭头函数，  
+// 在渲染时立即执行该函数，接收箭头函数作为事件处理函数，完成绑定的同时又传递了参数  
+handleClick (args) {
+  return () =&amp;gt; {
+    balabalabala...
+  }
+}
+onClick = {this.handleClick(args)}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Array</title>
+      <link>https://hueralin.github.io/2019/array/</link>
+      <pubDate>Mon, 19 Aug 2019 15:46:37 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/array/</guid>
+      <description>
+
+&lt;h1 id=&#34;array&#34;&gt;Array&lt;/h1&gt;
+
+&lt;p&gt;Emmmm, Array的函数不少，至少我觉的是这样。随着ES的发展，Array多了许多奇奇怪怪的函数。&lt;br /&gt;
+虽说奇怪&amp;hellip;.但用起来超爽的啊！！！！&lt;/p&gt;
+
+&lt;h3 id=&#34;什么-想要查找数组中的某个元素&#34;&gt;什么？想要查找数组中的某个元素？&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Array.find()&lt;/strong&gt; 拿走不送！&lt;br /&gt;
+该函数接受两个参数：callback、thisObj&lt;br /&gt;
+在回调函数中return符合查找条件的元素，若查找成功则直接返回该元素的值，否则返回undefined，并且不会改变原素组，简直不要太爽！&lt;br /&gt;
+如果想要查找某个元素的索引的话，可以使用 Array.findIndex() 函数，找不到的话返回-1。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>后台管理系统</title>
+      <link>https://hueralin.github.io/2019/athene/</link>
+      <pubDate>Wed, 07 Aug 2019 10:49:37 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/athene/</guid>
+      <description>
+
+&lt;h3 id=&#34;这是实习期一个后台管理的项目&#34;&gt;这是实习期一个后台管理的项目&lt;/h3&gt;
+
+&lt;p&gt;目前正在熟悉该项目，边熟悉，边做一些记录&lt;/p&gt;
+
+&lt;p&gt;先来看一下大体的框架：&lt;br /&gt;
+&lt;strong&gt;顶层容器&lt;/strong&gt;&lt;br /&gt;
+在container目录下的index.js文件中，有一个IndexContainer组件，该组件中的render函数是这么写的&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;render () {
+    let { permission } = this.props
+    return (
+        &amp;lt;div&amp;gt;
+        &amp;lt;Header params={this.props.params} username={permission.username} /&amp;gt;
+        &amp;lt;div className=&#39;main-content&#39;&amp;gt;
+            &amp;lt;SideNav routes={this.props.routes} permissions={permission.permission} /&amp;gt;
+            &amp;lt;div&amp;gt;
+            {this.props.children}
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+    )
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以看出该系统采用了非常常见的布局，即‘顶部导航+左侧导航+右侧内容’&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;路由配置&lt;/strong&gt;&lt;br /&gt;
+因为路由比较多，所有路由配置分为两个路由文件：&lt;br /&gt;
+&lt;em&gt;外层路由文件&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 这里引入了内层路由文件  
+import routers from &#39;./routers&#39;
+module.exports = (
+  &amp;lt;Router history={browserHistory}&amp;gt;
+    &amp;lt;Route path=&#39;/&#39; /&amp;gt;
+    &amp;lt;Route path=&#39;/xxx&#39; component={xxx} /&amp;gt;
+    &amp;lt;Route path=&#39;/xx/xx&#39; component={xx} /&amp;gt;
+    ......
+    &amp;lt;Route path=&#39;&#39; component={Container} onEnter={handleEnterSystem}&amp;gt;
+      {/* 嵌套路由，内层路由文件里的Route渲染的组件都是Container容器下的子组件，在this.props.children处渲染*/}
+      { routers }
+    &amp;lt;/Route&amp;gt;
+    &amp;lt;Redirect from=&#39;*&#39; to=&#39;/error/404.html&#39; /&amp;gt;
+  &amp;lt;/Router&amp;gt;
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;内层路由组件&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;const Router = (
+  &amp;lt;Route path=&#39;/xxx&#39;&amp;gt;
+    &amp;lt;IndexRoute component={Page} /&amp;gt;
+    &amp;lt;Route path=&#39;yyy/product&#39; component={ProductList} /&amp;gt;
+    &amp;lt;Route path=&#39;yyy/product/:id&#39; component={Product} /&amp;gt;
+    &amp;lt;Route path=&#39;yyy/users/:id&#39; component={Users} /&amp;gt;
+    ......
+  &amp;lt;/Route&amp;gt;
+)
+module.exports = Router
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>ES2016/2017新特性</title>
@@ -584,122 +841,6 @@ userInfo是用户信息，changeNavState是用来更改侧边导航状态的函�
 5. 查看远程分支：&lt;code&gt;git branch -r&lt;/code&gt;&lt;br /&gt;
 6. 查看所有分支：&lt;code&gt;git branch -a&lt;/code&gt;&lt;br /&gt;
 7. 合并分支：&lt;code&gt;git merge B&lt;/code&gt; 要想将B分支合并到A分支，首先要切换回A分支，在执行merge命令&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Zhike</title>
-      <link>https://hueralin.github.io/2019/zhike/</link>
-      <pubDate>Fri, 26 Jul 2019 15:48:33 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/zhike/</guid>
-      <description>&lt;p&gt;线上分支：production&lt;br /&gt;
-测试分支：master（www.dev.xxxxxx）&lt;br /&gt;
-迭代分支：release-3.xxx&lt;/p&gt;
-
-&lt;p&gt;在一个迭代开始后，各种开发新特性，修复BUG，当这些工作做完时，需要将所有的改动都合并到release分支上，&lt;br /&gt;
-作为一次迭代，再合并到master分支（dev）进行测试，测试没问题后再合并到production分支上，发布（上线）。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Git pull 的使用</title>
-      <link>https://hueralin.github.io/2019/gitpull/</link>
-      <pubDate>Tue, 23 Jul 2019 14:37:19 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/gitpull/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;语法：git pull &amp;lt;选项&amp;gt; &amp;lt;远程主机名&amp;gt; &amp;lt;远程分支名&amp;gt;:&amp;lt;本地分支名&amp;gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;注意：和git push的语法顺序稍有不同&lt;br /&gt;
-git push 的语法为：&lt;code&gt;git pull &amp;lt;远程主机名&amp;gt; &amp;lt;本地分支名&amp;gt;:&amp;lt;远程分支名&amp;gt;&lt;/code&gt;&lt;br /&gt;
-git pull 意为从远程分支的最新版本拉取下来并于本地分支合并&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;git pull origin master:dev&lt;/code&gt; 将origin的master分支拉取并合并到本地的dev分支&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;git pull origin master&lt;/code&gt;  省略了本地分支名，即拉取并合并到本地分支&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;git pull origin&lt;/code&gt;  若有 某远程分支与当前分支有追踪关系，则远程分支名也可以省略&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;git pull&lt;/code&gt; 若只有一个远程主机，且只有一个远程分支与当前分支有追踪关系，则可以直接git pull&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;git pull相当于git fetch和git merge的简写&lt;br /&gt;
-比如：&lt;code&gt;git pull origin dev&lt;/code&gt; 相当于 &lt;code&gt;git fetch origin dev&lt;/code&gt; + &lt;code&gt;git merge origin/dev&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;未完待续&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Fork工作流</title>
-      <link>https://hueralin.github.io/2019/fork/</link>
-      <pubDate>Tue, 23 Jul 2019 10:34:46 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/fork/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;Fork工作流  实现协同开发&lt;/strong&gt;&lt;br /&gt;
-作为实习新人，在参与公司项目的开发时被要求使用Fork工作流，Fork工作流实际上就是从GitHub上fork一个原仓库，并与原仓库代码保持同步的一种工作方式。&lt;br /&gt;
-Fork工作流不再是只有一个中央代码库，而是给予每个人一个远程仓库（origin），外加一个唯一的中央仓库（upstream，或称为官方仓库）。点击Fork时就会生成一个自己的远程仓库，每次开发者提交时都会先将自己的贡献提交到origin，然后发起一个Pull Request请求给中央仓库，中央仓库的管理者会决定是否将你的代码提交到中央仓库，其他人都没这个权限。这使得管理者可以接受任何人的提交，而不需要给它们中央仓库的权限。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;具体流程&lt;/strong&gt;&lt;br /&gt;
-1. 从原仓库fork到自己的origin&lt;br /&gt;
-2. &lt;code&gt;git clone xxxxxx&lt;/code&gt; 将origin克隆到本地&lt;br /&gt;
-3. &lt;code&gt;git remote add upstream xxxxx&lt;/code&gt;  指向上游仓库，即原仓库&lt;br /&gt;
-4. &lt;code&gt;git checkout -b feature-xx origin/dev&lt;/code&gt; 从远程分支检出本地分支进行开发&lt;br /&gt;
-5. 开发、修改。。。。提交。。。&lt;br /&gt;
-6. &lt;code&gt;git push origin feature-xx&lt;/code&gt; 将本地feature分支push到origin&lt;br /&gt;
-7. 发起Pull Request请求管理员合并&lt;br /&gt;
-8. 上述合并可能会导致冲突，因为本地仓库可能比较旧了，需要更新&lt;br /&gt;
-9. &lt;code&gt;git checkout dev&lt;/code&gt; 切回dev分支&lt;br /&gt;
-10. &lt;code&gt;git pull upstream dev&lt;/code&gt; 从原仓库拉取dev分支的最新版本,更新本地的dev分支&lt;br /&gt;
-11. &lt;code&gt;git checkout -b feature-merge-dev dev&lt;/code&gt; 从更新后的本地dev检出合并分支，并切换为该分支&lt;br /&gt;
-12. &lt;code&gt;git merge feature-xx&lt;/code&gt; 合并你的修改，即feature-xx分支上的内容&lt;br /&gt;
-13. &lt;code&gt;git branch -m feature-merge-dev feature-xx&lt;/code&gt; 将合并分支改名为feature-xx 覆盖原分支&lt;br /&gt;
-14. &lt;code&gt;git push origin feature-xx&lt;/code&gt; push后再Pull Request就不会发生冲突了&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Git push 的使用</title>
-      <link>https://hueralin.github.io/2019/gitpush/</link>
-      <pubDate>Mon, 22 Jul 2019 14:32:37 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/gitpush/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;语法：git push &amp;lt;远程主机名&amp;gt; &amp;lt;本地分支名&amp;gt; ：&amp;lt;远程分支名&amp;gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;git push origin master&lt;/strong&gt;&lt;br /&gt;
-最常用的一个写法，忽略了远程分支名，将本地master分支推送到origin中与之有追踪关系的对应分支（通常同名），若没有则创建一个对应的远程分支。&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;git push origin :master&lt;/strong&gt;&lt;br /&gt;
-忽略了本地分支名，意味着要推送一个本地的空分支到指定远程分支，即删除指定的远程分支，相当于&lt;code&gt;git push origin --delete master&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;git push origin&lt;/strong&gt;&lt;br /&gt;
-如果当前分支和远程分支存在对应关系，则两个分支名都可省略掉，直接推送当前分支到对应的远程分支。&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;git push&lt;/strong&gt;&lt;br /&gt;
-如果只有一个远程主机，且只有一个与当前分支对应的远程分支，那么就可以全都省略，直接git push。&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;git push -u origin master&lt;/strong&gt;&lt;br /&gt;
-如果对应多个远程主机，-u 则指定一个默认主机，以后就可以直接使用&lt;code&gt;git push&lt;/code&gt;推送当前分支到远程对应分支。&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;git push &amp;ndash;all origin&lt;/strong&gt;&lt;br /&gt;
-不管是否存在对应的远程分支，将本地的所有分支全部推上去。&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;git push &amp;ndash;force origin&lt;/strong&gt;&lt;br /&gt;
-一般情况下本地仓库比远程仓库旧的话会要求你先&lt;code&gt;git pull&lt;/code&gt;进行更新，而 &amp;ndash;force 表明不要更新，直接推上去。&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;git push origin &amp;ndash;tags&lt;/strong&gt;&lt;br /&gt;
-不推送分支，只推送标签。&lt;br /&gt;
-&amp;mdash;&lt;br /&gt;
-&lt;strong&gt;关于追踪关系&lt;/strong&gt;&lt;br /&gt;
-追踪即本地分支跟进远程分支的变化，用于push、pull、merge等&amp;hellip;&lt;br /&gt;
-&lt;em&gt;追踪远程分支&lt;/em&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;git clone&lt;/code&gt; 一般克隆下来的项目将自动创建master分支，并且自动关联到远程的master分支上&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;git branch -u 远程主机/远程分支名 本地分支名&lt;/code&gt; 设置本地分支跟踪远程分支&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;git checkout -b 本地分支名 远程主机/远程分支名&lt;/code&gt; 从远程分支中签出本地分支&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;git branch -vv&lt;/code&gt; 查看本地分支和远程分支的跟踪关系&lt;/li&gt;
-&lt;/ol&gt;
 </description>
     </item>
     

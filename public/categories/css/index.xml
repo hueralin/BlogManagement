@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CSS on 狐耳的雪原</title>
+    <link>https://hueralin.github.io/categories/css/</link>
+    <description>Recent content in CSS on 狐耳的雪原</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 21 Aug 2019 15:17:26 +0800</lastBuildDate>
+    
+	<atom:link href="https://hueralin.github.io/categories/css/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>伪类 与 伪元素</title>
+      <link>https://hueralin.github.io/2019/weilei/</link>
+      <pubDate>Wed, 21 Aug 2019 15:17:26 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/weilei/</guid>
+      <description>“请说一下伪类和伪元素的区别”，之前的面试中遇到过这个问题，当初表示只见过伪类，回答的基本上都是:hover之流，这道题就挂了&amp;hellip;&amp;hellip;
+ 如今，在实习中遇到了相关的需求，看来是时候深入学习一下了。其实，区分伪类和伪元素并不难，它俩最大的区别就在于应用场景。
+伪类 顾名思义，它相当于一个类，是用来设置样式的；当你需要让一个元素在某种特殊状态下显示特殊的样式时（如：按钮悬浮特效），就该使用伪类。 下面我们来实现一下伪类：
+需求：实现消息列表悬浮特效
+&amp;lt;!-- 需求很明确，li元素在悬浮情况下应用样式 --&amp;gt; &amp;lt;ul&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;React&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Vue&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Angular&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;jQuery&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Webpack&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;NPM&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; li:hover { background: #eee; } &amp;lt;!-- 再简单不过了，当然也可以设置奇偶行样式不一 --&amp;gt;  其他的伪类：
+:active :empty :enabled :first :first-child :first-child :first-of-type :focus :hover :visited :nth-child :nth-of-type :link  伪元素 顾名思义，它是一个元素，可以是现有的元素，也可以是新增的元素，这些元素往往有自己的特殊位置（如：段落首字母突出样式）往往被作为附加的标记。 下面我们来实现一下伪元素
+需求：表单必填项前面加一个标识（这也是我这次的需求）
+&amp;lt;label&amp;gt;页面地址&amp;lt;/label&amp;gt; &amp;lt;input type=&#39;text&#39; placeholder=&amp;quot;请输入页面地址&amp;quot;/&amp;gt; label::before { content: &#39;*&#39;; color: red; }  效果：伪元素并不多：
+1. ::before
+2. ::after</description>
+    </item>
+    
+  </channel>
+</rss>

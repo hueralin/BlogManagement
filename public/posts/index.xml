@@ -6,10 +6,77 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Aug 2019 11:56:42 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Aug 2019 15:17:26 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>伪类 与 伪元素</title>
+      <link>https://hueralin.github.io/2019/weilei/</link>
+      <pubDate>Wed, 21 Aug 2019 15:17:26 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/weilei/</guid>
+      <description>“请说一下伪类和伪元素的区别”，之前的面试中遇到过这个问题，当初表示只见过伪类，回答的基本上都是:hover之流，这道题就挂了&amp;hellip;&amp;hellip;
+ 如今，在实习中遇到了相关的需求，看来是时候深入学习一下了。其实，区分伪类和伪元素并不难，它俩最大的区别就在于应用场景。
+伪类 顾名思义，它相当于一个类，是用来设置样式的；当你需要让一个元素在某种特殊状态下显示特殊的样式时（如：按钮悬浮特效），就该使用伪类。 下面我们来实现一下伪类：
+需求：实现消息列表悬浮特效
+&amp;lt;!-- 需求很明确，li元素在悬浮情况下应用样式 --&amp;gt; &amp;lt;ul&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;React&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Vue&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Angular&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;jQuery&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Webpack&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;NPM&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; li:hover { background: #eee; } &amp;lt;!-- 再简单不过了，当然也可以设置奇偶行样式不一 --&amp;gt;  其他的伪类：
+:active :empty :enabled :first :first-child :first-child :first-of-type :focus :hover :visited :nth-child :nth-of-type :link  伪元素 顾名思义，它是一个元素，可以是现有的元素，也可以是新增的元素，这些元素往往有自己的特殊位置（如：段落首字母突出样式）往往被作为附加的标记。 下面我们来实现一下伪元素
+需求：表单必填项前面加一个标识（这也是我这次的需求）
+&amp;lt;label&amp;gt;页面地址&amp;lt;/label&amp;gt; &amp;lt;input type=&#39;text&#39; placeholder=&amp;quot;请输入页面地址&amp;quot;/&amp;gt; label::before { content: &#39;*&#39;; color: red; }  效果：伪元素并不多：
+1. ::before
+2. ::after</description>
+    </item>
+    
+    <item>
+      <title>React组件中的函数this绑定</title>
+      <link>https://hueralin.github.io/2019/bind/</link>
+      <pubDate>Tue, 20 Aug 2019 11:04:35 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/bind/</guid>
+      <description>实习项目遇到的问题 关于函数this绑定！ 最近在React项目中遇到了关于函数this绑定的问题，因为在普通函数（诸如:function(){xxx}）中，this的绑定是动态的，在被执行时才会确定。若这些普通函数在自身组件内使用一般不会有太大的问题，然而一旦被当作参数（例如事件处理函数）传递到其他组件时，this就会绑定为其他组件的实例，在获取原实例的状态时就会发生错误。
+箭头函数的this绑定和普通函数不一样，它是静态绑定的，也就是说箭头函数的this绑定是在定义时绑定的，即定义箭头函数时所处的作用域的this。所以说如果React组件中的函数是用箭头函数的形式定义的话，就不用担心this绑定的问题。
+假如你的onClick事件处理函数在被触发时需要传参，如果直接 onClick={this.handleClick(xxx)} 话，onClick得到的就不是函数，而是函数返回的结果，所以应使用 onClick={() =&amp;gt; this.handleClick(xxx)} ，即给onClick一个箭头函数作为事件处理函数，那么this就绑定为了当前组件的实例，调用的普通函数也不用做特殊的处理。
+我犯了一个最基础也最致命的问题，在渲染中进行了状态的改变！按理说我不应该会犯这种错误，我犯这种错误的原因就是我将箭头函数和普通函数结合使用（模仿的项目中的老代码）：
+handleInput(key) { return (e) =&amp;gt; { let inputValue = {} inputValue[key] = e.target.value this.setState({ data: Object.assign({}, this.state.data, inputValue) }) } } onChange={this.handleInput(xxx)}  看出和之前 onClick={() =&amp;gt; this.handleClick(xxx)} 的不同了么？
+这里是由普通函数将箭头函数return了出来，所以函数渲染时立即执行handleInput，并将执行后的箭头函数传给onChange，顺便完成this绑定，Emmmm，秀啊！可惜当初我没搞懂这个用意，将handleInput彻底改成了普通函数，导致在渲染时执行了this.setState()，浏览器不停的改变状态和渲染，瞬间报错0～20000+，不得不强制杀死浏览器进程&amp;hellip;&amp;hellip;
+总结React组件中的函数this绑定的几种方法 一、每当作为事件处理函数时，例如：onClick onChange 等，都手动绑定一次
+// 这种方法的好处是在绑定this的同时能传递参数 onClick={this.handleClick.bind(this, args)} // 缺点是，每次都得手动调用bind()  二、在构造函数中绑定一次，一劳永逸
+// 缺点是不能传递参数 this.handleCLick = this.handleClick.bind(this)  三、React组件的函数直接定义成箭头函数
+handleClick = (args) =&amp;gt; {xxxxx} // 缺点也是不能传递参数   上述三个做法有个矛盾，就是“一次绑定”和“传递参数”不能兼顾</description>
+    </item>
+    
+    <item>
+      <title>Array</title>
+      <link>https://hueralin.github.io/2019/array/</link>
+      <pubDate>Mon, 19 Aug 2019 15:46:37 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/array/</guid>
+      <description>Array Emmmm, Array的函数不少，至少我觉的是这样。随着ES的发展，Array多了许多奇奇怪怪的函数。
+虽说奇怪&amp;hellip;.但用起来超爽的啊！！！！
+什么？想要查找数组中的某个元素？ Array.find() 拿走不送！
+该函数接受两个参数：callback、thisObj
+在回调函数中return符合查找条件的元素，若查找成功则直接返回该元素的值，否则返回undefined，并且不会改变原素组，简直不要太爽！
+如果想要查找某个元素的索引的话，可以使用 Array.findIndex() 函数，找不到的话返回-1。</description>
+    </item>
+    
+    <item>
+      <title>后台管理系统</title>
+      <link>https://hueralin.github.io/2019/athene/</link>
+      <pubDate>Wed, 07 Aug 2019 10:49:37 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/athene/</guid>
+      <description>这是实习期一个后台管理的项目 目前正在熟悉该项目，边熟悉，边做一些记录
+先来看一下大体的框架：
+顶层容器
+在container目录下的index.js文件中，有一个IndexContainer组件，该组件中的render函数是这么写的
+render () { let { permission } = this.props return ( &amp;lt;div&amp;gt; &amp;lt;Header params={this.props.params} username={permission.username} /&amp;gt; &amp;lt;div className=&#39;main-content&#39;&amp;gt; &amp;lt;SideNav routes={this.props.routes} permissions={permission.permission} /&amp;gt; &amp;lt;div&amp;gt; {this.props.children} &amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; ) }  可以看出该系统采用了非常常见的布局，即‘顶部导航+左侧导航+右侧内容’
+路由配置
+因为路由比较多，所有路由配置分为两个路由文件：
+外层路由文件
+// 这里引入了内层路由文件 import routers from &#39;./routers&#39; module.exports = ( &amp;lt;Router history={browserHistory}&amp;gt; &amp;lt;Route path=&#39;/&#39; /&amp;gt; &amp;lt;Route path=&#39;/xxx&#39; component={xxx} /&amp;gt; &amp;lt;Route path=&#39;/xx/xx&#39; component={xx} /&amp;gt; ...... &amp;lt;Route path=&#39;&#39; component={Container} onEnter={handleEnterSystem}&amp;gt; {/* 嵌套路由，内层路由文件里的Route渲染的组件都是Container容器下的子组件，在this.props.children处渲染*/} { routers } &amp;lt;/Route&amp;gt; &amp;lt;Redirect from=&#39;*&#39; to=&#39;/error/404.</description>
+    </item>
     
     <item>
       <title>ES2016/2017新特性</title>
