@@ -30,47 +30,6 @@ git stash 应用场景 git stash 的作用是将当前为提交的修改存储�
     </item>
     
     <item>
-      <title>前端面试题（一）</title>
-      <link>https://hueralin.github.io/2019/xiti/</link>
-      <pubDate>Thu, 22 Aug 2019 16:06:11 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/xiti/</guid>
-      <description>请填充代码，使mySort()能使传入的参数按照从小到大的顺序显示出来。 function mySort() { var tags = new Array();//使用数组作为参数存储容器 请补充你的代码 return tags;//返回已经排序的数组 } var result = mySort(50,11,16,32,24,99,57,100);/传入参数个数不确定 console.info(result);//显示结果  </description>
-    </item>
-    
-    <item>
-      <title>技术分享会</title>
-      <link>https://hueralin.github.io/2019/atheneandzhike/</link>
-      <pubDate>Wed, 21 Aug 2019 18:08:27 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/atheneandzhike/</guid>
-      <description>智课网 Athene
-  （题库、订单、smart等服务）
-1. &amp;mdash;&amp;gt; API &amp;mdash;&amp;gt; 智课网 &amp;lt;&amp;ndash;读取&amp;ndash;&amp;gt; DB
-2. &amp;mdash;&amp;gt; 管理 &amp;mdash;&amp;gt; Athene &amp;lt;&amp;ndash;配置、写入&amp;ndash;&amp;gt; DB
-3. DB（Athene &amp;amp; beikao）
-智课网 智课展示资讯、商品、练习等，对其他服务提供接口
- 资讯
-archetype
-1. id(当前类目ID), reid（上一级类目ID）, topid（顶层类目ID）
-广告
-advertisement
-1. position_id（一级类目）
-2. type_id (二级类目)
-3. PC or WP
-4. archive_id
-订单
-1. type：1（付款成功）2（发起退款）3（取消订单）4（等待付款）
-退款
- Athene 负责智课网所有项目的配置，不对外部服务提供任何接口
-项目1 [athene-frontend(React+antd)]
-项目2 [admin-backend(express+node)]
-数据库 [DB(athene &amp;amp; beikao)]
-刷新页面，看getSession请求，里面包含用户的权限
-start - 获取权限 - 展示菜单 - 浏览页面 - 编辑、提交数据 - 检验登录、权限 - 数据入库or拒绝</description>
-    </item>
-    
-    <item>
       <title>Mock 前端假数据</title>
       <link>https://hueralin.github.io/2019/mock/</link>
       <pubDate>Wed, 21 Aug 2019 16:09:41 +0800</pubDate>
