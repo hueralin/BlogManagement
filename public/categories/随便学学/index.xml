@@ -6,10 +6,21 @@
     <description>Recent content in 随便学学 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Aug 2019 15:46:37 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Aug 2019 16:09:41 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mock 前端假数据</title>
+      <link>https://hueralin.github.io/2019/mock/</link>
+      <pubDate>Wed, 21 Aug 2019 16:09:41 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/mock/</guid>
+      <description>为什么需要前端做假数据？Emmmm，不用我说了吧～
+ 官方文档看这里MockJs！
+数据模版之类的语法去看官方文档，我这里只简单介绍一下我的使用情况。</description>
+    </item>
     
     <item>
       <title>Array</title>

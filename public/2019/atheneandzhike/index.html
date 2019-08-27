@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/mock/" />
+  <link rel="next" href="https://hueralin.github.io/2019/xiti/" />
+  <link rel="canonical" href="https://hueralin.github.io/2019/atheneandzhike/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           技术分享会 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="技术分享会 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "技术分享会",
+    "headline" : "技术分享会",
+    "description" : "智课网 Athene\n  （题库、订单、smart等服务）\n1. \x26mdash;\x26gt; API \x26mdash;\x26gt; 智课网 \x26lt;\x26ndash;读取\x26ndash;\x26gt; DB\n2. \x26mdash;\x26gt; 管理 \x26mdash;\x26gt; Athene \x26lt;\x26ndash;配置、写入\x26ndash;\x26gt; DB\n3. DB（Athene \x26amp; beikao）\n智课网 智课展示资讯、商品、练习等，对其他服务提供接口\n 资讯\narchetype\n1. id(当前类目ID), reid（上一级类目ID）, topid（顶层类目ID）\n广告\nadvertisement\n1. position_id（一级类目）\n2. type_id (二级类目)\n3. PC or WP\n4. archive_id\n订单\n1. type：1（付款成功）2（发起退款）3（取消订单）4（等待付款）\n退款\n Athene 负责智课网所有项目的配置，不对外部服务提供任何接口\n项目1 [athene-frontend(React\x2bantd)]\n项目2 [admin-backend(express\x2bnode)]\n数据库 [DB(athene \x26amp; beikao)]\n刷新页面，看getSession请求，里面包含用户的权限\nstart - 获取权限 - 展示菜单 - 浏览页面 - 编辑、提交数据 - 检验登录、权限 - 数据入库or拒绝",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-08-21 18:08:27 \x2b0800 CST",
+    "dateModified" : "2019-08-21 18:08:27 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/atheneandzhike\/",
+    "wordCount" : "70",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                &lt;-
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+                ->
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">技术分享会</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-08-21 itemprop="datePublished">August 21, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/%E5%AE%9E%E4%B9%A0/"> 实习 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<ol>
+<li>智课网</li>
+<li>Athene<br /></li>
+</ol>
+
+<p>（题库、订单、smart等服务）<br />
+1. &mdash;&gt; API &mdash;&gt; 智课网  &lt;&ndash;读取&ndash;&gt; DB<br />
+2. &mdash;&gt; 管理 &mdash;&gt; Athene  &lt;&ndash;配置、写入&ndash;&gt; DB<br />
+3. DB（Athene &amp; beikao）</p>
+
+<h3 id="智课网">智课网</h3>
+
+<p>智课展示资讯、商品、练习等，对其他服务提供接口</p>
+
+<blockquote>
+<p><strong>资讯</strong><br />
+archetype<br />
+1. id(当前类目ID), reid（上一级类目ID）, topid（顶层类目ID）</p>
+
+<p><strong>广告</strong><br />
+advertisement<br />
+1. position_id（一级类目）<br />
+2. type_id (二级类目)<br />
+3. PC or WP<br />
+4. archive_id</p>
+
+<p><strong>订单</strong><br />
+1. type：1（付款成功）2（发起退款）3（取消订单）4（等待付款）</p>
+
+<p><strong>退款</strong></p>
+</blockquote>
+
+<h3 id="athene">Athene</h3>
+
+<p>负责智课网所有项目的配置，不对外部服务提供任何接口<br />
+项目1 [athene-frontend(React+antd)]<br />
+项目2 [admin-backend(express+node)]<br />
+数据库 [DB(athene &amp; beikao)]</p>
+
+<p>刷新页面，看getSession请求，里面包含用户的权限</p>
+
+<p>start - 获取权限 - 展示菜单 - 浏览页面 - 编辑、提交数据 - 检验登录、权限 - 数据入库or拒绝</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/atheneandzhike/>https://hueralin.github.io/2019/atheneandzhike/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/mock/" class="prev" rel="prev" title="Mock 前端假数据"><i class="iconfont icon-left"></i>&nbsp;Mock 前端假数据</a>
+         
+        
+        <a href="https://hueralin.github.io/2019/xiti/" class="next" rel="next" title="前端面试题（一）">前端面试题（一）&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        
+        <span itemprop="copyrightYear">2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

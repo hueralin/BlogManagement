@@ -6,10 +6,28 @@
     <description>Recent content in Git on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jul 2019 17:41:51 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 26 Aug 2019 20:09:47 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/git/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Git Stash</title>
+      <link>https://hueralin.github.io/2019/gitstash/</link>
+      <pubDate>Mon, 26 Aug 2019 20:09:47 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitstash/</guid>
+      <description>Emmmm 最近在实习的项目中经常使用 git stash 这个命令，现在来做一些总结。
+你可能会遇到这样一种情况，就是当你在进行开发或修改某个BUG的时候突然来了一个新任务（新任务与当前的开发项目属于同一个项目），时间紧迫，你需要立即切换分支去执行，可是你当前的任务还没有做完，切分支的话会被拒绝，怎么办呢？有种方法是先add再commit，确实可以，但是我感觉这么做的话会添加一个毫无意义的提交记录，虽然以后可以修改，但是太过麻烦。那么，就来试试 git stash 吧。
+git stash 官方文档第一版
+git stash 官方文档第二版
+git stash 应用场景 git stash 的作用是将当前为提交的修改存储起来，让仓库还原到最后一次提交的状态。
+使用场景：
+1. 工作未完成，需要切换分支，但不想提交（常用）。
+2. 开发一个feature分支（未完成），此时想要合并一下主分支，看看做了哪些修改，提前解决冲突。
+现在来看看场景二的解决方法：
+// 假设我在feature分支上开发，突然得知主分支更新了，于是我想要将主分支合并到当前分支，看看有没有冲突，有的话直接解决。 git checkout master // 报错！会提示当前某些修改未存储提交 // 当然，我是不想提交的，毕竟还没做完...于是， git stash save &amp;quot;先搁这儿，我去瞅瞅主分支，拉下代码～&amp;quot; // save 类似于 commit 的 -m 选项，即注释信息 git stash list // 列出来所有的存储信息，看看有木有～ git checkout master // 切换到主分支 git pull origin master // 将远程主机的master分支拉下来 git checkout feature // 切回feature分支 git merge master // 将master分支合并到feature（可能会有冲突） git stash pop // 将先前feature分支做的修改释放出来（可能会有冲突） // 有冲突合并即可，合并完，feature拥有了master分支最新的修改以及当前的特性开发。  git stash git stash 实际上是一个栈结构，它可以获取工作目录中的中间状态（包括对已追踪文件的修改和暂存的变更，使用 git status 查看），将它保存在一个栈结构中，方便以后使用。（注意！未被追踪的文件不在存储的范围内！）</description>
+    </item>
     
     <item>
       <title>Git Reset</title>

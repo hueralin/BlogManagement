@@ -5,8 +5,167 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Aug 2019 15:17:26 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 26 Aug 2019 20:09:47 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Git Stash</title>
+      <link>https://hueralin.github.io/2019/gitstash/</link>
+      <pubDate>Mon, 26 Aug 2019 20:09:47 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitstash/</guid>
+      <description>
+
+&lt;h3 id=&#34;emmmm&#34;&gt;Emmmm&lt;/h3&gt;
+
+&lt;p&gt;最近在实习的项目中经常使用 git stash 这个命令，现在来做一些总结。&lt;/p&gt;
+
+&lt;p&gt;你可能会遇到这样一种情况，就是当你在进行开发或修改某个BUG的时候突然来了一个新任务（新任务与当前的开发项目属于同一个项目），时间紧迫，你需要立即切换分支去执行，可是你当前的任务还没有做完，切分支的话会被拒绝，怎么办呢？有种方法是先add再commit，确实可以，但是我感觉这么做的话会添加一个毫无意义的提交记录，虽然以后可以修改，但是太过麻烦。那么，就来试试 git stash 吧。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E5%82%A8%E8%97%8F%EF%BC%88Stashing%EF%BC%89&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;git stash 官方文档第一版&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%82%A8%E8%97%8F%E4%B8%8E%E6%B8%85%E7%90%86&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;git stash 官方文档第二版&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;git-stash-应用场景&#34;&gt;git stash 应用场景&lt;/h3&gt;
+
+&lt;p&gt;git stash 的作用是将当前为提交的修改存储起来，让仓库还原到最后一次提交的状态。&lt;br /&gt;
+使用场景：&lt;br /&gt;
+1. 工作未完成，需要切换分支，但不想提交（常用）。&lt;br /&gt;
+2. 开发一个feature分支（未完成），此时想要合并一下主分支，看看做了哪些修改，提前解决冲突。&lt;/p&gt;
+
+&lt;p&gt;现在来看看场景二的解决方法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 假设我在feature分支上开发，突然得知主分支更新了，于是我想要将主分支合并到当前分支，看看有没有冲突，有的话直接解决。
+git checkout master  // 报错！会提示当前某些修改未存储提交  
+// 当然，我是不想提交的，毕竟还没做完...于是，
+git stash save &amp;quot;先搁这儿，我去瞅瞅主分支，拉下代码～&amp;quot;   // save 类似于 commit 的 -m 选项，即注释信息  
+git stash list // 列出来所有的存储信息，看看有木有～  
+git checkout master  // 切换到主分支
+git pull origin master // 将远程主机的master分支拉下来  
+git checkout feature    // 切回feature分支  
+git merge master    // 将master分支合并到feature（可能会有冲突）  
+git stash pop   // 将先前feature分支做的修改释放出来（可能会有冲突）  
+// 有冲突合并即可，合并完，feature拥有了master分支最新的修改以及当前的特性开发。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;git-stash&#34;&gt;git stash&lt;/h3&gt;
+
+&lt;p&gt;git stash 实际上是一个栈结构，它可以获取工作目录中的中间状态（包括对已追踪文件的修改和暂存的变更，使用 git status 查看），将它保存在一个栈结构中，方便以后使用。（注意！未被追踪的文件不在存储的范围内！）&lt;/p&gt;
+
+&lt;p&gt;git stash 命令：&lt;br /&gt;
+1. git stash（git stash push的简写）将当前工作目录的中间状态保存在栈中。&lt;br /&gt;
+2. git stash list 列出所有的存储。&lt;br /&gt;
+3. git stash apply stash@{0} apply后面是名字，表示要应用的存储（省略名字则应用最近的存储到仓库中），apply只是应用，并不会将存储弹出栈。&lt;br /&gt;
+4. git stash pop 将最近的存储应用到仓库中（但会将存储弹出栈），也可以指定存储的名字，将指定的存储应用到仓库后弹出栈。&lt;br /&gt;
+5. git stash clear 清空存储栈。&lt;br /&gt;
+6. git stash drop 删除最近的存储，也可以指定名字（但不会被应用到仓库）。&lt;br /&gt;
+7. git stash branch name 根据最近的stash创建一个分支，然后删除最近的stash，也可以指定存储名。（如场景二，如果最后应用stash的时候发生了冲突，可以使用这个命令，牵引出一个未合并的分支做副本）。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;讲解一下 git stash push 和 git stash save&lt;/strong&gt;&lt;br /&gt;
+这两个命令都可以存储当前工作区中被追踪文件的修改，但是也有些区别。&lt;br /&gt;
+语法：&lt;br /&gt;
+1. git stash push -m &amp;lsquo;xxxxx&amp;rsquo; src/xxx&lt;br /&gt;
+2. git stash save &amp;lsquo;xxxxx&amp;rsquo;&lt;br /&gt;
+其中，git stash push能指定路径，存储指定的文件，而指定路径对git stash save来说无效，它会存储工作区中所有的被追踪文件的修改。&lt;/p&gt;
+
+&lt;h3 id=&#34;使用-git-stash-出现的问题&#34;&gt;使用 git stash 出现的问题&lt;/h3&gt;
+
+&lt;p&gt;Q：“我新建了一个文件，用stash存储了一下，切分支后发现该文件被带进了另一个分支”&lt;br /&gt;
+A：前面说过，新建的文件，如果没有add进暂存区，那么是不受stash管理的，git也不会追踪。所以对于新建的文件，应该在使用stash前先add一下。&lt;/p&gt;
+
+&lt;p&gt;Q：“不是说我BUG还没改完切到其他分支会报错吗，要我必须提交修改。可是我没提交修改，切master分支成功了。但是！BUG修复的代码被带到master了！”&lt;br /&gt;
+A：Emmmm&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>前端面试题（一）</title>
+      <link>https://hueralin.github.io/2019/xiti/</link>
+      <pubDate>Thu, 22 Aug 2019 16:06:11 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/xiti/</guid>
+      <description>&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;请填充代码，使mySort()能使传入的参数按照从小到大的顺序显示出来。
+function mySort() {
+    var tags = new Array();//使用数组作为参数存储容器
+    请补充你的代码
+    return tags;//返回已经排序的数组
+}
+ 
+var result = mySort(50,11,16,32,24,99,57,100);/传入参数个数不确定
+console.info(result);//显示结果
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>技术分享会</title>
+      <link>https://hueralin.github.io/2019/atheneandzhike/</link>
+      <pubDate>Wed, 21 Aug 2019 18:08:27 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/atheneandzhike/</guid>
+      <description>
+
+&lt;ol&gt;
+&lt;li&gt;智课网&lt;/li&gt;
+&lt;li&gt;Athene&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;（题库、订单、smart等服务）&lt;br /&gt;
+1. &amp;mdash;&amp;gt; API &amp;mdash;&amp;gt; 智课网  &amp;lt;&amp;ndash;读取&amp;ndash;&amp;gt; DB&lt;br /&gt;
+2. &amp;mdash;&amp;gt; 管理 &amp;mdash;&amp;gt; Athene  &amp;lt;&amp;ndash;配置、写入&amp;ndash;&amp;gt; DB&lt;br /&gt;
+3. DB（Athene &amp;amp; beikao）&lt;/p&gt;
+
+&lt;h3 id=&#34;智课网&#34;&gt;智课网&lt;/h3&gt;
+
+&lt;p&gt;智课展示资讯、商品、练习等，对其他服务提供接口&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;资讯&lt;/strong&gt;&lt;br /&gt;
+archetype&lt;br /&gt;
+1. id(当前类目ID), reid（上一级类目ID）, topid（顶层类目ID）&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;广告&lt;/strong&gt;&lt;br /&gt;
+advertisement&lt;br /&gt;
+1. position_id（一级类目）&lt;br /&gt;
+2. type_id (二级类目)&lt;br /&gt;
+3. PC or WP&lt;br /&gt;
+4. archive_id&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;订单&lt;/strong&gt;&lt;br /&gt;
+1. type：1（付款成功）2（发起退款）3（取消订单）4（等待付款）&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;退款&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;athene&#34;&gt;Athene&lt;/h3&gt;
+
+&lt;p&gt;负责智课网所有项目的配置，不对外部服务提供任何接口&lt;br /&gt;
+项目1 [athene-frontend(React+antd)]&lt;br /&gt;
+项目2 [admin-backend(express+node)]&lt;br /&gt;
+数据库 [DB(athene &amp;amp; beikao)]&lt;/p&gt;
+
+&lt;p&gt;刷新页面，看getSession请求，里面包含用户的权限&lt;/p&gt;
+
+&lt;p&gt;start - 获取权限 - 展示菜单 - 浏览页面 - 编辑、提交数据 - 检验登录、权限 - 数据入库or拒绝&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Mock 前端假数据</title>
+      <link>https://hueralin.github.io/2019/mock/</link>
+      <pubDate>Wed, 21 Aug 2019 16:09:41 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/mock/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;为什么需要前端做假数据？Emmmm，不用我说了吧～&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;官方文档看这里&lt;a href=&#34;http://mockjs.com/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;MockJs&lt;/a&gt;！&lt;/p&gt;
+
+&lt;p&gt;数据模版之类的语法去看官方文档，我这里只简单介绍一下我的使用情况。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>伪类 与 伪元素</title>
@@ -749,98 +908,6 @@ userInfo是用户信息，changeNavState是用来更改侧边导航状态的函�
 右边判断userInfo.id属性，有则根据headeUrl显示用户头像，否则显示默认头像。默认头像图标添加点击跳转登录事件。&lt;/p&gt;
 
 &lt;p&gt;其中userInfo属性是由connect函数连接的， userInfo来自于Redux的State。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Mac使用技巧</title>
-      <link>https://hueralin.github.io/2019/mactips/</link>
-      <pubDate>Sat, 27 Jul 2019 17:21:45 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/mactips/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;VSCODE使用命令行打开目录&lt;/strong&gt;&lt;br /&gt;
-&amp;gt;相关知识：环境变量的设置&lt;/p&gt;
-
-&lt;p&gt;环境变量的分类：系统级和用户级&lt;br /&gt;
-系统级：对所有用户生效的永久性变量（/etc/profile）&lt;br /&gt;
-用户级：对单一用户生效的永久性变量（～/.bash_profile）&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;查看单个环境变量&lt;code&gt;echo $PATH&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;查看所有环境变量&lt;code&gt;env&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;修改环境变量&lt;code&gt;PATH=&amp;quot;xxxx&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;查看所有本地定义的shell变量&lt;code&gt;set&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;删除变量&lt;code&gt;unset VNAME&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;设置只读变量&lt;code&gt;readonly VNAME&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;使用export指令添加环境变量：&lt;br /&gt;
-&lt;code&gt;vim ~/.bash_profile&lt;/code&gt;&lt;br /&gt;
-&lt;code&gt;输入 export JAVA_HOME=/usr/java/jdk&lt;/code&gt;&lt;br /&gt;
-&lt;code&gt;输入 export PATH=$JAVA_HOME/bin:$PATH&lt;/code&gt;&lt;br /&gt;
-添加完成后新的环境变量不会立即生效，调用source ~/.bash_profile 该文件才会生效&lt;/p&gt;
-
-&lt;p&gt;使用export命令添加临时环境变量：&lt;br /&gt;
-&lt;code&gt;命令行下输入 export MALIN=&#39;malin&#39;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;使用code命令用VSCODE打开目录：&lt;br /&gt;
-1. 在VSCODE中 command+shift+P -&amp;gt; 输入shell command -&amp;gt; 点击提示Shell Command: Install ‘code’ command in PATH运行&lt;br /&gt;
-2. 在终端中使用 code 目录路径 打开目录（vscode）&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>HOC---高阶组件</title>
-      <link>https://hueralin.github.io/2019/hoc/</link>
-      <pubDate>Sat, 27 Jul 2019 12:37:17 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/hoc/</guid>
-      <description>&lt;p&gt;推荐文章：&lt;a href=&#34;https://github.com/brickspert/blog/issues/2&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;助你完全理解React高阶组件（Higher-Order Components）&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;简单讲，高阶组件就是一个函数，以组件为参数，返回另一个组件。&lt;/p&gt;
-
-&lt;p&gt;高阶组件的目的就是为了复用，可能有很多人不理解，“组件不就是用来复用的么，为什么还要出来一个高阶组件呢？”。&lt;/p&gt;
-
-&lt;p&gt;举个例子，有这么一个需求：&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Git Reset</title>
-      <link>https://hueralin.github.io/2019/gitreset/</link>
-      <pubDate>Fri, 26 Jul 2019 17:41:51 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/gitreset/</guid>
-      <description>
-
-&lt;p&gt;惊了！本来想撤销上一次commit，但保留工作区的修改，但是手残加了 &amp;ndash;hard 参数，修改全没了！！！&lt;br /&gt;
-后来，运行了一遍&lt;code&gt;git reflog branchName&lt;/code&gt;, 查看了下该分支上的历史记录，找到reset操作之前的历史，执行&lt;code&gt;git reset --hard reset之前的记录点&lt;/code&gt;回来了！！！&lt;/p&gt;
-
-&lt;h1 id=&#34;回来了&#34;&gt;回来了！！！！&lt;/h1&gt;
-
-&lt;p&gt;&lt;strong&gt;Git取消对某个文件的跟踪&lt;/strong&gt;&lt;br /&gt;
-1. &lt;code&gt;git rm --cached readme.md&lt;/code&gt;    删除readme.md的跟踪，并保留在本地。
-2. &lt;code&gt;git rm --f readme.md&lt;/code&gt;    删除readme.md的跟踪，并且删除本地文件。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Git分支</title>
-      <link>https://hueralin.github.io/2019/gitbranch/</link>
-      <pubDate>Fri, 26 Jul 2019 16:45:41 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/gitbranch/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;分支就是一个指向单个commit的指针&lt;/strong&gt;&lt;br /&gt;
-&lt;img src=&#34;https://hueralin.github.io/img/posts/fork-commit.jpg&#34; alt=&#34;分支指向单个commit&#34; title=&#34;&#39;fork-commit&#39;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;分支基本操作：&lt;br /&gt;
-1. 分支改名：&lt;code&gt;git branch -m oldName newName&lt;/code&gt;&lt;br /&gt;
-2. 删除分支：&lt;code&gt;git branch -d feature&lt;/code&gt;&lt;br /&gt;
-3. 从master签出feature：&lt;code&gt;git checkout -b feature master&lt;/code&gt;&lt;br /&gt;
-4. 查看本地分支：&lt;code&gt;git branch&lt;/code&gt;&lt;br /&gt;
-5. 查看远程分支：&lt;code&gt;git branch -r&lt;/code&gt;&lt;br /&gt;
-6. 查看所有分支：&lt;code&gt;git branch -a&lt;/code&gt;&lt;br /&gt;
-7. 合并分支：&lt;code&gt;git merge B&lt;/code&gt; 要想将B分支合并到A分支，首先要切换回A分支，在执行merge命令&lt;/p&gt;
 </description>
     </item>
     
