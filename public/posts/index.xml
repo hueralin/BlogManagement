@@ -84,10 +84,17 @@ handleClick = (args) =&amp;gt; {xxxxx} // 缺点也是不能传递参数   上�
       <guid>https://hueralin.github.io/2019/array/</guid>
       <description>Array Emmmm, Array的函数不少，至少我觉的是这样。随着ES的发展，Array多了许多奇奇怪怪的函数。
 虽说奇怪&amp;hellip;.但用起来超爽的啊！！！！
-什么？想要查找数组中的某个元素？ Array.find() 拿走不送！
+什么？想要查找数组中的某个元素？ Array.find() 拿走不送！（ES6）
 该函数接受两个参数：callback、thisObj
 在回调函数中return符合查找条件的元素，若查找成功则直接返回该元素的值，否则返回undefined，并且不会改变原素组，简直不要太爽！
-如果想要查找某个元素的索引的话，可以使用 Array.findIndex() 函数，找不到的话返回-1。</description>
+如果想要查找某个元素的索引的话，可以使用 Array.findIndex() 函数，找不到的话返回-1。
+增删元素类（改变原数组）  push() 在后面插入
+ unshift() 在前面插入
+ pop() 在后面弹出 shift() 在前面弹出  元素查找类  find(callback) 通过callback的逻辑，查找满足条件的元素，返回“值”
+ findIndex(callback) 通过callback的逻辑，查找满足条件的元素，返回“索引“ includes(item) 查找是否有item，返回布尔值
+ indexOf(item) 查找是否有item，返回下标
+  数组遍历类 &amp;mdash; forEach() &amp;mdash;
+let a = [1,2,3,4,5] a.forEach((item, index, arr) =&amp;gt; { console.log(item) // 1,2,3,4,5 }) /* forEach 遍历的范围在第一次调用 callback 前就会确定,所以后续调用中 添加 和 删除 的item都不会被遍历到 */ a.forEach((item, index, arr) =&amp;gt; { arr.</description>
     </item>
     
     <item>
