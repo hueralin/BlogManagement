@@ -6,10 +6,42 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Aug 2019 20:09:47 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 30 Aug 2019 17:41:06 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>JS闭包</title>
+      <link>https://hueralin.github.io/2019/closure/</link>
+      <pubDate>Fri, 30 Aug 2019 17:41:06 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/closure/</guid>
+      <description>参考资料：阮一峰
+参考资料：MDN
+之前简单学习过闭包，也会无意间使用过闭包，但如果你要问我闭包是什么我也答不上来。今天呢，重新学习闭包，做个总结。
+什么是闭包 相信你在学习闭包的时候肯定看过类似的许多文章是这么说的：“闭包就是一个能够访问 其他函数的变量 的函数”，如果你看过《你不知道的javascript》这本书中关于闭包的解释，你会觉得这句话很片面，也很浅陋，而这句话被当今好多博文所提及，给好多学习闭包的小伙伴造成了不少的误解。
+《你不知道的javascript》这本书中对于闭包是这么说的：“当一个函数能够访问定义它时所处环境的局部变量时，那么就形成了一个闭包（具体怎么说的我也记不太清楚了）”，重点是“形成了一个闭包”，而不是大多数人所说的闭包就是那个函数，闭包其实还跟环境有关。在MDN中也有类似的解释，开头第一句话就是“闭包是函数和声明该函数的词法环境的组合”。下面还有一段解释:
+“闭包是由函数以及创建该函数的词法环境组合而成，这个环境包含了这个闭包创建时所能访问的所有局部变量”。  关于什么是词法作用域请看 [词法作用域]()
+啪！MDN 还是说出了打脸的话，在makeAdder栗子中，它竟然说“add5 和 add10 都是闭包”（糟糕，我要下不来台了），为什么又说这两个函数是闭包呢，虽然后面还是扯上了词法作用域，但这让读者看起来挺迷啊（哼，双标狗！😂）。
+function parent() { // 外部函数 let name = &#39;huer&#39; // 内部变量 return function children() { // 内部函数 console.log(name) } } let other = parent() other() // ‘huer’  说下我的简单理解，闭包既然被称为包，那我就可以把它想象成一个包结构（包袱），包裹着外部函数的内部变量和内部函数，并返回内部函数。注意：内部函数是要被返回的！ 如果内部函数没有被返回，那么当外部函数执行完毕后，外部函数里面的所有变量和函数都会被垃圾回收机制所清理。此时，我们就引出了闭包函数的一个重要特性，可以使某些变量长时间存在于内存中而不会被销毁。正常情况下，执行完一个函数，即return一个值后，该函数及其内部所有变量就会被回收。而当我们在函数内部又定义了一个函数时，根据对词法作用域的理解，该内部函数可以访问外部函数所定义的变量，即内部函数对它所处的词法作用域有一种引用关系，如果我们将内部函数return出去，并返回给一个变量，那么该变量就是对内部函数的一个引用，从而也能访问外部函数所定义的变量。那么这就实现了某些变量能够一直存在于内存中而不会被销毁，并且还是私有的，其他外部的变量无法访问，只有return的内部函数才能访问。
+在好多博文给出的栗子中，内部函数总是使用了外部函数所定义的变量，这就使好多同学误解，返回的内部函数一定要使用外部函数定义的变量，其实这是不对的。打个比方，我们（内部函数）出生在家里（词法作用域），我们对家里的一切事物都可以够得到，摸得着（除掉‘3岁以下儿童勿碰’等乱七八糟的规则），都可以使用，这并不意味着这些东西此时就在我们手里，它们不在我们的手里，我们也对它们有使用权（即，内部函数对所处的词法作用域有引用关系）。这就是闭包。
+形成闭包的条件：外部函数（词法作用域） + 返回一个内部函数
+我们上面的代码只是访问了内部变量，其实我们返回的内部函数还能操作内部变量，是不是有点面向对象的感觉？
+function parent() { let name = &#39;huer&#39; function getName() { return name } function setName(val) { name = val } return { getName, setName } } let obj = parent() obj.</description>
+    </item>
+    
+    <item>
+      <title>Task-2019 08 30</title>
+      <link>https://hueralin.github.io/2019/task20190830/</link>
+      <pubDate>Fri, 30 Aug 2019 11:02:01 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/task20190830/</guid>
+      <description>React的事件绑定是如何实现的
+ JS闭包和内存泄漏
+ 提交一次Rimage
+  </description>
+    </item>
     
     <item>
       <title>Git Stash</title>

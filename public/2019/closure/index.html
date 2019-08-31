@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/task20190830/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/closure/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JS闭包 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="JS闭包 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JS闭包",
+    "headline" : "JS闭包",
+    "description" : "参考资料：阮一峰\n参考资料：MDN\n之前简单学习过闭包，也会无意间使用过闭包，但如果你要问我闭包是什么我也答不上来。今天呢，重新学习闭包，做个总结。\n什么是闭包 相信你在学习闭包的时候肯定看过类似的许多文章是这么说的：“闭包就是一个能够访问 其他函数的变量 的函数”，如果你看过《你不知道的javascript》这本书中关于闭包的解释，你会觉得这句话很片面，也很浅陋，而这句话被当今好多博文所提及，给好多学习闭包的小伙伴造成了不少的误解。\n《你不知道的javascript》这本书中对于闭包是这么说的：“当一个函数能够访问定义它时所处环境的局部变量时，那么就形成了一个闭包（具体怎么说的我也记不太清楚了）”，重点是“形成了一个闭包”，而不是大多数人所说的闭包就是那个函数，闭包其实还跟环境有关。在MDN中也有类似的解释，开头第一句话就是“闭包是函数和声明该函数的词法环境的组合”。下面还有一段解释:\n“闭包是由函数以及创建该函数的词法环境组合而成，这个环境包含了这个闭包创建时所能访问的所有局部变量”。  关于什么是词法作用域请看 [词法作用域]()\n啪！MDN 还是说出了打脸的话，在makeAdder栗子中，它竟然说“add5 和 add10 都是闭包”（糟糕，我要下不来台了），为什么又说这两个函数是闭包呢，虽然后面还是扯上了词法作用域，但这让读者看起来挺迷啊（哼，双标狗！😂）。\nfunction parent() { \/\/ 外部函数 let name = \x27huer\x27 \/\/ 内部变量 return function children() { \/\/ 内部函数 console.log(name) } } let other = parent() other() \/\/ ‘huer’  说下我的简单理解，闭包既然被称为包，那我就可以把它想象成一个包结构（包袱），包裹着外部函数的内部变量和内部函数，并返回内部函数。注意：内部函数是要被返回的！ 如果内部函数没有被返回，那么当外部函数执行完毕后，外部函数里面的所有变量和函数都会被垃圾回收机制所清理。此时，我们就引出了闭包函数的一个重要特性，可以使某些变量长时间存在于内存中而不会被销毁。正常情况下，执行完一个函数，即return一个值后，该函数及其内部所有变量就会被回收。而当我们在函数内部又定义了一个函数时，根据对词法作用域的理解，该内部函数可以访问外部函数所定义的变量，即内部函数对它所处的词法作用域有一种引用关系，如果我们将内部函数return出去，并返回给一个变量，那么该变量就是对内部函数的一个引用，从而也能访问外部函数所定义的变量。那么这就实现了某些变量能够一直存在于内存中而不会被销毁，并且还是私有的，其他外部的变量无法访问，只有return的内部函数才能访问。\n在好多博文给出的栗子中，内部函数总是使用了外部函数所定义的变量，这就使好多同学误解，返回的内部函数一定要使用外部函数定义的变量，其实这是不对的。打个比方，我们（内部函数）出生在家里（词法作用域），我们对家里的一切事物都可以够得到，摸得着（除掉‘3岁以下儿童勿碰’等乱七八糟的规则），都可以使用，这并不意味着这些东西此时就在我们手里，它们不在我们的手里，我们也对它们有使用权（即，内部函数对所处的词法作用域有引用关系）。这就是闭包。\n形成闭包的条件：外部函数（词法作用域） \x2b 返回一个内部函数\n我们上面的代码只是访问了内部变量，其实我们返回的内部函数还能操作内部变量，是不是有点面向对象的感觉？\nfunction parent() { let name = \x27huer\x27 function getName() { return name } function setName(val) { name = val } return { getName, setName } } let obj = parent() obj.",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-08-30 17:41:06 \x2b0800 CST",
+    "dateModified" : "2019-08-30 17:41:06 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/closure\/",
+    "wordCount" : "205",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                &lt;-
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+                ->
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JS闭包</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-08-30 itemprop="datePublished">August 30, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/"> 随便学学 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<p><a href="http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html" rel="nofollow noreferrer" target="_blank">参考资料：阮一峰</a><br />
+<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures" rel="nofollow noreferrer" target="_blank">参考资料：MDN</a></p>
+
+<p>之前简单学习过闭包，也会无意间使用过闭包，但如果你要问我闭包是什么我也答不上来。今天呢，重新学习闭包，做个总结。</p>
+
+<h3 id="什么是闭包">什么是闭包</h3>
+
+<p>相信你在学习闭包的时候肯定看过类似的许多文章是这么说的：“闭包就是一个能够访问 <strong>其他函数的变量</strong> 的<strong>函数</strong>”，如果你看过《你不知道的javascript》这本书中关于闭包的解释，你会觉得这句话很片面，也很浅陋，而这句话被当今好多博文所提及，给好多学习闭包的小伙伴造成了不少的误解。</p>
+
+<p>《你不知道的javascript》这本书中对于闭包是这么说的：“当一个函数能够访问定义它时所处环境的局部变量时，那么就形成了一个闭包（具体怎么说的我也记不太清楚了）”，重点是“形成了一个闭包”，而不是大多数人所说的闭包就是那个函数，闭包其实还跟环境有关。在MDN中也有类似的解释，开头第一句话就是“闭包是函数和声明该函数的词法环境的组合”。下面还有一段解释:</p>
+
+<pre><code class="language-javascript">“闭包是由函数以及创建该函数的词法环境组合而成，这个环境包含了这个闭包创建时所能访问的所有局部变量”。
+</code></pre>
+
+<p>关于什么是词法作用域请看 [词法作用域]()</p>
+
+<p>啪！MDN 还是说出了打脸的话，在makeAdder栗子中，它竟然说“add5 和 add10 都是闭包”（糟糕，我要下不来台了），为什么又说这两个函数是闭包呢，虽然后面还是扯上了词法作用域，但这让读者看起来挺迷啊（哼，双标狗！😂）。</p>
+
+<pre><code class="language-javascript">function parent() {                 // 外部函数
+    let name = 'huer'               // 内部变量
+    return function children() {    // 内部函数
+        console.log(name)
+    }
+}
+let other = parent()
+other()                             // ‘huer’
+</code></pre>
+
+<p>说下我的简单理解，闭包既然被称为包，那我就可以把它想象成一个包结构（包袱），包裹着外部函数的内部变量和内部函数，并返回内部函数。<strong>注意：内部函数是要被返回的！</strong> 如果内部函数没有被返回，那么当外部函数执行完毕后，外部函数里面的所有变量和函数都会被垃圾回收机制所清理。此时，我们就引出了闭包函数的一个重要特性，<strong>可以使某些变量长时间存在于内存中而不会被销毁</strong>。正常情况下，执行完一个函数，即return一个值后，该函数及其内部所有变量就会被回收。而当我们在函数内部又定义了一个函数时，根据对词法作用域的理解，该内部函数可以访问外部函数所定义的变量，即内部函数对它所处的词法作用域有一种引用关系，如果我们将内部函数return出去，并返回给一个变量，那么该变量就是对内部函数的一个引用，从而也能访问外部函数所定义的变量。那么这就实现了某些变量能够一直存在于内存中而不会被销毁，并且还是私有的，其他外部的变量无法访问，只有return的内部函数才能访问。</p>
+
+<p>在好多博文给出的栗子中，内部函数总是使用了外部函数所定义的变量，这就使好多同学误解，返回的内部函数一定要使用外部函数定义的变量，其实这是不对的。打个比方，我们（内部函数）出生在家里（词法作用域），我们对家里的一切事物都可以够得到，摸得着（除掉‘3岁以下儿童勿碰’等乱七八糟的规则），都可以使用，这并不意味着这些东西此时就在我们手里，它们不在我们的手里，我们也对它们有使用权（即，内部函数对所处的词法作用域有引用关系）。这就是闭包。</p>
+
+<p><strong>形成闭包的条件：外部函数（词法作用域） + 返回一个内部函数</strong></p>
+
+<p>我们上面的代码只是访问了内部变量，其实我们返回的内部函数还能操作内部变量，是不是有点面向对象的感觉？</p>
+
+<pre><code class="language-javascript">function parent() {
+    let name = 'huer'
+    function getName() {
+        return name
+    }
+    function setName(val) {
+        name = val
+    }
+    return {
+        getName,
+        setName
+    }
+}
+let obj = parent()
+obj.getName()                   // 'huer'
+obj.setName('tuzi') 
+</code></pre>
+
+<p>看！不止返回函数才能形成闭包，返回对象也可以！（只要对你想留下的变量保持引用就可以）</p>
+
+<p>MDN 上还给出了一个使用闭包的情景：“通常你使用只有一个方法的对象的地方，都可以使用闭包” 原谅我没有get到点，不过下面给出的例子倒是比较明白：</p>
+
+<pre><code class="language-javascript">// 点击按钮，修改字体大小
+function makeSizer(size) {
+  return function() {
+    document.body.style.fontSize = size + 'px';
+  };
+}
+
+var size12 = makeSizer(12);
+var size14 = makeSizer(14);
+var size16 = makeSizer(16);
+
+document.getElementById('size-12').onclick = size12;
+document.getElementById('size-14').onclick = size14;
+document.getElementById('size-16').onclick = size16;
+</code></pre>
+
+<p>相信上面的代码大家应该都很明白，对于事件绑定，我们要传递的是一个函数，但是如果该函数还要传递参数那就比较棘手了，于是我们可以通过闭包的方式，将参数传递给makeSizer，将makeSizer执行完后返回的函数作为事件的回调函数，于是当我们触发事件的时候，回调函数仍能访问当初传递的参数。类似的关于事件处理函数传参的问题，比如 <a href="https://hueralin.github.io/2019/bind/" rel="nofollow noreferrer" target="_blank">React中的bind绑定</a>，我也使用了闭包。</p>
+
+<p>基于闭包，我们可以实现面向对象中的私有变量，外部无法访问，只能通过暴露出去的公共方法来操作这些私有变量。例如上面的setName和getName。</p>
+
+<p>MDN 上还有一个创建计时器的工厂函数，每个计时器内部的环境都是互相独立的，也就是说这些闭包互不干扰，关于这方面的知识，参见 [JS活动对象]()</p>
+
+<h3 id="坑">坑</h3>
+
+<p>闭包虽好，但也不能乱用，常见的一个坑就是在循环中使用了闭包：</p>
+
+<pre><code class="language-javascript">// 假设有五个按钮，点击按钮分别显示1，2，3，4，5
+function NB() {
+    var arr = [1,2,3,4,5]
+    for(var i = 0;i&lt;arr.length;i++){
+        var item = arr[i]
+        document.getElementById('五个button的ID').onclick = function() {
+            alert(item)
+        }
+    }
+}
+NB()
+// 以前在这里翻过车，总以为会按照期望弹出，结果是每个都弹出5  
+// 这里确实有闭包，想想上面形成闭包的条件，外部函数NB有了，返回的内部函数有了  
+// 这里的内部函数返回的不明显，即传给onclick的匿名函数，这些匿名函数会在点击的时候被调用。  
+// 循环了五次，形成了五个闭包（因为每个匿名函数都不一样），但这五个闭包共享同一个词法作用域，  
+// 即都引用了同一个arr数组，因为循环先于按钮被点击，所以当点击时，arr[i]已经是最后一个元素了，所以每次都弹出5。
+</code></pre>
+
+<p>出错的原因大家应该明白了，即五个闭包共享同一个词法作用股，确切的说是调用了同一个item(arr[i])，因为它本意是想弹出不同的item嘛，所以我们要做的就是使item不同：</p>
+
+<pre><code class="language-javascript">function NB() {
+    var arr = [1,2,3,4,5]
+    for(var i = 0;i&lt;arr.length;i++){
+        (function(i) {  // 创建了5个不同的匿名函数（即5个不同的函数作用域）
+            var item = arr[i]   // 每个作用域中的item都是独一无二的
+            document.getElementById('五个button的ID').onclick = function() {
+                alert(item)
+            }
+        })(i)   // 通过使用立即执行函数，传入i
+    }
+}
+// 此时，每个闭包所引用的词法作用域都是立即执行函数产生的，都是不同的
+NB()
+</code></pre>
+
+<p>未完待续&hellip;</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/closure/>https://hueralin.github.io/2019/closure/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/task20190830/" class="prev" rel="prev" title="Task-2019 08 30"><i class="iconfont icon-left"></i>&nbsp;Task-2019 08 30</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+
+    <div class="post-comment">
+        
+        
+
+<div id="vcomments"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments' ,
+      appId: 'Your appId',
+      appKey: 'Your appKey',
+      notify: 'false', 
+      verify: 'false', 
+      avatar:'mm', 
+      placeholder: '说点什么吧...',
+      visitor: 'true'
+  });
+</script>
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        
+        <span itemprop="copyrightYear">2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
