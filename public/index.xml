@@ -5,8 +5,70 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Aug 2019 17:41:06 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 02 Sep 2019 11:20:42 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>JS执行环境，作用域链，变量对象/活动对象</title>
+      <link>https://hueralin.github.io/2019/jsec/</link>
+      <pubDate>Mon, 02 Sep 2019 11:20:42 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/jsec/</guid>
+      <description>
+
+&lt;p&gt;JS的重点内容之一，虽然不会在面试题中直接那么问，多半给你出一段代码，看输出什么。&lt;/p&gt;
+
+&lt;p&gt;我觉得了解了这部分内容，能让我们对整个JS的执行流程有个详细、准确地认识，在面对工作中的一些错误也能快速且正确的排错。&lt;/p&gt;
+
+&lt;h3 id=&#34;js执行环境&#34;&gt;JS执行环境&lt;/h3&gt;
+
+&lt;p&gt;JS的执行环境又被称为执行上下文（Execution context），简称EC。顾名思义，JS执行环境就是JS执行时才会存在的环境，常见的执行环境有两种：全局执行环境和函数执行环境。当JS代码执行的时候，我们会进入不同的执行环境，这些执行环境会构成一个执行环境栈。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;EC的组成&lt;/strong&gt;：&lt;br /&gt;
+1. 变量对象（VO）：包含变量的对象，无法被访问&lt;br /&gt;
+2. [[scope]]：作用域链，由变量对象构成，该属性是指向作用域链头节点的指针&lt;br /&gt;
+3. this指针：指向环境对象（也是一个普通对象），而不是执行环境EC&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;EC的创建&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;p&gt;EC是在调用函数的时候创建的，一个EC的生命周期分为两个阶段：创建阶段 和 执行阶段：&lt;br /&gt;
+1. 创建阶段：此时EC创建变量对象，建立作用域链，确定this的指向，&lt;br /&gt;
+2. 代码执行阶段：完成变量赋值，其他函数调用等代码的执行&lt;/p&gt;
+
+&lt;p&gt;其中变量对象的创建也是个重点，这里涉及到了&lt;strong&gt;预编译&lt;/strong&gt;的问题：&lt;br /&gt;
+&lt;strong&gt;变量对象的创建&lt;/strong&gt;：&lt;br /&gt;
+1. 根据函数的参数，建立arguments对象（类数组，将参数值保存在下标中）。&lt;br /&gt;
+2. 函数声明提升：扫描所有的函数声明，将函数名作为变量对象的属性名，属性值为函数在内存中的地址，如果属性名存在，则会被覆盖。&lt;br /&gt;
+3. 变量声明提升：扫描所有的变量声明，将变量名作为变量对象的属性名，属性值初始化为undefined，如果属性名存在，则会跳过，不覆盖（防止同名的函数被覆盖为undefined，毕竟函数是一等公民嘛～）。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：在代码执行阶段的时候，变量才会被赋值，之前一直都是undefined。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;由上可知，作用域其实就是一个变量对象。那么什么是变量对象？&lt;/p&gt;
+
+&lt;h3 id=&#34;变量对象-vo&#34;&gt;变量对象（VO）&lt;/h3&gt;
+
+&lt;p&gt;变量对象存储了EC中定义的变量和函数声明，“这个对象是规范上的，或者说是引擎实现上的，不可在JS环境中访问到”。&lt;/p&gt;
+
+&lt;h3 id=&#34;活动对象-ao&#34;&gt;活动对象（AO）&lt;/h3&gt;
+
+&lt;p&gt;“活动对象其实就是变量对象的激活状态” 这是我在大多数博文中找到的介绍，即当执行流进入一个函数时，EC会被创建，变量对象会被创建，变量对象被激活成为活动对象。&lt;/p&gt;
+
+&lt;p&gt;此处有&lt;strong&gt;争议&lt;/strong&gt;：&lt;br /&gt;
+1. 根据“函数是被一级一级的调用的”，我是不是可以说这一级一级向下执行的函数的变量对象都是活动对象呢？毕竟这些函数都被执行了。所以说，我觉得 “活动对象” 应该是处于作用域链顶端的变量对象，该变量对象处于最近被执行的EC。&lt;br /&gt;
+2. 另一种说法，不是存在一个执行环境栈嘛，当A函数里执行了B函数，那么B函数入栈，A函数可以想象成处于一种 “休眠” 状态，B函数才算真正被执行。所以B函数里的环境对象、变量对象被创建，变量对象被激活为活动对象。（Emmm，好像也有道理。哈！都是我的猜想😂）&lt;/p&gt;
+
+&lt;p&gt;当函数执行完毕，它的执行环境会被销毁，活动对象也会跟着销毁。但这是在一般的情况下，如果是 &lt;strong&gt;&lt;a href=&#34;https://hueralin.github.io/2019/closure/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;闭包&lt;/a&gt;&lt;/strong&gt;，那就得另当别论。假设A函数里返回了B函数，B函数引用着A函数执行环境里的活动对象。当A函数执行完毕后，A函数的环境变量被销毁，但是活动对象依然存在于作用域的顶端。当返回的函数被调用时，会创建自己的执行环境和活动对象（此时应该就有两个活动对象），闭包函数的活动对象里面引用着上一个活动对象，当闭包函数执行完后，两个活动对象都将被销毁。&lt;/p&gt;
+
+&lt;h3 id=&#34;作用域链&#34;&gt;作用域链&lt;/h3&gt;
+
+&lt;p&gt;作用域分为两种：全局作用域 和 局部作用域。&lt;br /&gt;
+前面说过，作用域链其实就是变量对象，但并不是一个，而是一串儿😂。我们所说的局部作用域其实就是当前执行环境的变量对象，我们在查找一个变量的时候，如果在当前变量对象里面查不到的话，就会顺着作用域链一级一级的向上查找，直到全局作用域，因此全局作用域处于作用域链的末端。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.zhihu.com/question/36393048&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;最后，推荐一篇知乎上的帖子，上面讨论的很详细。（尤其是那几个图，很直观，我也就不再放图了😂）&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;(我听见你在说我懒了&amp;hellip;&amp;hellip;)&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>JS闭包</title>
@@ -136,20 +198,6 @@ NB()
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;未完待续&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Task-2019 08 30</title>
-      <link>https://hueralin.github.io/2019/task20190830/</link>
-      <pubDate>Fri, 30 Aug 2019 11:02:01 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/task20190830/</guid>
-      <description>&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; disabled class=&#34;task-list-item&#34;&gt; React的事件绑定是如何实现的&lt;br /&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; disabled class=&#34;task-list-item&#34;&gt; JS闭包和内存泄漏&lt;br /&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 提交一次Rimage&lt;br /&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     

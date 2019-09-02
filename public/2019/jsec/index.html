@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/closure/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/jsec/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           JS执行环境，作用域链，变量对象/活动对象 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="JS执行环境，作用域链，变量对象/活动对象 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JS执行环境，作用域链，变量对象\/活动对象",
+    "headline" : "JS执行环境，作用域链，变量对象\/活动对象",
+    "description" : "JS的重点内容之一，虽然不会在面试题中直接那么问，多半给你出一段代码，看输出什么。\n我觉得了解了这部分内容，能让我们对整个JS的执行流程有个详细、准确地认识，在面对工作中的一些错误也能快速且正确的排错。\nJS执行环境 JS的执行环境又被称为执行上下文（Execution context），简称EC。顾名思义，JS执行环境就是JS执行时才会存在的环境，常见的执行环境有两种：全局执行环境和函数执行环境。当JS代码执行的时候，我们会进入不同的执行环境，这些执行环境会构成一个执行环境栈。\nEC的组成：\n1. 变量对象（VO）：包含变量的对象，无法被访问\n2. [[scope]]：作用域链，由变量对象构成，该属性是指向作用域链头节点的指针\n3. this指针：指向环境对象（也是一个普通对象），而不是执行环境EC\nEC的创建：\nEC是在调用函数的时候创建的，一个EC的生命周期分为两个阶段：创建阶段 和 执行阶段：\n1. 创建阶段：此时EC创建变量对象，建立作用域链，确定this的指向，\n2. 代码执行阶段：完成变量赋值，其他函数调用等代码的执行\n其中变量对象的创建也是个重点，这里涉及到了预编译的问题：\n变量对象的创建：\n1. 根据函数的参数，建立arguments对象（类数组，将参数值保存在下标中）。\n2. 函数声明提升：扫描所有的函数声明，将函数名作为变量对象的属性名，属性值为函数在内存中的地址，如果属性名存在，则会被覆盖。\n3. 变量声明提升：扫描所有的变量声明，将变量名作为变量对象的属性名，属性值初始化为undefined，如果属性名存在，则会跳过，不覆盖（防止同名的函数被覆盖为undefined，毕竟函数是一等公民嘛～）。\n注意：在代码执行阶段的时候，变量才会被赋值，之前一直都是undefined。\n由上可知，作用域其实就是一个变量对象。那么什么是变量对象？\n变量对象（VO） 变量对象存储了EC中定义的变量和函数声明，“这个对象是规范上的，或者说是引擎实现上的，不可在JS环境中访问到”。\n活动对象（AO） “活动对象其实就是变量对象的激活状态” 这是我在大多数博文中找到的介绍，即当执行流进入一个函数时，EC会被创建，变量对象会被创建，变量对象被激活成为活动对象。\n此处有争议：\n1. 根据“函数是被一级一级的调用的”，我是不是可以说这一级一级向下执行的函数的变量对象都是活动对象呢？毕竟这些函数都被执行了。所以说，我觉得 “活动对象” 应该是处于作用域链顶端的变量对象，该变量对象处于最近被执行的EC。\n2. 另一种说法，不是存在一个执行环境栈嘛，当A函数里执行了B函数，那么B函数入栈，A函数可以想象成处于一种 “休眠” 状态，B函数才算真正被执行。所以B函数里的环境对象、变量对象被创建，变量对象被激活为活动对象。（Emmm，好像也有道理。哈！都是我的猜想😂）\n当函数执行完毕，它的执行环境会被销毁，活动对象也会跟着销毁。但这是在一般的情况下，如果是 闭包，那就得另当别论。假设A函数里返回了B函数，B函数引用着A函数执行环境里的活动对象。当A函数执行完毕后，A函数的环境变量被销毁，但是活动对象依然存在于作用域的顶端。当返回的函数被调用时，会创建自己的执行环境和活动对象（此时应该就有两个活动对象），闭包函数的活动对象里面引用着上一个活动对象，当闭包函数执行完后，两个活动对象都将被销毁。\n作用域链 作用域分为两种：全局作用域 和 局部作用域。\n前面说过，作用域链其实就是变量对象，但并不是一个，而是一串儿😂。我们所说的局部作用域其实就是当前执行环境的变量对象，我们在查找一个变量的时候，如果在当前变量对象里面查不到的话，就会顺着作用域链一级一级的向上查找，直到全局作用域，因此全局作用域处于作用域链的末端。\n最后，推荐一篇知乎上的帖子，上面讨论的很详细。（尤其是那几个图，很直观，我也就不再放图了😂）\n(我听见你在说我懒了\x26hellip;\x26hellip;)",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-09-02 11:20:42 \x2b0800 CST",
+    "dateModified" : "2019-09-02 11:20:42 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/jsec\/",
+    "wordCount" : "53",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                &lt;-
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+                ->
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JS执行环境，作用域链，变量对象/活动对象</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-09-02 itemprop="datePublished">September 2, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/"> 随便学学 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<p>JS的重点内容之一，虽然不会在面试题中直接那么问，多半给你出一段代码，看输出什么。</p>
+
+<p>我觉得了解了这部分内容，能让我们对整个JS的执行流程有个详细、准确地认识，在面对工作中的一些错误也能快速且正确的排错。</p>
+
+<h3 id="js执行环境">JS执行环境</h3>
+
+<p>JS的执行环境又被称为执行上下文（Execution context），简称EC。顾名思义，JS执行环境就是JS执行时才会存在的环境，常见的执行环境有两种：全局执行环境和函数执行环境。当JS代码执行的时候，我们会进入不同的执行环境，这些执行环境会构成一个执行环境栈。</p>
+
+<p><strong>EC的组成</strong>：<br />
+1. 变量对象（VO）：包含变量的对象，无法被访问<br />
+2. [[scope]]：作用域链，由变量对象构成，该属性是指向作用域链头节点的指针<br />
+3. this指针：指向环境对象（也是一个普通对象），而不是执行环境EC</p>
+
+<p><strong>EC的创建</strong>：</p>
+
+<p>EC是在调用函数的时候创建的，一个EC的生命周期分为两个阶段：创建阶段 和 执行阶段：<br />
+1. 创建阶段：此时EC创建变量对象，建立作用域链，确定this的指向，<br />
+2. 代码执行阶段：完成变量赋值，其他函数调用等代码的执行</p>
+
+<p>其中变量对象的创建也是个重点，这里涉及到了<strong>预编译</strong>的问题：<br />
+<strong>变量对象的创建</strong>：<br />
+1. 根据函数的参数，建立arguments对象（类数组，将参数值保存在下标中）。<br />
+2. 函数声明提升：扫描所有的函数声明，将函数名作为变量对象的属性名，属性值为函数在内存中的地址，如果属性名存在，则会被覆盖。<br />
+3. 变量声明提升：扫描所有的变量声明，将变量名作为变量对象的属性名，属性值初始化为undefined，如果属性名存在，则会跳过，不覆盖（防止同名的函数被覆盖为undefined，毕竟函数是一等公民嘛～）。</p>
+
+<p><strong>注意：在代码执行阶段的时候，变量才会被赋值，之前一直都是undefined。</strong></p>
+
+<p>由上可知，作用域其实就是一个变量对象。那么什么是变量对象？</p>
+
+<h3 id="变量对象-vo">变量对象（VO）</h3>
+
+<p>变量对象存储了EC中定义的变量和函数声明，“这个对象是规范上的，或者说是引擎实现上的，不可在JS环境中访问到”。</p>
+
+<h3 id="活动对象-ao">活动对象（AO）</h3>
+
+<p>“活动对象其实就是变量对象的激活状态” 这是我在大多数博文中找到的介绍，即当执行流进入一个函数时，EC会被创建，变量对象会被创建，变量对象被激活成为活动对象。</p>
+
+<p>此处有<strong>争议</strong>：<br />
+1. 根据“函数是被一级一级的调用的”，我是不是可以说这一级一级向下执行的函数的变量对象都是活动对象呢？毕竟这些函数都被执行了。所以说，我觉得 “活动对象” 应该是处于作用域链顶端的变量对象，该变量对象处于最近被执行的EC。<br />
+2. 另一种说法，不是存在一个执行环境栈嘛，当A函数里执行了B函数，那么B函数入栈，A函数可以想象成处于一种 “休眠” 状态，B函数才算真正被执行。所以B函数里的环境对象、变量对象被创建，变量对象被激活为活动对象。（Emmm，好像也有道理。哈！都是我的猜想😂）</p>
+
+<p>当函数执行完毕，它的执行环境会被销毁，活动对象也会跟着销毁。但这是在一般的情况下，如果是 <strong><a href="https://hueralin.github.io/2019/closure/" rel="nofollow noreferrer" target="_blank">闭包</a></strong>，那就得另当别论。假设A函数里返回了B函数，B函数引用着A函数执行环境里的活动对象。当A函数执行完毕后，A函数的环境变量被销毁，但是活动对象依然存在于作用域的顶端。当返回的函数被调用时，会创建自己的执行环境和活动对象（此时应该就有两个活动对象），闭包函数的活动对象里面引用着上一个活动对象，当闭包函数执行完后，两个活动对象都将被销毁。</p>
+
+<h3 id="作用域链">作用域链</h3>
+
+<p>作用域分为两种：全局作用域 和 局部作用域。<br />
+前面说过，作用域链其实就是变量对象，但并不是一个，而是一串儿😂。我们所说的局部作用域其实就是当前执行环境的变量对象，我们在查找一个变量的时候，如果在当前变量对象里面查不到的话，就会顺着作用域链一级一级的向上查找，直到全局作用域，因此全局作用域处于作用域链的末端。</p>
+
+<p><a href="https://www.zhihu.com/question/36393048" rel="nofollow noreferrer" target="_blank">最后，推荐一篇知乎上的帖子，上面讨论的很详细。（尤其是那几个图，很直观，我也就不再放图了😂）</a></p>
+
+<p>(我听见你在说我懒了&hellip;&hellip;)</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/jsec/>https://hueralin.github.io/2019/jsec/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/closure/" class="prev" rel="prev" title="JS闭包"><i class="iconfont icon-left"></i>&nbsp;JS闭包</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+
+    <div class="post-comment">
+        
+        
+
+<div id="vcomments"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments' ,
+      appId: 'Your appId',
+      appKey: 'Your appKey',
+      notify: 'false', 
+      verify: 'false', 
+      avatar:'mm', 
+      placeholder: '说点什么吧...',
+      visitor: 'true'
+  });
+</script>
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        
+        <span itemprop="copyrightYear">2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
