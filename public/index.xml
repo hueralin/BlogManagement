@@ -5,8 +5,48 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Sep 2019 17:08:32 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 02 Sep 2019 18:56:56 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>JS 事件循环</title>
+      <link>https://hueralin.github.io/2019/eventloop/</link>
+      <pubDate>Mon, 02 Sep 2019 18:56:56 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/eventloop/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;MDN 事件循环&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://hueralin.github.io/img/posts/eventloop.svg&#34; alt=&#34;从MDN上盗个图&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;栈&#34;&gt;栈&lt;/h3&gt;
+
+&lt;p&gt;由函数调用组成的栈，也被称为 “执行栈” ，函数被调用时压入栈，执行完毕弹出栈。结合 &lt;a href=&#34;http://localhost:1313/2019/jsec/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;JS执行环境&lt;/a&gt; 中所讲的内容，函数调用栈中的每一个帧都是一个执行环境，执行环境里面包含着变量对象（函数被调用时才会有）。&lt;/p&gt;
+
+&lt;h3 id=&#34;堆&#34;&gt;堆&lt;/h3&gt;
+
+&lt;p&gt;存放对象等非结构化的数据。&lt;/p&gt;
+
+&lt;h3 id=&#34;队列&#34;&gt;队列&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;待处理&lt;/strong&gt; 的消息队列，队列中的每一个消息都对应着一个消息处理函数。事件循环过程中，会处理最先进入消息队列的消息，将该消息出队，作为输入参数去调用与之关联的消息处理函数，函数的调用会入栈，执行完出栈，直到执行栈为空，然后再处理下一个消息。&lt;/p&gt;
+
+&lt;p&gt;拿一个简单的例子来说明：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;console.log(&#39;start&#39;)
+setTimeout(() =&amp;gt; {
+    console.log(&#39;time over!&#39;)
+}, 0)
+console.log(&#39;end&#39;)
+// start
+// end
+// time over!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;即使延迟设置为0也不会立即执行，setTimeout的延迟时间是最小延迟时间，即最少也需要xxx时间才会把回调函数放入消息队列。&lt;strong&gt;注意！是放进消息队列，而不是执行回调函数&lt;/strong&gt;，好多人都会认为这里是到时间后执行回调函数，其实是到时间后将事件处理函数放入消息队列，然后等待被执行。&lt;strong&gt;所有的事件都是这样，满足条件后将事件处理函数放入消息队列，然后等待事件循环到它时才会被执行。&lt;/strong&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>狐耳的技术栈</title>
@@ -1087,23 +1127,6 @@ module.exports = {
 &lt;p&gt;至于思考了啥？晚上回去再说，学习！😂&lt;/p&gt;
 
 &lt;p&gt;to be continue&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>汉家江湖-起源</title>
-      <link>https://hueralin.github.io/2019/hjjh-01/</link>
-      <pubDate>Sun, 28 Jul 2019 12:22:08 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/hjjh-01/</guid>
-      <description>&lt;p&gt;不知何时起，对汉服有了兴趣～&lt;/p&gt;
-
-&lt;p&gt;能做什么？
-1. 维护一个像B站二次元的网站（搞活动）
-2. 汉服实体店
-3. 联动武侠IP，电影？动漫？
-4. 侠客栈（民宿）
-5. IP手办？&lt;/p&gt;
 </description>
     </item>
     

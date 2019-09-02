@@ -6,10 +6,24 @@
     <description>Recent content in 随便学学 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Sep 2019 17:08:32 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 02 Sep 2019 18:56:56 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>JS 事件循环</title>
+      <link>https://hueralin.github.io/2019/eventloop/</link>
+      <pubDate>Mon, 02 Sep 2019 18:56:56 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/eventloop/</guid>
+      <description>MDN 事件循环
+栈 由函数调用组成的栈，也被称为 “执行栈” ，函数被调用时压入栈，执行完毕弹出栈。结合 JS执行环境 中所讲的内容，函数调用栈中的每一个帧都是一个执行环境，执行环境里面包含着变量对象（函数被调用时才会有）。
+堆 存放对象等非结构化的数据。
+队列 待处理 的消息队列，队列中的每一个消息都对应着一个消息处理函数。事件循环过程中，会处理最先进入消息队列的消息，将该消息出队，作为输入参数去调用与之关联的消息处理函数，函数的调用会入栈，执行完出栈，直到执行栈为空，然后再处理下一个消息。
+拿一个简单的例子来说明：
+console.log(&#39;start&#39;) setTimeout(() =&amp;gt; { console.log(&#39;time over!&#39;) }, 0) console.log(&#39;end&#39;) // start // end // time over!  即使延迟设置为0也不会立即执行，setTimeout的延迟时间是最小延迟时间，即最少也需要xxx时间才会把回调函数放入消息队列。注意！是放进消息队列，而不是执行回调函数，好多人都会认为这里是到时间后执行回调函数，其实是到时间后将事件处理函数放入消息队列，然后等待被执行。所有的事件都是这样，满足条件后将事件处理函数放入消息队列，然后等待事件循环到它时才会被执行。</description>
+    </item>
     
     <item>
       <title>狐耳的技术栈</title>

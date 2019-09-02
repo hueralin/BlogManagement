@@ -9,9 +9,9 @@
   
   
   
-  <link rel="prev" href="https://hueralin.github.io/2019/jsec/" />
-  <link rel="next" href="https://hueralin.github.io/2019/eventloop/" />
-  <link rel="canonical" href="https://hueralin.github.io/2019/stack/" />
+  <link rel="prev" href="https://hueralin.github.io/2019/stack/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/eventloop/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,10 +22,10 @@
   <title>
        
        
-           狐耳的技术栈 | 狐耳的雪原
+           JS 事件循环 | 狐耳的雪原
        
   </title>
-  <meta name="title" content="狐耳的技术栈 | 狐耳的雪原">
+  <meta name="title" content="JS 事件循环 | 狐耳的雪原">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "https:\/\/hueralin.github.io"
     },
     "articleSection" : "posts",
-    "name" : "狐耳的技术栈",
-    "headline" : "狐耳的技术栈",
-    "description" : " JavaScript JS闭包\n JS执行环境\/AO\/VO\n 事件循环\n async\/await\n  HTML CSS 性能优化手段 webpack ",
+    "name" : "JS 事件循环",
+    "headline" : "JS 事件循环",
+    "description" : "MDN 事件循环\n栈 由函数调用组成的栈，也被称为 “执行栈” ，函数被调用时压入栈，执行完毕弹出栈。结合 JS执行环境 中所讲的内容，函数调用栈中的每一个帧都是一个执行环境，执行环境里面包含着变量对象（函数被调用时才会有）。\n堆 存放对象等非结构化的数据。\n队列 待处理 的消息队列，队列中的每一个消息都对应着一个消息处理函数。事件循环过程中，会处理最先进入消息队列的消息，将该消息出队，作为输入参数去调用与之关联的消息处理函数，函数的调用会入栈，执行完出栈，直到执行栈为空，然后再处理下一个消息。\n拿一个简单的例子来说明：\nconsole.log(\x27start\x27) setTimeout(() =\x26gt; { console.log(\x27time over!\x27) }, 0) console.log(\x27end\x27) \/\/ start \/\/ end \/\/ time over!  即使延迟设置为0也不会立即执行，setTimeout的延迟时间是最小延迟时间，即最少也需要xxx时间才会把回调函数放入消息队列。注意！是放进消息队列，而不是执行回调函数，好多人都会认为这里是到时间后执行回调函数，其实是到时间后将事件处理函数放入消息队列，然后等待被执行。所有的事件都是这样，满足条件后将事件处理函数放入消息队列，然后等待事件循环到它时才会被执行。",
     "inLanguage" : "en-us",
     "author" : "狐耳",
     "creator" : "狐耳",
@@ -54,10 +54,10 @@
     "accountablePerson" : "狐耳",
     "copyrightHolder" : "狐耳",
     "copyrightYear" : "2019",
-    "datePublished": "2019-09-02 17:08:32 \x2b0800 CST",
-    "dateModified" : "2019-09-02 17:08:32 \x2b0800 CST",
-    "url" : "https:\/\/hueralin.github.io\/2019\/stack\/",
-    "wordCount" : "9",
+    "datePublished": "2019-09-02 18:56:56 \x2b0800 CST",
+    "dateModified" : "2019-09-02 18:56:56 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/eventloop\/",
+    "wordCount" : "31",
     "keywords" : [  "狐耳的雪原"]
 }
 </script>
@@ -122,7 +122,7 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">狐耳的技术栈</h1>
+        <h1 class="post-title" itemprop="name headline">JS 事件循环</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
                 <span class="post-time">
@@ -140,6 +140,8 @@
         
 
         
+            
+        
 
         
         
@@ -154,22 +156,35 @@
 
           
 
-<h3 id="javascript">JavaScript</h3>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop" rel="nofollow noreferrer" target="_blank">MDN 事件循环</a></p>
 
-<ul class="task-list">
-<li><label><input type="checkbox" checked disabled class="task-list-item"> <a href="https://hueralin.github.io/2019/closure/" rel="nofollow noreferrer" target="_blank">JS闭包</a><br /></label></li>
-<li><label><input type="checkbox" checked disabled class="task-list-item"> <a href="https://hueralin.github.io/2019/jsec/" rel="nofollow noreferrer" target="_blank">JS执行环境/AO/VO</a><br /></label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> 事件循环<br /></label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> async/await<br /></label></li>
-</ul>
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/eventloop.svg" alt="从MDN上盗个图" class="lazyload"><figcaption class="image-caption">从MDN上盗个图</figcaption></figure></p>
 
-<h3 id="html">HTML</h3>
+<h3 id="栈">栈</h3>
 
-<h3 id="css">CSS</h3>
+<p>由函数调用组成的栈，也被称为 “执行栈” ，函数被调用时压入栈，执行完毕弹出栈。结合 <a href="http://localhost:1313/2019/jsec/" rel="nofollow noreferrer" target="_blank">JS执行环境</a> 中所讲的内容，函数调用栈中的每一个帧都是一个执行环境，执行环境里面包含着变量对象（函数被调用时才会有）。</p>
 
-<h3 id="性能优化手段">性能优化手段</h3>
+<h3 id="堆">堆</h3>
 
-<h3 id="webpack">webpack</h3>
+<p>存放对象等非结构化的数据。</p>
+
+<h3 id="队列">队列</h3>
+
+<p><strong>待处理</strong> 的消息队列，队列中的每一个消息都对应着一个消息处理函数。事件循环过程中，会处理最先进入消息队列的消息，将该消息出队，作为输入参数去调用与之关联的消息处理函数，函数的调用会入栈，执行完出栈，直到执行栈为空，然后再处理下一个消息。</p>
+
+<p>拿一个简单的例子来说明：</p>
+
+<pre><code class="language-javascript">console.log('start')
+setTimeout(() =&gt; {
+    console.log('time over!')
+}, 0)
+console.log('end')
+// start
+// end
+// time over!
+</code></pre>
+
+<p>即使延迟设置为0也不会立即执行，setTimeout的延迟时间是最小延迟时间，即最少也需要xxx时间才会把回调函数放入消息队列。<strong>注意！是放进消息队列，而不是执行回调函数</strong>，好多人都会认为这里是到时间后执行回调函数，其实是到时间后将事件处理函数放入消息队列，然后等待被执行。<strong>所有的事件都是这样，满足条件后将事件处理函数放入消息队列，然后等待事件循环到它时才会被执行。</strong></p>
 
     </div>
 
@@ -184,7 +199,7 @@
              
             <p class="copyright-item">
                     <span>Link:</span>
-                    <a href=https://hueralin.github.io/2019/stack/>https://hueralin.github.io/2019/stack/</span>
+                    <a href=https://hueralin.github.io/2019/eventloop/>https://hueralin.github.io/2019/eventloop/</span>
             </p>
             
              
@@ -205,10 +220,8 @@
 
     <div class="post-nav">
         
-        <a href="https://hueralin.github.io/2019/jsec/" class="prev" rel="prev" title="JS执行环境，作用域链，变量对象/活动对象"><i class="iconfont icon-left"></i>&nbsp;JS执行环境，作用域链，变量对象/活动对象</a>
+        <a href="https://hueralin.github.io/2019/stack/" class="prev" rel="prev" title="狐耳的技术栈"><i class="iconfont icon-left"></i>&nbsp;狐耳的技术栈</a>
          
-        
-        <a href="https://hueralin.github.io/2019/eventloop/" class="next" rel="next" title="JS 事件循环">JS 事件循环&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 
@@ -273,8 +286,9 @@
 
 
     
-    
-    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
     
   
 
