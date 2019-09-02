@@ -5,8 +5,35 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Sep 2019 11:20:42 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 02 Sep 2019 17:08:32 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>狐耳的技术栈</title>
+      <link>https://hueralin.github.io/2019/stack/</link>
+      <pubDate>Mon, 02 Sep 2019 17:08:32 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/stack/</guid>
+      <description>
+
+&lt;h3 id=&#34;javascript&#34;&gt;JavaScript&lt;/h3&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;a href=&#34;https://hueralin.github.io/2019/closure/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;JS闭包&lt;/a&gt;&lt;br /&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;a href=&#34;https://hueralin.github.io/2019/jsec/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;JS执行环境/AO/VO&lt;/a&gt;&lt;br /&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; disabled class=&#34;task-list-item&#34;&gt; 事件循环&lt;br /&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; disabled class=&#34;task-list-item&#34;&gt; async/await&lt;br /&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;html&#34;&gt;HTML&lt;/h3&gt;
+
+&lt;h3 id=&#34;css&#34;&gt;CSS&lt;/h3&gt;
+
+&lt;h3 id=&#34;性能优化手段&#34;&gt;性能优化手段&lt;/h3&gt;
+
+&lt;h3 id=&#34;webpack&#34;&gt;webpack&lt;/h3&gt;
+</description>
+    </item>
     
     <item>
       <title>JS执行环境，作用域链，变量对象/活动对象</title>
@@ -1077,36 +1104,6 @@ module.exports = {
 3. 联动武侠IP，电影？动漫？
 4. 侠客栈（民宿）
 5. IP手办？&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>实习项目的Header结构解析</title>
-      <link>https://hueralin.github.io/2019/zkheader/</link>
-      <pubDate>Sun, 28 Jul 2019 00:07:10 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/zkheader/</guid>
-      <description>&lt;p&gt;最近在做公司的项目，更改移动端Header的现有布局。&lt;br /&gt;
-Header是React组件，点击按钮出现侧边栏导航。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;下面简单来介绍一下Header的结构：&lt;/strong&gt;&lt;br /&gt;
-Header接受了3个props，分别是“userInfo”、“changeNavState”、“style”。&lt;br /&gt;
-userInfo是用户信息，changeNavState是用来更改侧边导航状态的函数，style是一个类样式。&lt;/p&gt;
-
-&lt;p&gt;以上几个props都交由PropTypes来验证参数的合法性。&lt;br /&gt;
-该Header组件内仅维护了一个状态，那就是 subNav，即侧边导航栏的显示与否，changeNavState函数改变的就是它。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;在render渲染函数中：&lt;/strong&gt;&lt;br /&gt;
-&lt;code&gt;const { userInfo, style } = this.props&lt;/code&gt;&lt;br /&gt;
-根据是否有userInfo.avatar属性来初始化headUrl变量（有则赋值为用户头像URL，无则赋值为默认头像URL）&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;接下来return一个JSX，&lt;/strong&gt;&lt;br /&gt;
-首先判断subNav是否为真，真则显示侧边导航。&lt;br /&gt;
-然后是左右布局，左边是点击显示侧边导航的下拉按钮和点击能返回主页的LOGO，右边是用户头像。&lt;br /&gt;
-左边的导航按钮添加点击事件（调用changeNavState函数），通过控制subNav状态来显示和隐藏侧边导航。&lt;br /&gt;
-右边判断userInfo.id属性，有则根据headeUrl显示用户头像，否则显示默认头像。默认头像图标添加点击跳转登录事件。&lt;/p&gt;
-
-&lt;p&gt;其中userInfo属性是由connect函数连接的， userInfo来自于Redux的State。&lt;/p&gt;
 </description>
     </item>
     
