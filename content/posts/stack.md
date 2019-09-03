@@ -8,7 +8,7 @@ categories: ["随便学学"]
 ### JavaScript  
 - [x] [JS闭包](https://hueralin.github.io/2019/closure/)  
 - [x] [JS执行环境/AO/VO](https://hueralin.github.io/2019/jsec/)  
-- [ ] 事件循环  
+- [x] 事件循环  
 - [ ] async/await  
 
 
