@@ -5,8 +5,237 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Sep 2019 18:56:56 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 04 Sep 2019 15:07:51 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>用友笔试题</title>
+      <link>https://hueralin.github.io/2019/yongyou/</link>
+      <pubDate>Wed, 04 Sep 2019 15:07:51 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/yongyou/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;21题&lt;br /&gt;
+css 中经常有类似 background-image 这种通过 - 连接的字符，通过 javascript 设置样式的时候需要将这种样式转换成 backgroundImage 驼峰格式，请完成此转换功能。&lt;br /&gt;
+输入：-webkit-background-image&lt;br /&gt;
+输出：webkitBackgroundImage&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;解法一、  
+思路：将输入按照‘-’分开，得到一个数组，例如：[&#39;&#39;, &#39;webkit&#39;, &#39;background&#39;, &#39;image&#39;]  
+然后从第三个元素开始，将首字母变大写（注意字符串是不可变的）
+function func(pre){
+    let splitArr = pre.split(&#39;-&#39;)
+    for(let i=2;i&amp;lt;splitArr.length;i++){
+        splitArr[i] = splitArr[i][0].toUpperCase() + splitArr[i].slice(1)
+    }
+    return splitArr.join(&#39;&#39;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;解法二、  
+思路：
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;22题&lt;br /&gt;
+请实现一个简单的事件机制，能够实现对事件的触发和监听。
+如：EventEmitter.on(); EventEmitter.trigger();&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;思路：封装一个对象，该对象有两个方法：on、trigger。on方法接收两个参数，事件名和回调函数，如果一个事件可以绑定过个回调，可以考虑使用数组。trigger方法接受一个参数，即事件名，拿到指定事件，将该事件下的所有回调函数执行一遍。
+这种写法只是实现了时间的触发和更新，并没有将事件绑定到某个元素上。
+function EventEmitter () {
+    let eventObj = {}
+
+    function on (eventName, callback) {
+        if (!eventObj[eventName]) {
+            eventObj[eventName] = []
+        }
+        eventObj[eventName].push(callback)
+    }
+
+    function trigger (eventName) {
+        if (!eventObj[eventName]) {
+            return
+        }
+        for(let i=0;i&amp;lt;eventObj[eventName].length;i++){
+            eventObj[eventName][i]()
+        }
+    }
+
+    return {
+        on: on,
+        trigger: trigger
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>节流和防抖</title>
+      <link>https://hueralin.github.io/2019/debounceandthrottle/</link>
+      <pubDate>Tue, 03 Sep 2019 17:43:42 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/debounceandthrottle/</guid>
+      <description>
+
+&lt;h3 id=&#34;lodash-防抖源码解读&#34;&gt;lodash 防抖源码解读&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;function debounce(func, wait, options) {
+  let lastArgs,
+    lastThis,
+    maxWait,
+    result,
+    timerId,
+    lastCallTime
+
+  let lastInvokeTime = 0
+  let leading = false
+  let maxing = false
+  let trailing = true
+
+  // Bypass `requestAnimationFrame` by explicitly setting `wait=0`.
+  const useRAF = (!wait &amp;amp;&amp;amp; wait !== 0 &amp;amp;&amp;amp; typeof root.requestAnimationFrame === &#39;function&#39;)
+
+  if (typeof func !== &#39;function&#39;) {
+    throw new TypeError(&#39;Expected a function&#39;)
+  }
+  wait = +wait || 0
+  if (isObject(options)) {
+    leading = !!options.leading
+    maxing = &#39;maxWait&#39; in options
+    maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait
+    trailing = &#39;trailing&#39; in options ? !!options.trailing : trailing
+  }
+
+  // 调用函数
+  function invokeFunc(time) {
+    const args = lastArgs
+    const thisArg = lastThis
+
+    lastArgs = lastThis = undefined
+    lastInvokeTime = time
+    result = func.apply(thisArg, args)
+    return result
+  }
+
+  function startTimer(pendingFunc, wait) {
+    if (useRAF) {
+      root.cancelAnimationFrame(timerId)
+      return root.requestAnimationFrame(pendingFunc)
+    }
+    return setTimeout(pendingFunc, wait)
+  }
+
+  function cancelTimer(id) {
+    if (useRAF) {
+      return root.cancelAnimationFrame(id)
+    }
+    clearTimeout(id)
+  }
+
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time
+    // Start the timer for the trailing edge.
+    timerId = startTimer(timerExpired, wait)
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result
+  }
+
+  function remainingWait(time) {
+    const timeSinceLastCall = time - lastCallTime
+    const timeSinceLastInvoke = time - lastInvokeTime
+    const timeWaiting = wait - timeSinceLastCall
+
+    return maxing
+      ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke)
+      : timeWaiting
+  }
+
+  function shouldInvoke(time) {
+    const timeSinceLastCall = time - lastCallTime
+    const timeSinceLastInvoke = time - lastInvokeTime
+
+    // Either this is the first call, activity has stopped and we&#39;re at the
+    // trailing edge, the system time has gone backwards and we&#39;re treating
+    // it as the trailing edge, or we&#39;ve hit the `maxWait` limit.
+    return (lastCallTime === undefined || (timeSinceLastCall &amp;gt;= wait) ||
+      (timeSinceLastCall &amp;lt; 0) || (maxing &amp;amp;&amp;amp; timeSinceLastInvoke &amp;gt;= maxWait))
+  }
+
+  function timerExpired() {
+    const time = Date.now()
+    if (shouldInvoke(time)) {
+      return trailingEdge(time)
+    }
+    // Restart the timer.
+    timerId = startTimer(timerExpired, remainingWait(time))
+  }
+
+  function trailingEdge(time) {
+    timerId = undefined
+
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing &amp;amp;&amp;amp; lastArgs) {
+      return invokeFunc(time)
+    }
+    lastArgs = lastThis = undefined
+    return result
+  }
+
+  function cancel() {
+    if (timerId !== undefined) {
+      cancelTimer(timerId)
+    }
+    lastInvokeTime = 0
+    lastArgs = lastCallTime = lastThis = timerId = undefined
+  }
+
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(Date.now())
+  }
+
+  function pending() {
+    return timerId !== undefined
+  }
+
+  function debounced(...args) {
+    const time = Date.now()
+    const isInvoking = shouldInvoke(time)
+
+    lastArgs = args
+    lastThis = this
+    lastCallTime = time
+
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime)
+      }
+      if (maxing) {
+        // Handle invocations in a tight loop.
+        timerId = startTimer(timerExpired, wait)
+        return invokeFunc(lastCallTime)
+      }
+    }
+    if (timerId === undefined) {
+      timerId = startTimer(timerExpired, wait)
+    }
+    return result
+  }
+  debounced.cancel = cancel
+  debounced.flush = flush
+  debounced.pending = pending
+  return debounced
+}
+
+export default debounce
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>JS 事件循环</title>
@@ -1060,162 +1289,6 @@ match对象包含一些路由匹配的信息，match对象从this.props.match中
 &lt;p&gt;技术债务&lt;/p&gt;
 
 &lt;p&gt;迭代开发 增量交付 自组织团队 高价值的优先级排序&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Webpack4 配置文件解析</title>
-      <link>https://hueralin.github.io/2019/webpack4/</link>
-      <pubDate>Mon, 29 Jul 2019 18:54:31 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/webpack4/</guid>
-      <description>&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;let path = require(&#39;path&#39;)
-// 创建HTML模板的插件
-let HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;)
-// 抽离CSS样式为单独文件的插件（原来都是将CSS样式全部放进了style里面）
-let MiniCssExtractPlugin = require(&#39;mini-css-extract-plugin&#39;)
-// 优化CSS的插件（压缩CSS文件）
-let OptimizeCss = require(&#39;optimize-css-assets-webpack-plugin&#39;)
-// 用了上面优化CSS的插件，就得使用下面这个插件来优化JS（压缩JS文件）
-let UglifyJsWebpackPlugin = require(&#39;uglifyjs-webpack-plugin&#39;)
-
-module.exports = {
-
-    // 优化CSS和JS
-    // 优化项
-    optimization: {
-        // 压缩
-        minimizer: [
-            new UglifyJsWebpackPlugin({
-                cache: true,    // 缓存
-                parallel: true, // 并发压缩
-                sourceMap: true // 
-            }),
-            new OptimizeCss()
-        ]
-    },
-
-    // 模式：开发和生产模式两种
-    mode: &#39;development&#39;,
-    entry: &#39;./src/index.js&#39;,
-    output: {
-        // path 必须是绝对路径
-        // path.resolve()可以将相对路径解析为绝对路径
-        // __dirname 是当前目录
-        path: path.resolve(__dirname, &#39;build&#39;),
-        // 加上hash，每次都生成一个新的文件(不重复 ，防止出现缓存或覆盖的问题)（8位hash值）
-        filename: &#39;bundle.[hash:8].js&#39;
-
-    },
-    devServer: {
-        port: 3000,
-        // 显示进度条
-        progress: true,
-        //  以build目录为静态服务的根目录(所有被服务的内容都来自这里)
-        contentBase: &#39;./build&#39;,
-        // 启动时自动打开浏览器
-        open: true,
-        // 使用gzip压缩所有被服务的文件
-        compress: true
-    },
-    plugins: [
-        // 这个插件可以按照模板生成一个index.html文件，并插入打包后的bundle.js文件
-        new HtmlWebpackPlugin({
-            // 指定模板文件
-            template: &#39;./src/index.html&#39;,
-            // 打包后的文件名
-            filename: &#39;index.html&#39;,
-            // 上线时的压缩操作
-            minify: {
-                // 去掉属性的引号
-                removeAttributeQuotes: true,
-                // （压缩）变成单行
-                collapseWhitespace: true,
-            },
-            // 在引用文件名尾部加一个hash串
-            hash: true
-        }),
-        new MiniCssExtractPlugin({
-            // 抽离出来的CSS文件的名字
-            filename: &#39;main.css&#39;
-        })
-    ],
-    module: {   // 模块
-        rules: [    // 规则
-            {
-                // css-loader是来处理 css文件中@import语法的
-                // style-loader 是来将css文件插入到html中的style标签里去的
-                // 使用单个loader只需要一个字符串表示，
-                // 使用多个loader需要用数组
-                // loader的顺序，从右向左执行
-
-                // loader还可以用对象表示法（ 即数组元素为对象而不是字符串），该方法下可以传个option
-                test: /\.css$/,
-                use: [
-                    // {
-                    //     loader: &#39;style-loader&#39;,
-                    //     options: {
-                    //         // 将CSS文件插入到模板HTML自定义样式的上方
-                    //         insertAt: &#39;top&#39;
-                    //     }
-                    // }
-                    // 使用MiniCssExtractPlugin插件的loader，通过link引用CSS文件
-                    MiniCssExtractPlugin.loader
-                    , &#39;css-loader&#39;
-                    , {
-                        loader: &#39;postcss-loader&#39;,
-                        options: {
-                            plugins: [
-                                require(&#39;autoprefixer&#39;)
-                            ]
-                        }
-                    }]     // 自动加前缀，兼容浏览器
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    MiniCssExtractPlugin.loader
-                    , &#39;css-loader&#39;
-                    ,  {
-                        loader: &#39;postcss-loader&#39;,
-                        options: {
-                            plugins: [
-                                require(&#39;autoprefixer&#39;)
-                            ]
-                        }
-                    } // 加前缀
-                    ,  &#39;less-loader&#39;    // 处理less文件   
-                ]      
-            }
-        ]
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>汉服那么美，为何现在流行不起来</title>
-      <link>https://hueralin.github.io/2019/hjjh-02/</link>
-      <pubDate>Sun, 28 Jul 2019 12:27:50 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/hjjh-02/</guid>
-      <description>&lt;ol&gt;
-&lt;li&gt;出行不便（生活节奏）&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;价格昂贵（手工刺绣，配饰）&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;身材和气质（汉服对这两点要求有点高）&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;普及范围狭窄（汉服知识？恐怕得考古好久）&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;服装和文化一样，要与时俱进。要想发扬汉服文化，让汉服流行起来，不能一味的追求历史（此言不当，不知如何表述），应该结合当下的形式，做出一些改进，这算不上“取其精华，去其糟粕”，古代的穿衣礼节，穿衣过程确有其繁琐的地方，放到现代来确实让人难以接受，这也是汉服流行不起来的原因之一。我们不能一味的遵从汉服文化而渐渐变得复古，这也是不可能的。最近在相关贴吧上看到过这样一个帖子，有个小姐姐晒出汉服写真却被一群大叔嘲讽，不懂汉服历史，穿着不伦不类，不认同这是汉服，戏称为“花衣服”。大叔们有这种想法也无可厚非，毕竟现在的穿汉服的人多多少少也搭配着一些现代的服饰，比如手表、小白鞋，还有大叔们嘲讽的丝袜，小姐姐面对嘲讽也是欲哭无泪&amp;hellip;&lt;/p&gt;
-
-&lt;p&gt;小姐姐错了么？大叔们错了么？&lt;/p&gt;
-
-&lt;p&gt;在我看来，此事无关对错。现在的年轻人穿汉服无非两个原因，其一是服饰着实好看，其二是想为发扬中国传统文化献上一份力量。曾经抖音上的一个短视频对我产生了一丝丝触动，一个女孩儿边哭变向床上扔着一件件汉服，边扔边说“我穿汉服上街怎么了？我喜欢汉服，这有错么，碍着你们了？一个个用异样的眼光看我，甚至还嘲讽我穿着奇装异服”，“在日本韩国，这在他们看来是很正常不过的事情，为什么在国内穿传统服装却被看作异类”（Emmm，原话忘了，大体这个意思吧）这段话引起了我的思考&lt;/p&gt;
-
-&lt;p&gt;至于思考了啥？晚上回去再说，学习！😂&lt;/p&gt;
-
-&lt;p&gt;to be continue&amp;hellip;&lt;/p&gt;
 </description>
     </item>
     
