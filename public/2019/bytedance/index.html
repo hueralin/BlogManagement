@@ -9,9 +9,9 @@
   
   
   
-  <link rel="prev" href="https://hueralin.github.io/2019/debounceandthrottle/" />
-  <link rel="next" href="https://hueralin.github.io/2019/bytedance/" />
-  <link rel="canonical" href="https://hueralin.github.io/2019/yongyou/" />
+  <link rel="prev" href="https://hueralin.github.io/2019/yongyou/" />
+  <link rel="next" href="https://hueralin.github.io/2019/tcpys/" />
+  <link rel="canonical" href="https://hueralin.github.io/2019/bytedance/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,10 +22,10 @@
   <title>
        
        
-           用友笔试题 | 狐耳的雪原
+           字节跳动面试题 | 狐耳的雪原
        
   </title>
-  <meta name="title" content="用友笔试题 | 狐耳的雪原">
+  <meta name="title" content="字节跳动面试题 | 狐耳的雪原">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "https:\/\/hueralin.github.io"
     },
     "articleSection" : "posts",
-    "name" : "用友笔试题",
-    "headline" : "用友笔试题",
-    "description" : "21题\ncss 中经常有类似 background-image 这种通过 - 连接的字符，通过 javascript 设置样式的时候需要将这种样式转换成 backgroundImage 驼峰格式，请完成此转换功能。\n输入：-webkit-background-image\n输出：webkitBackgroundImage\n 解法一、 思路：将输入按照‘-’分开，得到一个数组，例如：[\x27\x27, \x27webkit\x27, \x27background\x27, \x27image\x27] 然后从第三个元素开始，将首字母变大写（注意字符串是不可变的） function func(pre){ let splitArr = pre.split(\x27-\x27) for(let i=2;i\x26lt;splitArr.length;i\x2b\x2b){ splitArr[i] = splitArr[i][0].toUpperCase() \x2b splitArr[i].slice(1) } return splitArr.join(\x27\x27) }  解法二、 思路：   22题\n请实现一个简单的事件机制，能够实现对事件的触发和监听。 如：EventEmitter.on(); EventEmitter.trigger();\n 思路：封装一个对象，该对象有两个方法：on、trigger。on方法接收两个参数，事件名和回调函数，如果一个事件可以绑定过个回调，可以考虑使用数组。trigger方法接受一个参数，即事件名，拿到指定事件，将该事件下的所有回调函数执行一遍。 这种写法只是实现了时间的触发和更新，并没有将事件绑定到某个元素上。 function EventEmitter () { let eventObj = {} function on (eventName, callback) { if (!eventObj[eventName]) { eventObj[eventName] = [] } eventObj[eventName].",
+    "name" : "字节跳动面试题",
+    "headline" : "字节跳动面试题",
+    "description" : " 实现sleep函数（将程序挂起一段时间，阻塞运行） 我能想到的方法就是ES6的 async\/await function my_sleep (time) { return new Promise((resolve) =\x26gt; { setTimeout(() =\x26gt; { resolve() }, time) }) } async function main() { console.log(\x27start\x27) await my_sleep(5000) console.log(\x27end\x27) } main() 网上还有一种解法，利用循环\x2bDate()，不断的循环，检测当前时间是否超出了间隔时间 原理就是一直在执行同步任务，阻塞下面同步任务的执行 function my_sleep (time) { let start = new Date().getTime() \/\/ 一串长数字 let end = start \x2b time \/\/ time是毫秒 while(new Date().getTime() \x26lt;= end){} } console.log(\x27start\x27) my_sleep(5000) console.log(\x27end\x27)  ",
     "inLanguage" : "en-us",
     "author" : "狐耳",
     "creator" : "狐耳",
@@ -54,10 +54,10 @@
     "accountablePerson" : "狐耳",
     "copyrightHolder" : "狐耳",
     "copyrightYear" : "2019",
-    "datePublished": "2019-09-04 15:07:51 \x2b0800 CST",
-    "dateModified" : "2019-09-04 15:07:51 \x2b0800 CST",
-    "url" : "https:\/\/hueralin.github.io\/2019\/yongyou\/",
-    "wordCount" : "88",
+    "datePublished": "2019-09-04 16:18:24 \x2b0800 CST",
+    "dateModified" : "2019-09-04 16:18:24 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/bytedance\/",
+    "wordCount" : "59",
     "keywords" : [  "狐耳的雪原"]
 }
 </script>
@@ -122,7 +122,7 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">用友笔试题</h1>
+        <h1 class="post-title" itemprop="name headline">字节跳动面试题</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
                 <span class="post-time">
@@ -152,61 +152,34 @@
           
           
 
-          <blockquote>
-<p>21题<br />
-css 中经常有类似 background-image 这种通过 - 连接的字符，通过 javascript 设置样式的时候需要将这种样式转换成 backgroundImage 驼峰格式，请完成此转换功能。<br />
-输入：-webkit-background-image<br />
-输出：webkitBackgroundImage</p>
-</blockquote>
+          
 
-<pre><code class="language-javascript">解法一、  
-思路：将输入按照‘-’分开，得到一个数组，例如：['', 'webkit', 'background', 'image']  
-然后从第三个元素开始，将首字母变大写（注意字符串是不可变的）
-function func(pre){
-    let splitArr = pre.split('-')
-    for(let i=2;i&lt;splitArr.length;i++){
-        splitArr[i] = splitArr[i][0].toUpperCase() + splitArr[i].slice(1)
-    }
-    return splitArr.join('')
+<h3 id="实现sleep函数-将程序挂起一段时间-阻塞运行">实现sleep函数（将程序挂起一段时间，阻塞运行）</h3>
+
+<pre><code class="language-javascript">我能想到的方法就是ES6的 async/await
+function my_sleep (time) {
+    return new Promise((resolve) =&gt; {
+        setTimeout(() =&gt; {
+            resolve()
+        }, time)
+    })
 }
-</code></pre>
-
-<pre><code class="language-javascript">解法二、  
-思路：
-</code></pre>
-
-<blockquote>
-<p>22题<br />
-请实现一个简单的事件机制，能够实现对事件的触发和监听。
-如：EventEmitter.on(); EventEmitter.trigger();</p>
-</blockquote>
-
-<pre><code class="language-javascript">思路：封装一个对象，该对象有两个方法：on、trigger。on方法接收两个参数，事件名和回调函数，如果一个事件可以绑定过个回调，可以考虑使用数组。trigger方法接受一个参数，即事件名，拿到指定事件，将该事件下的所有回调函数执行一遍。
-这种写法只是实现了时间的触发和更新，并没有将事件绑定到某个元素上。
-function EventEmitter () {
-    let eventObj = {}
-
-    function on (eventName, callback) {
-        if (!eventObj[eventName]) {
-            eventObj[eventName] = []
-        }
-        eventObj[eventName].push(callback)
-    }
-
-    function trigger (eventName) {
-        if (!eventObj[eventName]) {
-            return
-        }
-        for(let i=0;i&lt;eventObj[eventName].length;i++){
-            eventObj[eventName][i]()
-        }
-    }
-
-    return {
-        on: on,
-        trigger: trigger
-    }
+async function main() {
+    console.log('start')
+    await my_sleep(5000)
+    console.log('end')
 }
+main()
+网上还有一种解法，利用循环+Date()，不断的循环，检测当前时间是否超出了间隔时间  
+原理就是一直在执行同步任务，阻塞下面同步任务的执行
+function my_sleep (time) {
+    let start = new Date().getTime()    // 一串长数字
+    let end = start + time  // time是毫秒
+    while(new Date().getTime() &lt;= end){}
+}
+console.log('start')
+my_sleep(5000)
+console.log('end')
 </code></pre>
 
     </div>
@@ -222,7 +195,7 @@ function EventEmitter () {
              
             <p class="copyright-item">
                     <span>Link:</span>
-                    <a href=https://hueralin.github.io/2019/yongyou/>https://hueralin.github.io/2019/yongyou/</span>
+                    <a href=https://hueralin.github.io/2019/bytedance/>https://hueralin.github.io/2019/bytedance/</span>
             </p>
             
              
@@ -243,10 +216,10 @@ function EventEmitter () {
 
     <div class="post-nav">
         
-        <a href="https://hueralin.github.io/2019/debounceandthrottle/" class="prev" rel="prev" title="节流和防抖"><i class="iconfont icon-left"></i>&nbsp;节流和防抖</a>
+        <a href="https://hueralin.github.io/2019/yongyou/" class="prev" rel="prev" title="用友笔试题"><i class="iconfont icon-left"></i>&nbsp;用友笔试题</a>
          
         
-        <a href="https://hueralin.github.io/2019/bytedance/" class="next" rel="next" title="字节跳动面试题">字节跳动面试题&nbsp;<i class="iconfont icon-right"></i></a>
+        <a href="https://hueralin.github.io/2019/tcpys/" class="next" rel="next" title="TCP流量控制、拥塞控制">TCP流量控制、拥塞控制&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

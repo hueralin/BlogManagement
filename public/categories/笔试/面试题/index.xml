@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>笔试/面试题 on 狐耳的雪原</title>
+    <link>https://hueralin.github.io/categories/%E7%AC%94%E8%AF%95/%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <description>Recent content in 笔试/面试题 on 狐耳的雪原</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 04 Sep 2019 16:18:24 +0800</lastBuildDate>
+    
+	<atom:link href="https://hueralin.github.io/categories/%E7%AC%94%E8%AF%95/%E9%9D%A2%E8%AF%95%E9%A2%98/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>字节跳动面试题</title>
+      <link>https://hueralin.github.io/2019/bytedance/</link>
+      <pubDate>Wed, 04 Sep 2019 16:18:24 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/bytedance/</guid>
+      <description> 实现sleep函数（将程序挂起一段时间，阻塞运行） 我能想到的方法就是ES6的 async/await function my_sleep (time) { return new Promise((resolve) =&amp;gt; { setTimeout(() =&amp;gt; { resolve() }, time) }) } async function main() { console.log(&#39;start&#39;) await my_sleep(5000) console.log(&#39;end&#39;) } main() 网上还有一种解法，利用循环+Date()，不断的循环，检测当前时间是否超出了间隔时间 原理就是一直在执行同步任务，阻塞下面同步任务的执行 function my_sleep (time) { let start = new Date().getTime() // 一串长数字 let end = start + time // time是毫秒 while(new Date().getTime() &amp;lt;= end){} } console.log(&#39;start&#39;) my_sleep(5000) console.log(&#39;end&#39;)  </description>
+    </item>
+    
+    <item>
+      <title>用友笔试题</title>
+      <link>https://hueralin.github.io/2019/yongyou/</link>
+      <pubDate>Wed, 04 Sep 2019 15:07:51 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/yongyou/</guid>
+      <description>21题
+css 中经常有类似 background-image 这种通过 - 连接的字符，通过 javascript 设置样式的时候需要将这种样式转换成 backgroundImage 驼峰格式，请完成此转换功能。
+输入：-webkit-background-image
+输出：webkitBackgroundImage
+ 解法一、 思路：将输入按照‘-’分开，得到一个数组，例如：[&#39;&#39;, &#39;webkit&#39;, &#39;background&#39;, &#39;image&#39;] 然后从第三个元素开始，将首字母变大写（注意字符串是不可变的） function func(pre){ let splitArr = pre.split(&#39;-&#39;) for(let i=2;i&amp;lt;splitArr.length;i++){ splitArr[i] = splitArr[i][0].toUpperCase() + splitArr[i].slice(1) } return splitArr.join(&#39;&#39;) }  解法二、 思路：   22题
+请实现一个简单的事件机制，能够实现对事件的触发和监听。 如：EventEmitter.on(); EventEmitter.trigger();
+ 思路：封装一个对象，该对象有两个方法：on、trigger。on方法接收两个参数，事件名和回调函数，如果一个事件可以绑定过个回调，可以考虑使用数组。trigger方法接受一个参数，即事件名，拿到指定事件，将该事件下的所有回调函数执行一遍。 这种写法只是实现了时间的触发和更新，并没有将事件绑定到某个元素上。 function EventEmitter () { let eventObj = {} function on (eventName, callback) { if (!eventObj[eventName]) { eventObj[eventName] = [] } eventObj[eventName].</description>
+    </item>
+    
+  </channel>
+</rss>

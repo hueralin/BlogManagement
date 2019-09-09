@@ -2,7 +2,7 @@
 title: "用友笔试题"
 date: 2019-09-04T15:07:51+08:00
 draft: false,
-categories: ['笔试题']
+categories: ['笔试/面试题']
 ---
 
 > 21题  

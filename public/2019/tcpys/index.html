@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/bytedance/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/tcpys/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           TCP流量控制、拥塞控制 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="TCP流量控制、拥塞控制 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "TCP流量控制、拥塞控制",
+    "headline" : "TCP流量控制、拥塞控制",
+    "description" : "计算机网络推荐书籍：计算机网络（谢希仁）\nTCP流量控制、拥塞控制\n在前端面试中关于计算机网络的知识多半是HTTP协议、TCP\/IP协议，拥塞控制之类的。昨天看了几篇关于拥塞控制的文章，现来做一些总结。\nTCP流量控制 一、 流量控制的原因\n双方在通信时会涉及到通信速率的问题，即发送速率和处理速率，这两个速率往往是不一样的。如果发送方的发送速率太快，接收方来不及处理，就会将报文放进缓存，若发送方仍不控制发送速率，那么缓存终会爆满，导致丢包，浪费网络资源，所以应该对发送方的发送速率进行控制，使发送方和接收方达到一种动态平衡。\n流量控制，即控制发送方的发送速率。\n二、滑动窗口\n滑动窗口协议：TCP协议中的一种应用，用于网络数据传输中的流量控制。\n该协议允许发送方在停止并等待确认报文前发送多个数据，不必每发完一段数据就定下来等待确认，提高网络的吞吐量，所以TCP定义了一个滑动窗口协议，滑动窗口包括发送窗口和接受窗口。\n相关概念\n1. 窗口：一段可以被发送者连续发送的字节序列范围。\n2. 滑动：“窗口”的大小会随着发送过程变化，这种变化是在字节序列上按顺序滑动的。\n因为TCP协议是全双工协议，所以双方都有一个发送缓冲区和接收缓冲区。\n发送缓冲区接收来自应用层的数据（一长条字节流？），而发送窗口框住了其中的一部分（前面说了，窗口其实是一段范围）。\n发送缓存区相关的四个概念：\n1. 已发送并受到确认\n2. 已发送但未收到确认\n3. 允许发送但未发送\n4. 不允许发送\n其中，允许发送的数据都在发送窗口内。每次成功发送数据之后，发送窗口就会在发送缓冲区中按顺序移动，将新的数据包含到窗口中准备发送。\n下面，我借由计算机网络（谢希仁）中的图片来讲解一下过程(后来发现copy率达到99.9%)：\nA B 双方在建立TCP连接的时候，B就已经向A给出了自己的窗口值，发送方A会根据这个值来构造自己的发送窗口。\n发送窗口表示：在没有收到B的确认情况下，A可以连续把发送窗口中的数据都发送出去。凡是发送过的数据在未收到确认前都应留在发送窗口内，以便超时重传。\n发送窗口的位置由前沿和后沿的位置来确定：\n1. 前沿：不动或前移。不动，可能是因为没有收到确认，或收到了确认但接受窗口缩小了。\n2. 后沿：不动或前移。\nA发送了11个字节的数据，但未收到新的确认，所以前沿后沿都不变，即发送窗口的位置不变。\n看B的接收窗口，32 33 未按序到达，因为接收方发送的确认号ack是由按序到达数据的最高序号决定的，所以B返回的确认号仍然是31。导致了A的发送窗口不变。\n描述一个发送窗口的状态需要三个指针：p1、p2、p3。\n1. 小于p1：已发送且已收到确认的部分\n2. 大于p3：不允许发送的部分\n3. p3 - p1：发送窗口\n4. p2 - p1：已发送但未收到确认的部分\n5. p3 - p2：允许发送但未发送的部分，又叫“可用窗口”、“有效窗口”\nB 收到了31，然后返回确认号34，表明31 32 33 都收到了，且已交付主机。A收到确认号后，发送窗口前移，后沿前移3位指向34。指针p2不动，可用窗口变大，可发送42-53的数据。\n42-53的数据都被发送了出去，p2指针与p3指针重合，但是没有收到确认，使得可用窗口为0，A不能再发送数据，必须等到B的确认。但是B发送的确认可能在网络中延时了，没有及时到达，A就会一直等，B也会一直等待A发送数据，造成死锁。所以A有一个超时计时器机制，一段时间后没有收到B的确认，会自动重传这部分数据并重置超时计时器，直到收到B的确认为止。\n三、如何控制\n流量控制主要依靠滑动窗口来实现\n流量控制即接收方B向发送方A传递消息，使其不要发送太快～，是一种端到端的控制。利用B返回的报文中的接收窗口的大小来控制A的发送窗口大小。rwnd: 接收窗口",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-09-09 12:51:57 \x2b0800 CST",
+    "dateModified" : "2019-09-09 12:51:57 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/tcpys\/",
+    "wordCount" : "89",
+    "keywords" : [ "计算机网络", "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                &lt;-
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+                ->
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">TCP流量控制、拥塞控制</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-09-09 itemprop="datePublished">September 9, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/"> 随便学学 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<p>计算机网络推荐书籍：计算机网络（谢希仁）</p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/37379780" rel="nofollow noreferrer" target="_blank">TCP流量控制、拥塞控制</a></p>
+
+<p>在前端面试中关于计算机网络的知识多半是HTTP协议、TCP/IP协议，拥塞控制之类的。昨天看了几篇关于拥塞控制的文章，现来做一些总结。</p>
+
+<h2 id="tcp流量控制">TCP流量控制</h2>
+
+<p><strong>一、 流量控制的原因</strong></p>
+
+<p>双方在通信时会涉及到通信速率的问题，即发送速率和处理速率，这两个速率往往是不一样的。如果发送方的发送速率太快，接收方来不及处理，就会将报文放进缓存，若发送方仍不控制发送速率，那么缓存终会爆满，导致丢包，浪费网络资源，所以应该对发送方的发送速率进行控制，使发送方和接收方达到一种动态平衡。</p>
+
+<p>流量控制，即控制发送方的发送速率。</p>
+
+<p><strong>二、滑动窗口</strong></p>
+
+<p>滑动窗口协议：TCP协议中的一种应用，用于网络数据传输中的流量控制。</p>
+
+<p>该协议允许发送方在停止并等待确认报文前发送多个数据，不必每发完一段数据就定下来等待确认，提高网络的吞吐量，所以TCP定义了一个<strong>滑动窗口协议</strong>，滑动窗口包括<strong>发送窗口</strong>和<strong>接受窗口</strong>。</p>
+
+<p><strong>相关概念</strong><br />
+1. 窗口：一段可以被发送者连续发送的字节序列范围。<br />
+2. 滑动：“窗口”的大小会随着发送过程变化，这种变化是在字节序列上按顺序滑动的。</p>
+
+<p>因为TCP协议是全双工协议，所以双方都有一个<strong>发送缓冲区</strong>和<strong>接收缓冲区</strong>。<br />
+发送缓冲区接收来自应用层的数据（一长条字节流？），而发送窗口框住了其中的一部分（前面说了，窗口其实是一段范围）。</p>
+
+<p><strong>发送缓存区</strong>相关的四个概念：<br />
+1. 已发送并受到确认<br />
+2. 已发送但未收到确认<br />
+3. 允许发送但未发送<br />
+4. 不允许发送</p>
+
+<p>其中，允许发送的数据都在发送窗口内。每次成功发送数据之后，发送窗口就会在发送缓冲区中按顺序移动，将新的数据包含到窗口中准备发送。</p>
+
+<p>下面，我借由计算机网络（谢希仁）中的图片来讲解一下过程(后来发现copy率达到99.9%)：<br />
+A B 双方在建立TCP连接的时候，B就已经向A给出了自己的窗口值，发送方A会根据这个值来构造自己的发送窗口。<br />
+<figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/tcp01.png" alt="根据B给出的窗口值，A构造自己的发送窗口" class="lazyload"><figcaption class="image-caption">根据B给出的窗口值，A构造自己的发送窗口</figcaption></figure><br />
+发送窗口表示：在没有收到B的确认情况下，A可以连续把发送窗口中的数据都发送出去。凡是发送过的数据在未收到确认前都应留在发送窗口内，以便超时重传。</p>
+
+<p>发送窗口的位置由前沿和后沿的位置来确定：<br />
+1. 前沿：不动或前移。不动，可能是因为没有收到确认，或收到了确认但接受窗口缩小了。<br />
+2. 后沿：不动或前移。</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/tcp02.png" alt="A发送了11个字节的数据" class="lazyload"><figcaption class="image-caption">A发送了11个字节的数据</figcaption></figure></p>
+
+<p>A发送了11个字节的数据，但未收到新的确认，所以前沿后沿都不变，即发送窗口的位置不变。<br />
+看B的接收窗口，32 33 未按序到达，因为接收方发送的确认号ack是由按序到达数据的最高序号决定的，所以B返回的确认号仍然是31。导致了A的发送窗口不变。</p>
+
+<p><strong>描述一个发送窗口的状态</strong>需要三个指针：p1、p2、p3。<br />
+1. 小于p1：已发送且已收到确认的部分<br />
+2. 大于p3：不允许发送的部分<br />
+3. p3 - p1：发送窗口<br />
+4. p2 - p1：已发送但未收到确认的部分<br />
+5. p3 - p2：允许发送但未发送的部分，又叫“可用窗口”、“有效窗口”</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/tcp03.png" alt="A收到了新的确认号，发送窗口向前滑动" class="lazyload"><figcaption class="image-caption">A收到了新的确认号，发送窗口向前滑动</figcaption></figure></p>
+
+<p>B 收到了31，然后返回确认号34，表明31 32 33 都收到了，且已交付主机。A收到确认号后，发送窗口前移，后沿前移3位指向34。指针p2不动，可用窗口变大，可发送42-53的数据。</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/tcp04.png" alt="可用窗口内的数据已全部发送，但未收到确认" class="lazyload"><figcaption class="image-caption">可用窗口内的数据已全部发送，但未收到确认</figcaption></figure><br />
+42-53的数据都被发送了出去，p2指针与p3指针重合，但是没有收到确认，使得可用窗口为0，A不能再发送数据，必须等到B的确认。但是B发送的确认可能在网络中延时了，没有及时到达，A就会一直等，B也会一直等待A发送数据，造成死锁。所以A有一个超时计时器机制，一段时间后没有收到B的确认，会自动重传这部分数据并重置超时计时器，直到收到B的确认为止。</p>
+
+<p><strong>三、如何控制</strong></p>
+
+<p><strong>流量控制主要依靠滑动窗口来实现</strong></p>
+
+<p>流量控制即接收方B向发送方A传递消息，使其不要发送太快～，是一种端到端的控制。利用B返回的报文中的接收窗口的大小来控制A的发送窗口大小。rwnd: 接收窗口</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/tcp05.png" alt="利用可变窗口进行拥塞控制" class="lazyload"><figcaption class="image-caption">利用可变窗口进行拥塞控制</figcaption></figure></p>
+
+<p>上图我们也可以看到，发送窗口是连续的一段一段的发送数据，比如上面连续发送了3段数据后才返回了一个ack。</p>
+
+<p>B的缓存区也会有满的情况，当缓存区满了后会发送rwnd=0通知A停止发送数据。等一段时间后B的缓存区有了空会发送非0的rwnd给A，但是如果这个报文中途丢失了，A一直收不到，双方一直在互相等待，造成死锁。所以TCP引入了持续计时器，即当A收到了0接收窗口通知时，启动该计时器，时间到了就会发送一个1字节的探测报文，接收方会回应自己的接收窗口大小，若仍为0，则重设计时器，继续等待。</p>
+
+<h2 id="tcp拥塞控制">TCP拥塞控制</h2>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/tcp06.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+<p><strong>相关概念：</strong><br />
+1. 慢开始门限：控制使用慢开始算法还是拥塞避免算法<br />
+2. 拥塞窗口</p>
+
+<p><strong>相关算法</strong><br />
+1. 慢开始  2. 拥塞避免  3. 快重传  4. 快恢复</p>
+
+<p>发送方维持一个叫做“拥塞窗口”的状态变量，其大小取决于网络的拥塞程度，且会动态变化。发送方的发送窗口等于拥塞窗口。</p>
+
+<p><strong>发送方控制拥塞窗口的原则</strong>：当网络没有发生拥塞时，我可以让窗口再增大一些，发出更多的分组。若出现了拥塞，就让拥塞窗口减小一些，缓解拥塞。</p>
+
+<p><strong>网络中出现拥塞的依据</strong>：分组丢失/超时。</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/tcpys/>https://hueralin.github.io/2019/tcpys/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://hueralin.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+                    #计算机网络</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/bytedance/" class="prev" rel="prev" title="字节跳动面试题"><i class="iconfont icon-left"></i>&nbsp;字节跳动面试题</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+
+    <div class="post-comment">
+        
+        
+
+<div id="vcomments"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments' ,
+      appId: 'Your appId',
+      appKey: 'Your appKey',
+      notify: 'false', 
+      verify: 'false', 
+      avatar:'mm', 
+      placeholder: '说点什么吧...',
+      visitor: 'true'
+  });
+</script>
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        
+        <span itemprop="copyrightYear">2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
