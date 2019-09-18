@@ -5,8 +5,167 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Sep 2019 12:51:57 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 18 Sep 2019 13:40:10 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>技术分享之Redux思想</title>
+      <link>https://hueralin.github.io/2019/share/</link>
+      <pubDate>Wed, 18 Sep 2019 13:40:10 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/share/</guid>
+      <description>
+
+&lt;h1 id=&#34;redux&#34;&gt;Redux&lt;/h1&gt;
+
+&lt;h3 id=&#34;普通的状态管理&#34;&gt;普通的状态管理&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 状态
+let state = {
+    // 计数
+    count: 0
+}···
+// 修改状态
+state.count = 1
+// 获取状态
+console.log(state.count)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;缺点：状态改变，依赖状态的地方得不到通知&lt;/p&gt;
+
+&lt;h3 id=&#34;带有发布订阅的状态管理&#34;&gt;带有发布订阅的状态管理&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 状态
+let state = {
+    // 计数
+    count: 0
+}
+// 集中管理订阅
+let listeners = []
+// 订阅函数
+function subscribe(callback) {
+    listeners.push(callback)
+}
+// 修改状态的函数
+function changState(newVal) {
+    state.count = newVal
+    for(let i=0;i&amp;lt;listeners.length;i++){
+        listeners[i]()
+    }
+}
+// main
+subscribe(() =&amp;gt; {
+    console.log(&#39;count&#39;, state.count)
+})
+changState(1)  // 1
+changState(2)  // 2
+changState(3)  // 3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;缺点：只对count（即单个状态）有效，应将公共操作封装起来。&lt;/p&gt;
+
+&lt;h3 id=&#34;封装后的版本&#34;&gt;封装后的版本&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;//  创建store的函数
+function createStore(initState) {
+    let state = initState || {}
+    let listeners = []
+    // 订阅函数
+    function subscribe(callback) {
+        listeners.push(callback)
+    }
+    // 修改状态的函数
+    function changeState(newState) {
+        state = newState
+        for(let i=0;i&amp;lt;listeners.length;i++){
+            listeners[i]()
+        }
+    }
+    //  获取状态
+    function getState() {
+        return state
+    }
+    // 返回一个store对象
+    return {
+        subscribe,
+        changeState,
+        getState
+    }
+}
+// main
+let initState = {
+    count: 0,
+    user: {
+        name: &#39;huer&#39;,
+        age: 20,
+        sex: &#39;male&#39;
+    }
+}
+let store = createStore(initState)
+store.subscribe(() =&amp;gt; {
+    let count = store.getState().count
+    console.log(`count: ${count}`)
+})
+store.subscribe(() =&amp;gt; {
+    let user = store.getState().user
+    console.log(`name: ${user.name}`)
+})
+store.changeState(Object.assign({}, store.getState(), {count: 1}))
+store.changeState(Object.assign({}, store.getState(), {user: &#39;malin&#39;}))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;缺点：state可以被随便改，没有约束。&lt;/p&gt;
+
+&lt;h3 id=&#34;带计划的状态管理&#34;&gt;带计划的状态管理&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;//  以计数器为例
+/*
+    {
+        type: &#39;ADD&#39;,
+        count: 2
+    }
+*/
+// 计划函数 plan
+function plan(state = {}, action) {
+    switch(action.type) {
+        case &#39;ADD&#39;: return Object.assign({}, state, {count: state.count + 1});break;
+        case &#39;SUB&#39;: return Object.assign({}, state, {count: state.count - 1});break;
+        default: return state;
+    }
+}
+//  改进封装后的changeState函数
+function changeState(action) {
+    // 按计划修改状态
+    state = plan(state, action)
+    for(let i=0;i&amp;lt;listeners.length;i++){
+        listeners[i]()
+    }
+}
+// main
+// 自增
+store.changeState({
+  type: &#39;ADD&#39;
+})
+// 自减
+store.changeState({
+  type: &#39;SUB&#39;
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;通过Action，使得状态变化的结果可预测。&lt;/p&gt;
+
+&lt;p&gt;changeState &amp;ndash;&amp;gt; dispatch&lt;br /&gt;
+plan &amp;mdash;&amp;gt; Reducer&lt;/p&gt;
+
+&lt;p&gt;Store的角色是整个应用的数据存储中心，集中大部分页面需要的状态数据。&lt;/p&gt;
+
+&lt;p&gt;Redux工作流程：用户通过界面组件 触发Action，携带Store中的旧State与Action 流向Reducer, Reducer返回新的state，并更新界面。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/hueralin/Rimage&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Rimage&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zmage.caldis.me/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Zmage&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>TCP流量控制、拥塞控制</title>
@@ -1145,76 +1304,6 @@ module.exports = (
 )
 module.exports = Router
 &lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>ES2016/2017新特性</title>
-      <link>https://hueralin.github.io/2019/es20162017etc/</link>
-      <pubDate>Tue, 06 Aug 2019 11:56:42 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/es20162017etc/</guid>
-      <description>
-
-&lt;h3 id=&#34;es2016-es7&#34;&gt;ES2016(ES7)&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Array.prototype.includes(value): 判断一个元素是否在数组中&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;let a = [1,2,3,4,5,6]  
-a.includes(4)   // true  
-a.includes(7)   // false  
-
-// 功能类似于 xxx.indexOf(y) &amp;gt; -1, 但有不同  
-// includes可以检测Nan  (indexO不可以)
-[NaN].includes(NaN) // true
-
-// 不区分 -0 +0 （indexOf也可以）
-[-0].includes(+0)   // true
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;求幂运算&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;let a = 3
-a ** 2      // 9
-// 相当于 Math.pow(a, 2)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;es2017-es8&#34;&gt;ES2017(ES8)&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;String.prototype.padStart / String.prototype.padEnd（字符串填充）&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;功能：返回指定长度的填充后的字符串  
-语法：str.padStart(len [, padStr])  // len 指定长度 padStr 填充字符串  
-let str = &#39;huer&#39;  
-// 1. 指定长度小于原字符串长度，则返回原字符串    
-str.padStart(2)  // &#39;huer&#39;
-// 2. 指定长度大于原字符串长度，则返回填充字符串（默认为空格）+原字符串  
-str.padStart(5)  // &#39; huer&#39;  
-// 3. 原字符串 &amp;lt; 指定长度 &amp;lt; 填充字符串 + 原字符串，则从填充字符串的右侧截取  
-str.padStart(7, &#39;malin&#39;)    // &#39;malhuer&#39;  
-// 4. 指定长度 &amp;gt; 填充字符串 + 原字符串, 重复填充字符串，使其达到指定长度  
-str.padStart(10, &#39;a&#39;)       // &#39;aaaaaahuer&#39;  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Object.values / Object.entries&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Object.values(obj): 返回obj的可遍历属性的 ‘属性值’ 数组&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;Object.entries(obj): 返回obj的可遍历属性的 ‘键值对’ 数组&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;strong&gt;Object.getOwnPropertyDescriptors&lt;/strong&gt;&lt;br /&gt;
-该函数返回对象的属性描述符&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;函数定义和函数调用的参数列表最后面的尾逗号&lt;/strong&gt;&lt;br /&gt;
-Emmmm，就是说下面这种情况不会报错，有什么作用？？？&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;function Func(a,b,) {xxx}
-Func(1,2,)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;异步函数 async/await&lt;/strong&gt;&lt;br /&gt;
-to be continued&amp;hellip;&lt;/p&gt;
 </description>
     </item>
     

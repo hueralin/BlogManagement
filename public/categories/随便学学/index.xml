@@ -6,10 +6,20 @@
     <description>Recent content in 随便学学 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Sep 2019 12:51:57 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 18 Sep 2019 13:40:10 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>技术分享之Redux思想</title>
+      <link>https://hueralin.github.io/2019/share/</link>
+      <pubDate>Wed, 18 Sep 2019 13:40:10 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/share/</guid>
+      <description>Redux 普通的状态管理 // 状态 let state = { // 计数 count: 0 }··· // 修改状态 state.count = 1 // 获取状态 console.log(state.count)  缺点：状态改变，依赖状态的地方得不到通知
+带有发布订阅的状态管理 // 状态 let state = { // 计数 count: 0 } // 集中管理订阅 let listeners = [] // 订阅函数 function subscribe(callback) { listeners.push(callback) } // 修改状态的函数 function changState(newVal) { state.count = newVal for(let i=0;i&amp;lt;listeners.length;i++){ listeners[i]() } } // main subscribe(() =&amp;gt; { console.log(&#39;count&#39;, state.count) }) changState(1) // 1 changState(2) // 2 changState(3) // 3  缺点：只对count（即单个状态）有效，应将公共操作封装起来。</description>
+    </item>
     
     <item>
       <title>TCP流量控制、拥塞控制</title>
