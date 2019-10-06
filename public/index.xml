@@ -5,8 +5,81 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Sep 2019 13:40:10 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 04 Oct 2019 23:57:30 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>setState</title>
+      <link>https://hueralin.github.io/2019/state-async/</link>
+      <pubDate>Fri, 04 Oct 2019 23:57:30 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/state-async/</guid>
+      <description>
+
+&lt;h3 id=&#34;state机制&#34;&gt;State机制&lt;/h3&gt;
+
+&lt;p&gt;setState函数是React管理组件状态的一种方法，修改组件的状态时必须使用该方法，而不能直接在this.state上赋值。但是，如果我们在调用完setState之后直接去访问State时，拿到的是修改前的值。也就是说，setState并不保证“同步执行”。&lt;/p&gt;
+
+&lt;p&gt;如果在一次操作中多次调用setState，那么React会将这几次操作暂存起来，然后统一集中合并，根据合并后的结果去计算新的虚拟DOM，最后执行渲染。　　&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 初始 count = 0
+this.setState({ count: this.state.count + 1 })
+console.log(this.state.count)       // 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;那么如果和解决上面的问题呢？&amp;mdash;&amp;ndash;回调函数&lt;/p&gt;
+
+&lt;p&gt;setState函数的参数有两个，第一个参数是对象，第二个参数是回调函数。回调函数在State合并更新完后才会被调用，所以可以拿到更新后的值。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;this.setState({
+    count: this.state.count + 1
+}, () =&amp;gt; {
+    console.log(this.state.count)   // count = 1
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;下面来看另一段代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;this.setState({ count: this.state.count + 1 })
+this.setState({ count: this.state.count + 1 })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;该会怎么执行呢？结果是2么？不对！结果是1。&lt;br /&gt;
+上面提到过，多次调用setState会被合并为一次操作。上面的代码类似于下面这段：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;Object.assign(state, {count: state.count+1}, {count: state.count+1})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;都是操作的count，合并时只执行最后一个。&lt;/p&gt;
+
+&lt;p&gt;那么如何做到增加两次呢？其实setState函数的第一个参数也可以为函数：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;this.setState((preState, props) =&amp;gt; {count: preState.count + 1})
+this.setState((preState, props) =&amp;gt; {count: preState.count + 1})
+console.log(this.state.count)   // 仍然是10，但页面渲染的是2
+
+// preState为之前的State，props为State更新执行瞬间的props
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样，每次调用都是在上一次state的基础上修改。&lt;/p&gt;
+
+&lt;p&gt;上面代码相当于:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;[{increment: 1}, {increment: 1}, {increment: 1}].reduce((preState, props) =&amp;gt; {
+    count: preState.count + props.increment
+})
+// 累加器
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其实，React的内部会维护一个State的更新队列，会将当前所有的State修改操作都推入队列中，然后集中合并处理，再调用回调函数，最后计算新的虚拟DOM，执行渲染。&lt;/p&gt;
+
+&lt;h3 id=&#34;setstate真的是异步的么-非也&#34;&gt;setState真的是异步的么？非也！&lt;/h3&gt;
+
+&lt;p&gt;React为了实现跨平台，保证兼容性，内部封装了自己的事件机制，来代替原生事件。React内部会维护一个isBatchingUpdate的标识，来决定是同步修改还是异步修改。在这些合成事件和生命周期函数里执行setState的时候，React将isBatchingUpdate设置为true，即批处理修改，也就是说异步修改。而在原生事和setTimeout函数里面使用setState的时候则是同步修改。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/sisterAn/blog/issues/26&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;参考&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>技术分享之Redux思想</title>
@@ -1232,77 +1305,6 @@ map用途：格式化原数组，根据原数组做一些拓展（计算）
 // 可以使用一些内置函数，但是要注意这些内置函数的参数，map的回调函数要求参数有三个item，index，arr。  
 // 即使你没有显示的设置后两个参数（仅仅是声明一个局部变量而已），map还是会传递index和arr作为回调函数的参数。  
 // parseInt函数接受两个参数：数值，进制。而map将item，index，arr都传递进去（arr会被忽略），那么索引就被当成了进制，所以最后出错了。
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>后台管理系统</title>
-      <link>https://hueralin.github.io/2019/athene/</link>
-      <pubDate>Wed, 07 Aug 2019 10:49:37 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/athene/</guid>
-      <description>
-
-&lt;h3 id=&#34;这是实习期一个后台管理的项目&#34;&gt;这是实习期一个后台管理的项目&lt;/h3&gt;
-
-&lt;p&gt;目前正在熟悉该项目，边熟悉，边做一些记录&lt;/p&gt;
-
-&lt;p&gt;先来看一下大体的框架：&lt;br /&gt;
-&lt;strong&gt;顶层容器&lt;/strong&gt;&lt;br /&gt;
-在container目录下的index.js文件中，有一个IndexContainer组件，该组件中的render函数是这么写的&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;render () {
-    let { permission } = this.props
-    return (
-        &amp;lt;div&amp;gt;
-        &amp;lt;Header params={this.props.params} username={permission.username} /&amp;gt;
-        &amp;lt;div className=&#39;main-content&#39;&amp;gt;
-            &amp;lt;SideNav routes={this.props.routes} permissions={permission.permission} /&amp;gt;
-            &amp;lt;div&amp;gt;
-            {this.props.children}
-            &amp;lt;/div&amp;gt;
-        &amp;lt;/div&amp;gt;
-        &amp;lt;/div&amp;gt;
-    )
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;可以看出该系统采用了非常常见的布局，即‘顶部导航+左侧导航+右侧内容’&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;路由配置&lt;/strong&gt;&lt;br /&gt;
-因为路由比较多，所有路由配置分为两个路由文件：&lt;br /&gt;
-&lt;em&gt;外层路由文件&lt;/em&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 这里引入了内层路由文件  
-import routers from &#39;./routers&#39;
-module.exports = (
-  &amp;lt;Router history={browserHistory}&amp;gt;
-    &amp;lt;Route path=&#39;/&#39; /&amp;gt;
-    &amp;lt;Route path=&#39;/xxx&#39; component={xxx} /&amp;gt;
-    &amp;lt;Route path=&#39;/xx/xx&#39; component={xx} /&amp;gt;
-    ......
-    &amp;lt;Route path=&#39;&#39; component={Container} onEnter={handleEnterSystem}&amp;gt;
-      {/* 嵌套路由，内层路由文件里的Route渲染的组件都是Container容器下的子组件，在this.props.children处渲染*/}
-      { routers }
-    &amp;lt;/Route&amp;gt;
-    &amp;lt;Redirect from=&#39;*&#39; to=&#39;/error/404.html&#39; /&amp;gt;
-  &amp;lt;/Router&amp;gt;
-)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;em&gt;内层路由组件&lt;/em&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;const Router = (
-  &amp;lt;Route path=&#39;/xxx&#39;&amp;gt;
-    &amp;lt;IndexRoute component={Page} /&amp;gt;
-    &amp;lt;Route path=&#39;yyy/product&#39; component={ProductList} /&amp;gt;
-    &amp;lt;Route path=&#39;yyy/product/:id&#39; component={Product} /&amp;gt;
-    &amp;lt;Route path=&#39;yyy/users/:id&#39; component={Users} /&amp;gt;
-    ......
-  &amp;lt;/Route&amp;gt;
-)
-module.exports = Router
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>

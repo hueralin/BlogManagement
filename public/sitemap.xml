@@ -2,9 +2,9 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
     <url>
-      <loc>https://hueralin.github.io/categories/</loc>
+      <loc>https://hueralin.github.io/posts/</loc>
       
-      <lastmod>2019-09-18T13:40:10+08:00</lastmod>
+      <lastmod>2019-10-04T23:57:30+08:00</lastmod>
       
       
       
@@ -14,7 +14,29 @@
     </url>
   
     <url>
-      <loc>https://hueralin.github.io/posts/</loc>
+      <loc>https://hueralin.github.io/2019/state-async/</loc>
+      
+      <lastmod>2019-10-04T23:57:30+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://hueralin.github.io/</loc>
+      
+      <lastmod>2019-10-04T23:57:30+08:00</lastmod>
+      
+      
+      
+      <priority>0</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://hueralin.github.io/categories/</loc>
       
       <lastmod>2019-09-18T13:40:10+08:00</lastmod>
       
@@ -31,18 +53,6 @@
       <lastmod>2019-09-18T13:40:10+08:00</lastmod>
       
       
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://hueralin.github.io/</loc>
-      
-      <lastmod>2019-09-18T13:40:10+08:00</lastmod>
-      
-      
-      
-      <priority>0</priority>
       
       
     </url>
