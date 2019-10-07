@@ -4,7 +4,19 @@
     <url>
       <loc>https://hueralin.github.io/categories/</loc>
       
-      <lastmod>2019-09-18T13:40:10+08:00</lastmod>
+      <lastmod>2019-10-06T13:27:32+08:00</lastmod>
+      
+      
+      
+      <priority>0</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://hueralin.github.io/tags/javascript/</loc>
+      
+      <lastmod>2019-10-06T13:27:32+08:00</lastmod>
       
       
       
@@ -16,11 +28,67 @@
     <url>
       <loc>https://hueralin.github.io/posts/</loc>
       
-      <lastmod>2019-09-18T13:40:10+08:00</lastmod>
+      <lastmod>2019-10-06T13:27:32+08:00</lastmod>
       
       
       
       <priority>0</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://hueralin.github.io/tags/</loc>
+      
+      <lastmod>2019-10-06T13:27:32+08:00</lastmod>
+      
+      
+      
+      <priority>0</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://hueralin.github.io/2019/callapplybind/</loc>
+      
+      <lastmod>2019-10-06T13:27:32+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://hueralin.github.io/</loc>
+      
+      <lastmod>2019-10-06T13:27:32+08:00</lastmod>
+      
+      
+      
+      <priority>0</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/</loc>
+      
+      <lastmod>2019-10-06T13:27:32+08:00</lastmod>
+      
+      
+      
+      <priority>0</priority>
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://hueralin.github.io/2019/state-async/</loc>
+      
+      <lastmod>2019-10-04T23:57:30+08:00</lastmod>
+      
+      
       
       
     </url>
@@ -36,47 +104,11 @@
     </url>
   
     <url>
-      <loc>https://hueralin.github.io/</loc>
-      
-      <lastmod>2019-09-18T13:40:10+08:00</lastmod>
-      
-      
-      
-      <priority>0</priority>
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/</loc>
-      
-      <lastmod>2019-09-18T13:40:10+08:00</lastmod>
-      
-      
-      
-      <priority>0</priority>
-      
-      
-    </url>
-  
-    <url>
       <loc>https://hueralin.github.io/2019/tcpys/</loc>
       
       <lastmod>2019-09-09T12:51:57+08:00</lastmod>
       
       
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://hueralin.github.io/tags/</loc>
-      
-      <lastmod>2019-09-09T12:51:57+08:00</lastmod>
-      
-      
-      
-      <priority>0</priority>
       
       
     </url>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JavaScript on 狐耳的雪原</title>
+    <link>https://hueralin.github.io/tags/javascript/</link>
+    <description>Recent content in JavaScript on 狐耳的雪原</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 06 Oct 2019 13:27:32 +0800</lastBuildDate>
+    
+	<atom:link href="https://hueralin.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>call, apply, bind</title>
+      <link>https://hueralin.github.io/2019/callapplybind/</link>
+      <pubDate>Sun, 06 Oct 2019 13:27:32 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/callapplybind/</guid>
+      <description>call apply bind 这三个函数的作用都是将一个函数的this指向另一个对象，使得该对象可以调用这个它自身没有的函数。
+ Func.call(thisObj, [arg1,arg2,&amp;hellip;.]) thisObj 作为Func内部的this，它的取值有四种情况：
+1. null/undefined/不传 Func的this &amp;mdash;-&amp;gt; window
+2. 函数名 Func的this &amp;mdash;-&amp;gt; 该函数的引用
+3. 数值/字符串/布尔值 Func的this &amp;mdash;-&amp;gt; Number/String/Boolean
+4. 对象 Func的this &amp;mdash;-&amp;gt; 对象
+function Func(){ console.log(this) } function Test(){console.log(&#39;Test&#39;)} var obj = { name: &#39;huer&#39; } Func.call() // window Func.call(null) // window Func.call(undefined) // window Func.call(Test) // Test(){console.log(&#39;Test&#39;)} Func.call(666) // Number {666} Func.call(&#39;666&#39;) // String {&amp;quot;666&amp;quot;} Func.call(true) // Boolean {true} Func.call(obj) // {name: &amp;quot;huer&amp;quot;}  这三个函数除了由上面的功能外，还有一个功能。还能给对象添加新属性，例如在继承中：</description>
+    </item>
+    
+  </channel>
+</rss>

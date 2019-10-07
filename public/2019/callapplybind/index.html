@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/state-async/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/callapplybind/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           call, apply, bind | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="call, apply, bind | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "call, apply, bind",
+    "headline" : "call, apply, bind",
+    "description" : "call apply bind 这三个函数的作用都是将一个函数的this指向另一个对象，使得该对象可以调用这个它自身没有的函数。\n Func.call(thisObj, [arg1,arg2,\x26hellip;.]) thisObj 作为Func内部的this，它的取值有四种情况：\n1. null\/undefined\/不传 Func的this \x26mdash;-\x26gt; window\n2. 函数名 Func的this \x26mdash;-\x26gt; 该函数的引用\n3. 数值\/字符串\/布尔值 Func的this \x26mdash;-\x26gt; Number\/String\/Boolean\n4. 对象 Func的this \x26mdash;-\x26gt; 对象\nfunction Func(){ console.log(this) } function Test(){console.log(\x27Test\x27)} var obj = { name: \x27huer\x27 } Func.call() \/\/ window Func.call(null) \/\/ window Func.call(undefined) \/\/ window Func.call(Test) \/\/ Test(){console.log(\x27Test\x27)} Func.call(666) \/\/ Number {666} Func.call(\x27666\x27) \/\/ String {\x26quot;666\x26quot;} Func.call(true) \/\/ Boolean {true} Func.call(obj) \/\/ {name: \x26quot;huer\x26quot;}  这三个函数除了由上面的功能外，还有一个功能。还能给对象添加新属性，例如在继承中：",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-10-06 13:27:32 \x2b0800 CST",
+    "dateModified" : "2019-10-06 13:27:32 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/callapplybind\/",
+    "wordCount" : "253",
+    "keywords" : [ "JavaScript", "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">call, apply, bind</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-10-06 itemprop="datePublished">October 6, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/"> 随便学学 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<blockquote>
+<p>call apply bind 这三个函数的作用都是将一个函数的this指向另一个对象，使得该对象可以调用这个它自身没有的函数。</p>
+</blockquote>
+
+<h3 id="func-call-thisobj-arg1-arg2">Func.call(thisObj, [arg1,arg2,&hellip;.])</h3>
+
+<p><strong>thisObj</strong> 作为Func内部的this，它的取值有四种情况：<br />
+1. null/undefined/不传 Func的this &mdash;-&gt; window<br />
+2. 函数名 Func的this &mdash;-&gt; 该函数的引用<br />
+3. 数值/字符串/布尔值 Func的this &mdash;-&gt; Number/String/Boolean<br />
+4. 对象 Func的this &mdash;-&gt; 对象</p>
+
+<pre><code class="language-javascript">function Func(){
+    console.log(this)
+}
+function Test(){console.log('Test')}
+var obj = { name: 'huer' }
+Func.call() // window
+Func.call(null) // window
+Func.call(undefined) // window
+Func.call(Test) // Test(){console.log('Test')}
+Func.call(666) // Number {666}
+Func.call('666') // String {&quot;666&quot;}
+Func.call(true) // Boolean {true}
+Func.call(obj)  // {name: &quot;huer&quot;}
+</code></pre>
+
+<p>这三个函数除了由上面的功能外，还有一个功能。还能给对象添加新属性，例如在继承中：</p>
+
+<pre><code class="language-javascript">function Person(name, age) {
+    this.name = name;
+    this.age = age; 
+}
+let dog = {}
+Person.call(dog, 'wangcai', 5);
+console.log(dog);   // {name: &quot;wangcai&quot;, age: 5}
+// dog调用了Person构造函数，于是Person函数中的this指向dog，然后给dog添加了两个属性。
+</code></pre>
+
+<h3 id="func-apply-thisobj-args">Func.apply(thisObj, [args[]])</h3>
+
+<p>功能和call一样，只不过第二个参数是一个参数数组（或伪数组，如arguments），而不是参数列表。</p>
+
+<h3 id="func-bind-thisobj-arg1-arg2">Func.bind(thisObj, [arg1, arg2&hellip;])</h3>
+
+<p>功能和上面两个一样，只不过该函数并不会立即执行Func，而是返回一个绑定后的函数。它常用于事件绑定中，因为事件绑定要求传入函数引用而不是函数的执行结果，bind的其他参数和call一样，是一个参数列表。</p>
+
+<p>bind函数返回一个原函数的拷贝，并拥有指定的this值和初始参数。</p>
+
+<p>bind()方法创建一个新的函数，在bind()被调用时，这个新函数的this被bind的第一个参数指定，其余的参数将作为新函数的参数供调用时使用。</p>
+
+<p><strong>bind函数用法1：创建一个绑定函数。</strong></p>
+
+<pre><code class="language-javascript">var x = 9;
+var module = {
+  x: 81,
+  getX: function() { return this.x; }
+};
+
+module.getX(); // 81
+
+var retrieveX = module.getX;
+retrieveX();   
+// 返回9 - 因为函数是在全局作用域中调用的
+
+// 创建一个新函数，把 'this' 绑定到 module 对象
+var boundGetX = retrieveX.bind(module);
+boundGetX(); // 81
+</code></pre>
+
+<p><strong>bind函数用法2：创建一个偏函数</strong></p>
+
+<pre><code class="language-javascript">// 偏函数，即拥有预设参数的函数
+// 只要将这些参数（如果有的话）作为bind()的参数写在this后面。
+// 当绑定函数被调用时，这些参数会被插入到目标函数的参数列表的开始位置，传递给绑定函数的参数会跟在它们后面。
+
+function sum(a, b) {
+    return a + b;
+}
+function toArr() {
+    return Array.prototype.slice.call(arguments);
+}
+
+let FuncA = sum.bind(null, 666);    // 将666作为第一个参数的预设
+console.log(FuncA(10)); // 676
+console.log(FuncA(10, 20)); // 676, 第二个参数实际上被作为第三个参数而忽略掉
+
+let FuncB = toArr.bind(null, 6, 7, 8);  // 将6，7，8作为预设参数
+console.log(FuncB());   // [6, 7, 8]
+console.log(FuncB(9, 10));   // [6, 7, 8, 9, 10]
+</code></pre>
+
+<h3 id="bind函数用法3-配合settimeout">bind函数用法3: 配合setTimeout</h3>
+
+<pre><code class="language-javascript">// setTimeout实际上是window.setTimeout
+// 下面计时器的执行过程是，3秒后，将匿名函数放进事件队列，事件循环到它时执行
+// 这个执行和 function A(){xxx} A()一样，即在全局环境下执行匿名函数，里面的this指向window
+setTimeout(function() {
+    console.log('this is: ', this)
+}, 3000)
+
+// 比如有个绘制函数
+let canvas = {
+    render: function() {
+        this.update();
+        this.draw();
+    }
+    update: function(){xxx}
+    draw: function(){xxx}
+}
+
+window.setInterval(canvas.render, 1000 / 60)
+// 这样的话，render函数里的this很容易指向window，导致报错！
+
+// 所以我们可以显式地将this绑定到canvas
+window.setInterval(canvas.render.bind(canvas), 1000);
+</code></pre>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/callapplybind/>https://hueralin.github.io/2019/callapplybind/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://hueralin.github.io/tags/javascript/">
+                    #JavaScript</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/state-async/" class="prev" rel="prev" title="setState"><i class="iconfont icon-left"></i>&nbsp;setState</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

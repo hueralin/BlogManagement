@@ -6,10 +6,42 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Sep 2019 13:40:10 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 06 Oct 2019 13:27:32 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>call, apply, bind</title>
+      <link>https://hueralin.github.io/2019/callapplybind/</link>
+      <pubDate>Sun, 06 Oct 2019 13:27:32 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/callapplybind/</guid>
+      <description>call apply bind 这三个函数的作用都是将一个函数的this指向另一个对象，使得该对象可以调用这个它自身没有的函数。
+ Func.call(thisObj, [arg1,arg2,&amp;hellip;.]) thisObj 作为Func内部的this，它的取值有四种情况：
+1. null/undefined/不传 Func的this &amp;mdash;-&amp;gt; window
+2. 函数名 Func的this &amp;mdash;-&amp;gt; 该函数的引用
+3. 数值/字符串/布尔值 Func的this &amp;mdash;-&amp;gt; Number/String/Boolean
+4. 对象 Func的this &amp;mdash;-&amp;gt; 对象
+function Func(){ console.log(this) } function Test(){console.log(&#39;Test&#39;)} var obj = { name: &#39;huer&#39; } Func.call() // window Func.call(null) // window Func.call(undefined) // window Func.call(Test) // Test(){console.log(&#39;Test&#39;)} Func.call(666) // Number {666} Func.call(&#39;666&#39;) // String {&amp;quot;666&amp;quot;} Func.call(true) // Boolean {true} Func.call(obj) // {name: &amp;quot;huer&amp;quot;}  这三个函数除了由上面的功能外，还有一个功能。还能给对象添加新属性，例如在继承中：</description>
+    </item>
+    
+    <item>
+      <title>setState</title>
+      <link>https://hueralin.github.io/2019/state-async/</link>
+      <pubDate>Fri, 04 Oct 2019 23:57:30 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/state-async/</guid>
+      <description>State机制 setState函数是React管理组件状态的一种方法，修改组件的状态时必须使用该方法，而不能直接在this.state上赋值。但是，如果我们在调用完setState之后直接去访问State时，拿到的是修改前的值。也就是说，setState并不保证“同步执行”。
+如果在一次操作中多次调用setState，那么React会将这几次操作暂存起来，然后统一集中合并，根据合并后的结果去计算新的虚拟DOM，最后执行渲染。　// 初始 count = 0 this.setState({ count: this.state.count + 1 }) console.log(this.state.count) // 0  那么如果和解决上面的问题呢？&amp;mdash;&amp;ndash;回调函数
+setState函数的参数有两个，第一个参数是对象，第二个参数是回调函数。回调函数在State合并更新完后才会被调用，所以可以拿到更新后的值。
+this.setState({ count: this.state.count + 1 }, () =&amp;gt; { console.log(this.state.count) // count = 1 })  下面来看另一段代码：
+this.setState({ count: this.state.count + 1 }) this.setState({ count: this.state.count + 1 })  该会怎么执行呢？结果是2么？不对！结果是1。
+上面提到过，多次调用setState会被合并为一次操作。上面的代码类似于下面这段：
+Object.assign(state, {count: state.count+1}, {count: state.count+1})  都是操作的count，合并时只执行最后一个。
+那么如何做到增加两次呢？其实setState函数的第一个参数也可以为函数：
+this.setState((preState, props) =&amp;gt; {count: preState.count + 1}) this.setState((preState, props) =&amp;gt; {count: preState.</description>
+    </item>
     
     <item>
       <title>技术分享之Redux思想</title>
