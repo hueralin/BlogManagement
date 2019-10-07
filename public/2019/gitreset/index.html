@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "Git Reset",
     "headline" : "Git Reset",
-    "description" : "惊了！本来想撤销上一次commit，但保留工作区的修改，但是手残加了 \x26ndash;hard 参数，修改全没了！！！\n后来，运行了一遍git reflog branchName, 查看了下该分支上的历史记录，找到reset操作之前的历史，执行git reset --hard reset之前的记录点回来了！！！\n回来了！！！！ Git取消对某个文件的跟踪\n1. git rm --cached readme.md 删除readme.md的跟踪，并保留在本地。 2. git rm --f readme.md 删除readme.md的跟踪，并且删除本地文件。",
+    "description" : "背景：\n惊了！本来想撤销上一次commit，但保留工作区的修改，但是手残加了 \x26ndash;hard 参数，修改全没了！！！\n后来，运行了一遍 git reflog branchName , 查看了下该分支上的历史记录，找到reset操作之前的历史，执行 git reset --hard reset之前的记录点 回来了！！！\n git reset 命令 git reset - 重置当前指针，指向特定的状态\n也就是说，该命令只会改变指针的指向，并不会清除commit记录。\n[译文]()\nreset命令有3种方式：\n git reset --mixed：默认方式，即git reset，它回退到某个版本，只保留源码，回退commit和index信息\n git reset --soft：回退到某个版本，只回退了commit的信息，不会恢复到index file一级。如果还要提交，直接commit即可\n git reset --hard：彻底回退到某个版本，本地的源码也会变为上一个版本的内容  Git取消对某个文件的跟踪\n1. git rm --cached readme.md 仅删除readme.md的跟踪，并保留在本地。\n2. git rm --f readme.md 删除readme.md的跟踪，并且删除本地文件。",
     "inLanguage" : "en-us",
     "author" : "狐耳",
     "creator" : "狐耳",
@@ -57,7 +57,7 @@
     "datePublished": "2019-07-26 17:41:51 \x2b0800 CST",
     "dateModified" : "2019-07-26 17:41:51 \x2b0800 CST",
     "url" : "https:\/\/hueralin.github.io\/2019\/gitreset\/",
-    "wordCount" : "24",
+    "wordCount" : "49",
     "keywords" : [  "狐耳的雪原"]
 }
 </script>
@@ -136,7 +136,22 @@
     </header>
     <div class="post-content">
         
-
+        <div id="breadcrumbs">
+    <a href="/">Home</a>
+    
+        
+    
+        
+            / <a href="/2019">2019th</a>
+        
+    
+        
+            / <a href="/gitreset">Gitreset</a>
+        
+    
+        
+    
+</div>
         
 
         
@@ -152,13 +167,30 @@
 
           
 
-<p>惊了！本来想撤销上一次commit，但保留工作区的修改，但是手残加了 &ndash;hard 参数，修改全没了！！！<br />
-后来，运行了一遍<code>git reflog branchName</code>, 查看了下该分支上的历史记录，找到reset操作之前的历史，执行<code>git reset --hard reset之前的记录点</code>回来了！！！</p>
+<blockquote>
+<p><strong>背景：</strong><br />
+惊了！本来想撤销上一次commit，但保留工作区的修改，但是手残加了 &ndash;hard 参数，修改全没了！！！<br />
+后来，运行了一遍 <code>git reflog branchName</code> , 查看了下该分支上的历史记录，找到reset操作之前的历史，执行 <code>git reset --hard reset之前的记录点</code> 回来了！！！</p>
+</blockquote>
 
-<h1 id="回来了">回来了！！！！</h1>
+<h2 id="git-reset-命令">git reset 命令</h2>
+
+<p><strong><em>git reset - 重置当前指针，指向特定的状态</em></strong></p>
+
+<p>也就是说，该命令只会改变指针的指向，并不会清除commit记录。</p>
+
+<p>[译文]()</p>
+
+<p>reset命令有3种方式：</p>
+
+<ol>
+<li><code>git reset --mixed</code>：默认方式，即<code>git reset</code>，它回退到某个版本，只保留源码，回退commit和index信息<br /></li>
+<li><code>git reset --soft</code>：回退到某个版本，只回退了commit的信息，不会恢复到index file一级。如果还要提交，直接commit即可<br /></li>
+<li><code>git reset --hard</code>：彻底回退到某个版本，本地的源码也会变为上一个版本的内容</li>
+</ol>
 
 <p><strong>Git取消对某个文件的跟踪</strong><br />
-1. <code>git rm --cached readme.md</code>    删除readme.md的跟踪，并保留在本地。
+1. <code>git rm --cached readme.md</code>    仅删除readme.md的跟踪，并保留在本地。<br />
 2. <code>git rm --f readme.md</code>    删除readme.md的跟踪，并且删除本地文件。</p>
 
     </div>

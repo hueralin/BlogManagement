@@ -5,8 +5,388 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 06 Oct 2019 13:27:32 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 07 Oct 2019 11:30:54 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>LearnGitWithBitbucketCloud(3-4-4)-Git Reset</title>
+      <link>https://hueralin.github.io/2019/gitreset-translation/</link>
+      <pubDate>Mon, 07 Oct 2019 11:30:54 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitreset-translation/</guid>
+      <description>
+
+&lt;p&gt;&lt;strong&gt;[假面包屑导航]&lt;/strong&gt; &lt;a href=&#34;https://www.atlassian.com/git/tutorials&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Git tutorials&lt;/a&gt; / &lt;a href=&#34;https://www.atlassian.com/git/tutorials/setting-up-a-repository&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Getting Started&lt;/a&gt; / &lt;a href=&#34;https://www.atlassian.com/git/tutorials/undoing-changes&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;UndoingChanges&lt;/a&gt; / git-reset&lt;/p&gt;
+
+&lt;p&gt;“这是一篇译文”，本人水平有限，若有错误请&lt;a href=&#34;https://www.atlassian.com/git/tutorials/undoing-changes/git-reset&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;参考原文&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The git reset command is a complex and versatile tool for undoing changes. It has three primary forms of invocation. These forms correspond to command line arguments &amp;ndash;soft, &amp;ndash;mixed, &amp;ndash;hard. The three arguments each correspond to Git&amp;rsquo;s three internal state management mechanism&amp;rsquo;s, The Commit Tree (HEAD), The Staging Index, and The Working Directory.&lt;/p&gt;
+
+&lt;p&gt;git reset 命令是用于撤销更改的复杂而又通用的工具。它有三种主要的调用形式，这三种形式分别对应着命令行参数 &amp;ndash;soft, &amp;ndash;mixed, &amp;ndash;hard。这三种参数分别对应着Git的三种内部状态管理机制，The Commit Tree (HEAD), The Staging Index, and The Working Directory。&lt;/p&gt;
+
+&lt;h1 id=&#34;git-reset-three-trees-of-git&#34;&gt;Git Reset &amp;amp; Three Trees of Git&lt;/h1&gt;
+
+&lt;p&gt;To properly understand git reset usage, we must first understand Git&amp;rsquo;s internal state management systems. Sometimes these mechanisms are called Git&amp;rsquo;s &amp;ldquo;three trees&amp;rdquo;. Trees may be a misnomer, as they are not strictly traditional tree data-structures. They are, however, node and pointer-based data structures that Git uses to track a timeline of edits. The best way to demonstrate these mechanisms is to create a changeset in a repository and follow it through the three trees.&lt;/p&gt;
+
+&lt;p&gt;为了更适当的理解 git reset 的用法，我们必须首先了解Git的内部状态管理系统。有时这些机制被称为&lt;strong&gt;Git的三棵树&lt;/strong&gt;，尽管它们不是严格意义上的传统的“树”数据结构。而是Git用来跟踪编辑时间轴的基于结点和指针的数据结构。演示这种机制的最好方法是在仓库中创建一个“改动集合”，然后通过着三棵树来跟踪它。&lt;/p&gt;
+
+&lt;p&gt;To get started we will create a new repository with the commands below:&lt;br /&gt;
+首先，我们使用以下的命令行创建一个仓库&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ mkdir git_reset_test
+$ cd git_reset_test/
+$ git init .
+Initialized empty Git repository in /git_reset_test/.git/
+$ touch reset_lifecycle_file
+$ git add reset_lifecycle_file
+$ git commit -m&amp;quot;initial commit&amp;quot;
+[master (root-commit) d386d86] initial commit
+1 file changed, 0 insertions(+), 0 deletions(-)
+create mode 100644 reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The above example code creates a new git repository with a single empty file, reset_lifecycle_file. At this point, the example repository has a single commit (d386d86) from adding reset_lifecycle_file.&lt;/p&gt;
+
+&lt;p&gt;上面的示例代码创建了一个仓库，里面只有一个空文件 reset_lifecycle_file。此时，这个仓库里面只有一个刚刚初始化的提交。&lt;/p&gt;
+
+&lt;h1 id=&#34;the-working-directory&#34;&gt;The working directory&lt;/h1&gt;
+
+&lt;p&gt;The first tree we will examine is &amp;ldquo;The Working Directory&amp;rdquo;. This tree is in sync with the local filesystem and is representative of the immediate changes made to content in files and directories.&lt;/p&gt;
+
+&lt;p&gt;我们将要了解的第一棵树叫做“工作目录”。这棵树和本地文件系统是同步的，并且文件或目录中内容的更改它都能立即显示出来。（说白了就是你本地的工作目录）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ echo &#39;hello git reset&#39; &amp;gt; reset_lifecycle_file  
+$ git status  
+On branch master  
+Changes not staged for commit:  
+(use &amp;quot;git add ...&amp;quot; to update what will be committed)  
+(use &amp;quot;git checkout -- ...&amp;quot; to discard changes in working directory)  
+modified: reset_lifecycle_file // (假装是红色的)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In our demo repository, we modify and add some content to the reset_lifecycle_file. Invoking git status shows that Git is aware of the changes to the file. These changes are currently a part of the first tree, &amp;ldquo;The Working Directory&amp;rdquo;. Git status can be used to show changes to the Working Directory. They will be displayed in the red with a &amp;lsquo;modified&amp;rsquo; prefix.&lt;/p&gt;
+
+&lt;p&gt;在我们的示例仓库中，我们修改了 reset_lifecycle_file 文件的内容。调用 git status 命令，可以看到Git已经追踪到了文件的修改。这些修改是当前“工作目录”的一部分。&lt;code&gt;git status&lt;/code&gt; 用来显示工作目录的修改。这些改动将会以红色的‘modified’前缀显示。&lt;/p&gt;
+
+&lt;h1 id=&#34;staging-index&#34;&gt;Staging index&lt;/h1&gt;
+
+&lt;p&gt;Next up is the &amp;lsquo;Staging Index&amp;rsquo; tree. This tree is tracking Working Directory changes, that have been promoted with git add, to be stored in the next commit. This tree is a complex internal caching mechanism. Git generally tries to hide the implementation details of the Staging Index from the user.&lt;/p&gt;
+
+&lt;p&gt;接下来是“暂存索引”树。这棵树是用来追踪工作目录的修改的，且已经调用过 &lt;code&gt;git add&lt;/code&gt;。这棵树是一个复杂的内部缓存机制。Git一般情况下会对用户隐藏暂存索引的实现细节。&lt;/p&gt;
+
+&lt;p&gt;To accurately view the state of the Staging Index we must utilize a lesser known Git command git ls-files. The git ls-files command is essentially a debug utility for inspecting the state of the Staging Index tree.&lt;/p&gt;
+
+&lt;p&gt;为了准确的观察“暂存索引”的状态，我们必须使用一个不常见的Git命令 &lt;code&gt;git ls-files&lt;/code&gt; 。这个命令实际上是一个为了检查“暂存索引”树的状态的调试命令。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;git ls-files -s  
+100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0 reset_lifecycle_file  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we have executed git ls-files with the -s or &amp;ndash;stage option. Without the -s option the git ls-files output is simply a list of file names and paths that are currently part of the index. The -s option displays additional metadata for the files in the Staging Index. This metadata is the staged contents&amp;rsquo; mode bits, object name, and stage number. Here we are interested in the object name, the second value (d7d77c1b04b5edd5acfc85de0b592449e5303770). This is a standard Git object SHA-1 hash. It is a hash of the content of the files. The Commit History stores its own object SHA&amp;rsquo;s for identifying pointers to commits and refs and the Staging Index has its own object SHA&amp;rsquo;s for tracking versions of files in the index.&lt;/p&gt;
+
+&lt;p&gt;接下来，我们执行 git ls-files -s / &amp;ndash;stage。如果没有 -s 选项，那么 git ls-files 只会输出一个简单的包含文件名和路径的文件列表。-s 选项展示了暂存索引树中文件的额外的元数据。这些元数据包括暂存内容的位模式，对象名以及暂存号。这里我们主要看对象名，即列表项的第二个值。这是一个标准的Git对象SHA-1散列。它是文章内容的hash值。提交历史（git log）保存了它自身的对象SHA，用于标识提交和引用的指针，并且暂存索引也有它自己的用来跟踪索引中文件版本的对象SHA。&lt;/p&gt;
+
+&lt;p&gt;Next, we will promote the modified reset_lifecycle_file into the Staging Index.&lt;/p&gt;
+
+&lt;p&gt;接下来，我们将修改后的 reset_lifecycle_file 文件加入到暂存索引中。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git add reset_lifecycle_file   
+$ git status   
+On branch master Changes to be committed:   
+(use &amp;quot;git reset HEAD ...&amp;quot; to unstage)   
+modified: reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we have invoked git add reset_lifecycle_file which adds the file to the Staging Index. Invoking git status now shows reset_lifecycle_file in green under &amp;ldquo;Changes to be committed&amp;rdquo;. It is important to note that git status is not a true representation of the Staging Index. The git status command output displays changes between the Commit History and the Staging Index. Let us examine the Staging Index content at this point.&lt;/p&gt;
+
+&lt;p&gt;这里我们调用了 git add reset_lifecycle_file 命令，将文件加入了暂存索引中。在调用 git status 命令，可以看到输出显示 reset_lifecycle_file 文件以绿色标识在“Changes to be committed”下面。注意，git status 并不是暂存索引的真正体现。git status 命令输出显示是 提交历史 和 暂存索引 之间的改动。现在让我们检查一下暂存索引的内容。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git ls-files -s  
+100644 d7d77c1b04b5edd5acfc85de0b592449e5303770 0 reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can see that the object SHA for reset_lifecycle_file has been updated from e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 to d7d77c1b04b5edd5acfc85de0b592449e5303770.&lt;/p&gt;
+
+&lt;p&gt;我们可以看到 reset_lifecycle_file 文件的对象SHA发生了变化。&lt;/p&gt;
+
+&lt;h1 id=&#34;commit-history&#34;&gt;Commit history&lt;/h1&gt;
+
+&lt;p&gt;The final tree is the Commit History. The git commit command adds changes to a permanent snapshot that lives in the Commit History. This snapshot also includes the state of the Staging Index at the time of commit.&lt;/p&gt;
+
+&lt;p&gt;最后一棵树是“提交历史”。git commit 命令将文件的改动添加进一个永久的快照中，这个快照保存在“提交历史”树中。这个快照还包含了提交时暂存索引的状态。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git commit -am&amp;quot;update content of reset_lifecycle_file&amp;quot;
+[master dc67808] update content of reset_lifecycle_file
+1 file changed, 1 insertion(+)
+$ git status
+On branch master
+nothing to commit, working tree clean
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we have created a new commit with a message of &amp;ldquo;update content of resetlifecyclefile&amp;rdquo;. The changeset has been added to the Commit History. Invoking git status at this point shows that there are no pending changes to any of the trees. Executing git log will display the Commit History. Now that we have followed this changeset through the three trees we can begin to utilize git reset.&lt;/p&gt;
+
+&lt;p&gt;我们创建了一个提交，将之前所做的修改作为一个集合添加进提交历史。调用 git status 命令，可以看到没有需要添加进任何树中的等待中的修改。执行 git log 命令会显示提交历史。既然我们已经通过三棵树跟踪了这个变更集，我们就可以开始使用git reset了。&lt;/p&gt;
+
+&lt;h1 id=&#34;how-it-works&#34;&gt;How it works&lt;/h1&gt;
+
+&lt;p&gt;At a surface level, git reset is similar in behavior to git checkout. Where git checkout solely operates on the HEAD ref pointer, git reset will move the HEAD ref pointer and the current branch ref pointer. To better demonstrate this behavior consider the following example:&lt;/p&gt;
+
+&lt;p&gt;表面上，git reset 在行为上和 git checkout 相似。git checkout 仅仅操作在HEAD的引用指针上，而 git reset 会移动到HEAD的引用指针以及当前分支的引用指针上。为了更好地演示这种行为，我们考虑下下面的例子：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://wac-cdn.atlassian.com/dam/jcr:b02e7b60-742a-449d-921d-53c32410576d/git-sequence-transparent.png?cdnVersion=612&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;git checkout b&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://wac-cdn.atlassian.com/dam/jcr:73e231c7-ddee-4f32-94d6-a3e31e835690/git-checkout-transparent.png?cdnVersion=612&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;With git checkout, the master ref is still pointing to d. The HEAD ref has been moved, and now points at commit b. The repo is now in a &amp;lsquo;detached HEAD&amp;rsquo; state.&lt;/p&gt;
+
+&lt;p&gt;调用了 git checkout ，master分支的引用仍然指向d。HEAD引用移动了，现在指向了 commit b。仓库现在处于HEAD指向的状态。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;git reset b&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://wac-cdn.atlassian.com/dam/jcr:29e29d3d-dddd-480b-afd9-77169a7b0230/git-reset-transparent.png?cdnVersion=612&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Comparatively, git reset, moves both the HEAD and branch refs to the specified commit.&lt;/p&gt;
+
+&lt;p&gt;相对而言，git reset 将HEAD引用和分支引用都移动到了特定的提交上。&lt;/p&gt;
+
+&lt;p&gt;In addition to updating the commit ref pointers, git reset will modify the state of the three trees. The ref pointer modification always happens and is an update to the third tree, the Commit tree. The command line arguments &amp;ndash;soft, &amp;ndash;mixed, and &amp;ndash;hard direct how to modify the Staging Index, and Working Directory trees.&lt;/p&gt;
+
+&lt;p&gt;除了更新提交引用指针，git reset 还会修改三棵树的状态。引用指针的改变经常会发生，并且是对第三棵树&amp;mdash;“提交树”的更新。命令行参数 &amp;ndash;soft，&amp;ndash;mixed 以及 &amp;ndash;hard 如何修改这三棵树呢。&lt;/p&gt;
+
+&lt;h1 id=&#34;main-options&#34;&gt;Main Options&lt;/h1&gt;
+
+&lt;p&gt;The default invocation of git reset has implicit arguments of &amp;ndash;mixed and HEAD. This means executing git reset is equivalent to executing git reset &amp;ndash;mixed HEAD. In this form HEAD is the specified commit. Instead of HEAD any Git SHA-1 commit hash can be used.&lt;/p&gt;
+
+&lt;p&gt;调用 git reset 默认会有两个隐式的参数 &amp;ndash;mixed 和 HEAD。也就是说执行 git reset 等同于执行 git reset &amp;ndash;mixed HEAD。在这种形式中，HEAD就是一个指定的提交。可以使用任何提交对象的散列值来代替HEAD。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://wac-cdn.atlassian.com/dam/jcr:7fb4b5f7-a2cd-4cb7-9a32-456202499922/03%20(8).svg?cdnVersion=612&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;hard&#34;&gt;&amp;ndash;hard&lt;/h1&gt;
+
+&lt;p&gt;This is the most direct, DANGEROUS, and frequently used option. When passed &amp;ndash;hard The Commit History ref pointers are updated to the specified commit. Then, the Staging Index and Working Directory are reset to match that of the specified commit. Any previously pending changes to the Staging Index and the Working Directory gets reset to match the state of the Commit Tree. This means any pending work that was hanging out in the Staging Index and Working Directory will be lost.&lt;/p&gt;
+
+&lt;p&gt;这是一个最直接，&lt;strong&gt;最危险&lt;/strong&gt;，且使用最频繁的一个选项。当使用 &amp;ndash;hard 后，提交历史的引用指针会更新到指定的提交。然后，暂存索引和工作目录也会重置到指定提交的状态。任何先前暂存索引和工作目录中的等待中的修改都会被重置到提交记录树种的指定的状态。也就是说任何暂存索引和工作目录中挂起的工作都会丢失。&lt;/p&gt;
+
+&lt;p&gt;To demonstrate this, let&amp;rsquo;s continue with the three tree example repo we established earlier. First let&amp;rsquo;s make some modifications to the repo. Execute the following commands in the example repo:&lt;/p&gt;
+
+&lt;p&gt;为了演示，我们继续使用之前的仓库。首先我们做些修改，然后执行下面的命令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ echo &#39;new file content&#39; &amp;gt; new_file
+$ git add new_file
+$ echo &#39;changed content&#39; &amp;gt;&amp;gt; reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;These commands have created a new file named new_file and added it to the repo. Additionally, the content of reset_lifecycle_file will be modified. With these changes in place let us now examine the state of the repo using git status.&lt;/p&gt;
+
+&lt;p&gt;创建一个新文件，并添加进仓库。然后对 reset_lifecycle_file 文件做一些修改，再执行 git status：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git status
+On branch master
+Changes to be committed:
+(use &amp;quot;git reset HEAD ...&amp;quot; to unstage)
+new file: new_file
+Changes not staged for commit:
+(use &amp;quot;git add ...&amp;quot; to update what will be committed)
+(use &amp;quot;git checkout -- ...&amp;quot; to discard changes in working directory)
+modified: reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can see that there are now pending changes to the repo. The Staging Index tree has a pending change for the addition of new_file and the Working Directory has a pending change for the modifications to reset_lifecycle_file.&lt;/p&gt;
+
+&lt;p&gt;现在我们能看到仓库中有一些等待中的修改。暂存索引树中等待中的修改是新文件的增加，工作目录书树的等待中的修改是 reset_lifecycle_file 文件的改动。&lt;/p&gt;
+
+&lt;p&gt;Before moving forward let us also examine the state of the Staging Index:&lt;/p&gt;
+
+&lt;p&gt;在使用 git reset 移动之前，我们先来看一下暂存索引：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git ls-files -s
+100644 8e66654a5477b1bf4765946147c49509a431f963 0 new_file
+100644 d7d77c1b04b5edd5acfc85de0b592449e5303770 0 reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can see that new_file has been added to the index. We have made updates to reset_lifecycle_file but the Staging Index SHA (d7d77c1b04b5edd5acfc85de0b592449e5303770) remains the same. This is expected behavior because have not used git add to promote these changes to the Staging Index. These changes exist in the Working Directory.&lt;/p&gt;
+
+&lt;p&gt;我们可以看到新文件被添加进了暂存索引。我们对 reset_lifecycle_file 文件做了修改，但是它的暂存索引中的SHA并没有改变。这是意料之中的事，因为我们并没有使用 git add 命令将修改添加进暂存索引。这些修改仍然存在于工作目录中。&lt;/p&gt;
+
+&lt;p&gt;Let us now execute a git reset &amp;ndash;hard and examine the new state of the repository.&lt;/p&gt;
+
+&lt;p&gt;让我们执行下 git reset &amp;ndash;hard 然后看看仓库中当前的状态：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git reset --hard
+HEAD is now at dc67808 update content of reset_lifecycle_file
+$ git status
+On branch master
+nothing to commit, working tree clean
+$ git ls-files -s
+100644 d7d77c1b04b5edd5acfc85de0b592449e5303770 0 reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we have executed a &amp;ldquo;hard reset&amp;rdquo; using the &amp;ndash;hard option. Git displays output indicating that HEAD is pointing to the latest commit dc67808. Next, we check the state of the repo with git status. Git indicates there are no pending changes. We also examine the state of the Staging Index and see that it has been reset to a point before new_file was added. Our modifications to reset_lifecycle_file and the addition of new_file have been destroyed. This data loss cannot be undone, this is critical to take note of.&lt;/p&gt;
+
+&lt;p&gt;现在HEAD指向了最近的一次提交 dc67808。执行 git status，发现Git说此时没有等待中的修改。执行  git ls-files -s ，查看暂存索引树，发现回到了添加新文件之前的状态。我们对新文件的添加和对旧文件的修改都被销毁了。这些数据丢失了，也不能重做，注意这一点很重要。&lt;/p&gt;
+
+&lt;h1 id=&#34;mixed&#34;&gt;&amp;ndash;mixed&lt;/h1&gt;
+
+&lt;p&gt;This is the default operating mode. The ref pointers are updated. The Staging Index is reset to the state of the specified commit. Any changes that have been undone from the Staging Index are moved to the Working Directory. Let us continue.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;mixed 是默认选项。引用指针会被更新。暂存索引被重置到指定的提交。从暂存索引中撤消的任何更改都将移动到工作目录。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ echo &#39;new file content&#39; &amp;gt; new_file
+$ git add new_file
+$ echo &#39;append content&#39; &amp;gt;&amp;gt; reset_lifecycle_file
+$ git add reset_lifecycle_file
+$ git status
+On branch master
+Changes to be committed:
+(use &amp;quot;git reset HEAD ...&amp;quot; to unstage)
+new file: new_file
+modified: reset_lifecycle_file
+$ git ls-files -s
+100644 8e66654a5477b1bf4765946147c49509a431f963 0 new_file
+100644 7ab362db063f9e9426901092c00a3394b4bec53d 0 reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the example above we have made some modifications to the repository. Again, we have added a new_file and modified the contents of reset_lifecycle_file. These changes are then applied to the Staging Index with git add. With the repo in this state, we will now execute the reset.&lt;/p&gt;
+
+&lt;p&gt;新文件的增加和旧文件的修改都被执行了 git add ，添加进了暂存索引。然后，我们执行reset：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git reset --mixed
+$ git status
+On branch master
+Changes not staged for commit:
+(use &amp;quot;git add ...&amp;quot; to update what will be committed)
+(use &amp;quot;git checkout -- ...&amp;quot; to discard changes in working directory)
+modified: reset_lifecycle_file
+Untracked files:
+(use &amp;quot;git add ...&amp;quot; to include in what will be committed)
+new_file
+no changes added to commit (use &amp;quot;git add&amp;quot; and/or &amp;quot;git commit -a&amp;quot;)
+$ git ls-files -s
+100644 d7d77c1b04b5edd5acfc85de0b592449e5303770 0 reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we have executed a &amp;ldquo;mixed reset&amp;rdquo;. To reiterate, &amp;ndash;mixed is the default mode and the same effect as executing git reset. Examining the output from git status and git ls-files, shows that the Staging Index has been reset to a state where reset_lifecycle_file is the only file in the index. The object SHA for reset_lifecycle_file has been reset to the previous version.&lt;/p&gt;
+
+&lt;p&gt;我们可以看到，&amp;ndash;mixed 和 &amp;ndash;hard 对使用 git ls-files 命令的结果一样，暂存索引中只有reset_lifecycle_file。暂存索引回退到之前的状态。&lt;/p&gt;
+
+&lt;p&gt;The important things to take note of here is that git status shows us that there are modifications to reset_lifecycle_file and there is an untracked file: new_file. This is the explicit &amp;ndash;mixed behavior. The Staging Index has been reset and the pending changes have been moved into the Working Directory. Compare this to the &amp;ndash;hard reset case where the Staging Index was reset and the Working Directory was reset as well, losing these updates.&lt;/p&gt;
+
+&lt;p&gt;需要注意的是，git status 显示，reset_lifecycle_file 被修改了， new_file 未被跟踪。暂存索引被重置，等待中的修改都被放进了工作目录。而 &amp;ndash;hard ，暂存索引和工作目录都被重置了，所做的修改都丢失了。&lt;/p&gt;
+
+&lt;h1 id=&#34;soft&#34;&gt;&amp;ndash;soft&lt;/h1&gt;
+
+&lt;p&gt;When the &amp;ndash;soft argument is passed, the ref pointers are updated and the reset stops there. The Staging Index and the Working Directory are left untouched. This behavior can be hard to clearly demonstrate. Let&amp;rsquo;s continue with our demo repo and prepare it for a soft reset.&lt;/p&gt;
+
+&lt;p&gt;使用 &amp;ndash;soft，引用指针被更新，重置就停止在那里。暂存索引和工作目录保持不变。这个行为不好演示，我们继续使用这个仓库，为 soft reset 做好准备。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git add reset_lifecycle_file   
+$ git ls-files -s   
+100644 67cc52710639e5da6b515416fd779d0741e3762e 0 reset_lifecycle_file   
+$ git status   
+On branch master   
+Changes to be committed:   
+(use &amp;quot;git reset HEAD ...&amp;quot; to unstage)   
+modified: reset_lifecycle_file   
+Untracked files:   
+(use &amp;quot;git add ...&amp;quot; to include in what will be committed)   
+new_file  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we have again used git add to promote the modified reset_lifecycle_file into the Staging Index. We confirm that the index has been updated with the git ls-files output. The output from git status now displays the &amp;ldquo;Changes to be committed&amp;rdquo; in green. The new_file from our previous examples is floating around in the Working Directory as an untracked file. Lets quickly execute rm new_file to delete the file as we will not need it for the upcoming examples.&lt;/p&gt;
+
+&lt;p&gt;这里，我们修改了旧文件，并添加进了暂存索引。执行 git status 可以看到旧文件处于待提交状态，新文件处于待暂存状态。让我们快速执行rm new_file来删除文件，因为在接下来的示例中不需要它。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git reset --soft
+$ git status
+On branch master
+Changes to be committed:
+(use &amp;quot;git reset HEAD ...&amp;quot; to unstage)
+modified: reset_lifecycle_file
+$ git ls-files -s
+100644 67cc52710639e5da6b515416fd779d0741e3762e 0 reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We have executed a &amp;lsquo;soft reset&amp;rsquo;. Examining the repo state with git status and git ls-files shows that nothing has changed. This is expected behavior. A soft reset will only reset the Commit History. By default, git reset is invoked with HEAD as the target commit. Since our Commit History was already sitting on HEAD and we implicitly reset to HEAD nothing really happened.&lt;/p&gt;
+
+&lt;p&gt;执行完 git reset &amp;ndash;soft 以及 git status 后，显示xxx。soft reset 只会重置提交历史。因为我们的提交历史已经被设置为HEAD了，我们隐式地将其重置为HEAD，所以实际上什么也没有发生。&lt;/p&gt;
+
+&lt;p&gt;To better understand and utilize &amp;ndash;soft we need a target commit that is not HEAD. We have reset_lifecycle_file waiting in the Staging Index. Let&amp;rsquo;s create a new commit.&lt;/p&gt;
+
+&lt;p&gt;为了更好的理解 &amp;ndash;soft 用法，我们需要一个非HEAD的提交记录。暂存索引中 reset_lifecycle_file 文件还在等着被提交，那我们就提交它吧。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git commit -m&amp;quot;prepend content to reset_lifecycle_file&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;At this point, our repo should have three commits. We will be going back in time to the first commit. To do this we will need the first commit&amp;rsquo;s ID. This can be found by viewing output from git log.&lt;/p&gt;
+
+&lt;p&gt;此时，仓库应该有3个提交记录。为了回退到第一个提交记录，我们需要它的提交ID，执行 git log 即可查看。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git log
+commit 62e793f6941c7e0d4ad9a1345a175fe8f45cb9df
+Author: bitbucket 
+Date: Fri Dec 1 15:03:07 2017 -0800
+prepend content to reset_lifecycle_file
+commit dc67808a6da9f0dec51ed16d3d8823f28e1a72a
+Author: bitbucket 
+Date: Fri Dec 1 10:21:57 2017 -0800
+update content of reset_lifecycle_file
+commit 780411da3b47117270c0e3a8d5dcfd11d28d04a4
+Author: bitbucket 
+Date: Thu Nov 30 16:50:39 2017 -0800
+initial commit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Keep in mind that Commit History ID&amp;rsquo;s will be unique to each system. This means the commit ID&amp;rsquo;s in this example will be different from what you see on your personal machine. The commit ID we are interested in for this example is 780411da3b47117270c0e3a8d5dcfd11d28d04a4. This is the ID that corresponds to the &amp;ldquo;initial commit&amp;rdquo;. Once we have located this ID we will use it as the target for our soft reset.&lt;/p&gt;
+
+&lt;p&gt;注意，每个系统的提交历史的ID都是独一无二的。我们需要的是第一个提交历史的ID 780411da3b47117270c0e3a8d5dcfd11d28d04a4 ，将用它准备调用 git reset &amp;ndash;soft。&lt;/p&gt;
+
+&lt;p&gt;Before we travel back in time lets first check the current state of the repo.&lt;/p&gt;
+
+&lt;p&gt;回退之前我们先看一下仓库当前的状态。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git status &amp;amp;&amp;amp; git ls-files -s
+On branch master
+nothing to commit, working tree clean
+100644 67cc52710639e5da6b515416fd779d0741e3762e 0 reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;开始回退&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$git reset --soft 780411da3b47117270c0e3a8d5dcfd11d28d04a4
+$ git status &amp;amp;&amp;amp; git ls-files -s
+On branch master
+Changes to be committed:
+(use &amp;quot;git reset HEAD ...&amp;quot; to unstage)
+modified: reset_lifecycle_file
+100644 67cc52710639e5da6b515416fd779d0741e3762e 0 reset_lifecycle_file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The code above executes a &amp;ldquo;soft reset&amp;rdquo; and also invokes the git status and git ls-files combo command, which outputs the state of the repository. We can examine the repo state output and note some interesting observations. First, git status indicates there are modifications to reset_lifecycle_file and highlights them indicating they are changes staged for the next commit. Second, the git ls-files input indicates that the Staging Index has not changed and retains the SHA 67cc52710639e5da6b515416fd779d0741e3762e we had earlier.&lt;/p&gt;
+
+&lt;p&gt;首先，根据状态输出，我们能够看到对 reset_lifecycle_file 文件的修改仍然存在，仍然在等着被提交。其次，根据暂存索引输出，我们发现 reset_lifecycle_file 的SHA也没有变化。&lt;/p&gt;
+
+&lt;p&gt;To further clarify what has happened in this reset let us examine the git log:&lt;/p&gt;
+
+&lt;p&gt;为了更进一步地解释执行 &amp;ndash;soft 发生了什么，我们执行 git log 查看一下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ git log
+commit 780411da3b47117270c0e3a8d5dcfd11d28d04a4
+Author: bitbucket 
+Date: Thu Nov 30 16:50:39 2017 -0800
+initial commit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The log output now shows that there is a single commit in the Commit History. This helps to clearly illustrate what &amp;ndash;soft has done. As with all git reset invocations, the first action reset takes is to reset the commit tree. Our previous examples with &amp;ndash;hard and &amp;ndash;mixed have both been against the HEAD and have not moved the Commit Tree back in time. During a soft reset, this is all that happens.&lt;/p&gt;
+
+&lt;p&gt;日志输出显示了这确实是第一次提交历史。与所有 git reset 调用一样，重置的第一个操作是重置提交树。我们前面的例子 &amp;ndash;hard 和 &amp;ndash;mixed 都是针对HEAD的，没有及时地将提交树向后移动。但是在 &amp;ndash;soft 中，这些都做过了。&lt;/p&gt;
+
+&lt;p&gt;This may then be confusing as to why git status indicates there are modified files. &amp;ndash;soft does not touch the Staging Index, so the updates to our Staging Index followed us back in time through the commit history. This can be confirmed by the output of git ls-files -s showing that the SHA for reset_lifecycle_file is unchanged. As a reminder, git status does not show the state of &amp;lsquo;the three trees&amp;rsquo;, it essentially shows a diff between them. In this case, it is displaying that the Staging Index is ahead of the changes in the Commit History as if we have already staged them.&lt;/p&gt;
+
+&lt;p&gt;为什么 git status 表明存在修改过的文件？这可能会让人感到困惑。因为 &amp;ndash;soft 没有触及暂存索引，因此对暂存索引的更新在提交历史中一直跟随我们。这可以通过git ls-files -s的输出得到确认，其中 reset_lifecycle_file 的SHA没有改变。提醒一下，git status 并不显示“三棵树”的状态，它实际上显示了它们之间的差异。在本例中，它将显示暂存索引先于提交历史记录中的更改，就好像我们已经暂存了它们一样。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>call, apply, bind</title>
@@ -1256,84 +1636,6 @@ p::before { content: &amp;quot;Hello world!&amp;quot;; }
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;MDN上关于这一节的最后一个例子不错，大家可以尝试一下！&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>React组件中的函数this绑定</title>
-      <link>https://hueralin.github.io/2019/bind/</link>
-      <pubDate>Tue, 20 Aug 2019 11:04:35 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/bind/</guid>
-      <description>
-
-&lt;h2 id=&#34;实习项目遇到的问题&#34;&gt;实习项目遇到的问题&lt;/h2&gt;
-
-&lt;h3 id=&#34;关于函数this绑定&#34;&gt;关于函数this绑定！&lt;/h3&gt;
-
-&lt;p&gt;最近在React项目中遇到了关于函数this绑定的问题，因为在普通函数（诸如:function(){xxx}）中，this的绑定是动态的，在被执行时才会确定。若这些普通函数在自身组件内使用一般不会有太大的问题，然而一旦被当作参数（例如事件处理函数）传递到其他组件时，this就会绑定为其他组件的实例，在获取原实例的状态时就会发生错误。&lt;/p&gt;
-
-&lt;p&gt;箭头函数的this绑定和普通函数不一样，它是静态绑定的，也就是说箭头函数的this绑定是在定义时绑定的，即定义箭头函数时所处的作用域的this。所以说如果React组件中的函数是用箭头函数的形式定义的话，就不用担心this绑定的问题。&lt;/p&gt;
-
-&lt;p&gt;假如你的onClick事件处理函数在被触发时需要传参，如果直接 &lt;code&gt;onClick={this.handleClick(xxx)}&lt;/code&gt; 话，onClick得到的就不是函数，而是函数返回的结果，所以应使用 &lt;code&gt;onClick={() =&amp;gt; this.handleClick(xxx)}&lt;/code&gt; ，即给onClick一个箭头函数作为事件处理函数，那么this就绑定为了当前组件的实例，调用的普通函数也不用做特殊的处理。&lt;/p&gt;
-
-&lt;p&gt;我犯了一个最基础也最致命的问题，在渲染中进行了状态的改变！按理说我不应该会犯这种错误，我犯这种错误的原因就是我将箭头函数和普通函数结合使用（模仿的项目中的老代码）：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;handleInput(key) {
-  return (e) =&amp;gt; {
-      let inputValue = {}
-      inputValue[key] = e.target.value
-      this.setState({
-      data: Object.assign({}, this.state.data, inputValue)
-      })
-  }
-}
-onChange={this.handleInput(xxx)}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;看出和之前 &lt;code&gt;onClick={() =&amp;gt; this.handleClick(xxx)}&lt;/code&gt; 的不同了么？&lt;br /&gt;
-这里是由普通函数将箭头函数return了出来，所以函数渲染时立即执行handleInput，并将执行后的箭头函数传给onChange，顺便完成this绑定，Emmmm，秀啊！可惜当初我没搞懂这个用意，将handleInput彻底改成了普通函数，导致在渲染时执行了this.setState()，浏览器不停的改变状态和渲染，瞬间报错0～20000+，不得不强制杀死浏览器进程&amp;hellip;&amp;hellip;&lt;/p&gt;
-
-&lt;h3 id=&#34;总结react组件中的函数this绑定的几种方法&#34;&gt;总结React组件中的函数this绑定的几种方法&lt;/h3&gt;
-
-&lt;p&gt;一、每当作为事件处理函数时，例如：&lt;code&gt;onClick onChange&lt;/code&gt; 等，都手动绑定一次&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 这种方法的好处是在绑定this的同时能传递参数
-onClick={this.handleClick.bind(this, args)}
-// 缺点是，每次都得手动调用bind()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;二、在构造函数中绑定一次，一劳永逸&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 缺点是不能传递参数
-this.handleCLick = this.handleClick.bind(this)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;三、React组件的函数直接定义成箭头函数&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;handleClick = (args) =&amp;gt; {xxxxx}
-// 缺点也是不能传递参数
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;上述三个做法有个矛盾，就是“一次绑定”和“传递参数”不能兼顾&lt;br /&gt;
-对于二、三方法，要实现传递参数，就得使用箭头函数，即&lt;br /&gt;
-&lt;code&gt;onClick = {() =&amp;gt; this.handleClick(args)}&lt;/code&gt;&lt;br /&gt;
-既然使用了箭头函数，那么二三方法中的绑定就没有必要了，这虽然是个好方法，但是看书写的代码量和第一种方法又有什么区别呢？&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;四、普通函数返回一个箭头函数&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 这是在实习期做项目时前辈的一个做法，感觉还不错
-// 这种方法的原理就是在普通函数中返回一个箭头函数，  
-// 在渲染时立即执行该函数，接收箭头函数作为事件处理函数，完成绑定的同时又传递了参数  
-handleClick (args) {
-  return () =&amp;gt; {
-    balabalabala...
-  }
-}
-onClick = {this.handleClick(args)}
-&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
