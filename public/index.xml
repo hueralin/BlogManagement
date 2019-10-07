@@ -5,8 +5,65 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Oct 2019 11:30:54 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 07 Oct 2019 22:13:09 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Git Reflog</title>
+      <link>https://hueralin.github.io/2019/gitreflog/</link>
+      <pubDate>Mon, 07 Oct 2019 22:13:09 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitreflog/</guid>
+      <description>
+
+&lt;h1 id=&#34;是不是-git-reset-hard-之后傻眼了-嗯&#34;&gt;是不是 git reset &amp;ndash;hard 之后傻眼了~~~嗯？&lt;/h1&gt;
+
+&lt;p&gt;来咯来咯~ git reflog 真的来咯~~&lt;/p&gt;
+
+&lt;h3 id=&#34;git-reflog&#34;&gt;git reflog&lt;/h3&gt;
+
+&lt;p&gt;git reflog 工具会记录你每次对HEAD的更改，即当你提交、切换分支或者reset后，HEAD都会更改，reflog都会记录下来你的操作。&lt;/p&gt;
+
+&lt;p&gt;比如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// git log --oneline
+b2d387d (HEAD -&amp;gt; master) add index.css
+9515998 initial reset
+29adb97 (origin/master, origin/HEAD) add branch_learn
+1563c0f add log.md
+53b7acc add What&#39;s commit/log.md
+f318db2 git add --all
+
+// 现在我们不小心回退到 1563c0f 这个提交
+// git reset --hard 1563c0f
+// git log --oneline
+1563c0f (HEAD -&amp;gt; master) add log.md
+53b7acc add What&#39;s commit/log.md
+f318db2 git add --all
+// 此时，暂存区和工作目录都回退到了指定的提交，那些未保存的修改都没了......
+
+// 因为Git记录下来了我们每次对HEAD进行的更改，所以我们可以使用git reflog命令查看所有的HEAD改动记录。
+// git reflog
+1563c0f (HEAD -&amp;gt; master) HEAD@{0}: reset: moving to 1563c0f
+b2d387d HEAD@{1}: commit: add index.css
+9515998 HEAD@{2}: commit: initial reset
+// 可以看到，第一条就是我们的reset命令。
+// 第二条是最近的一次提交记录，即我们刚刚回退的记录，前面有它的散列值。
+// 我们再次执行 git reset --hard，为什么要加上hard呢？因为我们要复原，暂存索引和工作目录都要。
+// git reset --hard b2d387d
+// git log --oneline
+b2d387d (HEAD -&amp;gt; master) add index.css
+9515998 initial reset
+29adb97 (origin/master, origin/HEAD) add branch_learn
+1563c0f add log.md
+53b7acc add What&#39;s commit/log.md
+f318db2 git add --all
+// 看！又回来了！
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其实，我只是为了简单介绍这个命令而举的这个例子，并不具有代表性，在实际过程中遇到的问题比这个复杂得多，所以还要随机应变，和其他命令配合。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>LearnGitWithBitbucketCloud(3-4-4)-Git Reset</title>
@@ -1550,92 +1607,6 @@ A：Emmmm&amp;hellip;&lt;/p&gt;
 &lt;p&gt;官方文档看这里&lt;a href=&#34;http://mockjs.com/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;MockJs&lt;/a&gt;！&lt;/p&gt;
 
 &lt;p&gt;数据模版之类的语法去看官方文档，我这里只简单介绍一下我的使用情况。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>伪类 与 伪元素</title>
-      <link>https://hueralin.github.io/2019/weilei/</link>
-      <pubDate>Wed, 21 Aug 2019 15:17:26 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/weilei/</guid>
-      <description>
-
-&lt;blockquote&gt;
-&lt;p&gt;“请说一下伪类和伪元素的区别”，之前的面试中遇到过这个问题，当初表示只见过伪类，回答的基本上都是:hover之流，这道题就挂了&amp;hellip;&amp;hellip;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;如今，在实习中遇到了相关的需求，看来是时候深入学习一下了。其实，区分伪类和伪元素并不难，它俩最大的区别就在于应用场景。&lt;/p&gt;
-
-&lt;h3 id=&#34;伪类&#34;&gt;伪类&lt;/h3&gt;
-
-&lt;h4 id=&#34;顾名思义-它相当于一个类-是用来设置样式的-当你需要让一个元素在某种特殊状态下显示特殊的样式时-如-按钮悬浮特效-就该使用伪类&#34;&gt;顾名思义，它相当于一个类，是用来设置样式的；当你需要让一个元素在某种特殊状态下显示特殊的样式时（如：按钮悬浮特效），就该使用伪类。&lt;/h4&gt;
-
-&lt;p&gt;&lt;strong&gt;下面我们来实现一下伪类：&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;需求：实现消息列表悬浮特效&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;!-- 需求很明确，li元素在悬浮情况下应用样式 --&amp;gt;
-&amp;lt;ul&amp;gt;
-  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;React&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Vue&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Angular&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;jQuery&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Webpack&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-  &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;NPM&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-&amp;lt;/ul&amp;gt;
-li:hover {
-    background: #eee;
-}
-&amp;lt;!-- 再简单不过了，当然也可以设置奇偶行样式不一 --&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;其他的伪类：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;:active :empty  :enabled    :first  :first-child    :first-child  
-:first-of-type  :focus  :hover  :visited    :nth-child  :nth-of-type    :link
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;伪元素&#34;&gt;伪元素&lt;/h3&gt;
-
-&lt;h4 id=&#34;顾名思义-它是一个元素-可以是现有的元素-也可以是新增的元素-这些元素往往有自己的特殊位置-如-段落首字母突出样式-往往被作为附加的标记&#34;&gt;顾名思义，它是一个元素，可以是现有的元素，也可以是新增的元素，这些元素往往有自己的特殊位置（如：段落首字母突出样式）往往被作为附加的标记。&lt;/h4&gt;
-
-&lt;p&gt;&lt;strong&gt;下面我们来实现一下伪元素&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;需求：表单必填项前面加一个标识（这也是我这次的需求）&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;label&amp;gt;页面地址&amp;lt;/label&amp;gt;
-&amp;lt;input type=&#39;text&#39; placeholder=&amp;quot;请输入页面地址&amp;quot;/&amp;gt;
-label::before {
-    content: &#39;*&#39;;
-    color: red;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;效果：&lt;img src=&#34;https://hueralin.github.io/img/posts/xinghao.jpg&#34; alt=&#34;必填项前加星号&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;伪元素并不多：&lt;br /&gt;
-1. ::before&lt;br /&gt;
-2. ::after&lt;br /&gt;
-3. ::first-letter 段落首字母&lt;br /&gt;
-4. ::first-line 段落首行&lt;br /&gt;
-5. ::selection 这个很有意思，代表被用户高亮的部分（例如鼠标选中）&lt;/p&gt;
-
-&lt;h3 id=&#34;before-和-after&#34;&gt;::before 和 ::after&lt;/h3&gt;
-
-&lt;p&gt;这两个伪元素比较特殊，属于扩增原元素一类（我自己瞎起的名字）&lt;br /&gt;
-::before 创建一个伪元素，并作为匹配元素的第一个子元素，::after则相反；这个新增的元素默认为“行内元素”&lt;br /&gt;
-语法参照&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/::before&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;MDN&lt;/a&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;/* CSS3 语法 */
-element::before { 样式 }  
-/* （单冒号）CSS2 过时语法 (仅用来支持 IE8) */
-element:before  { 样式 }  
-/* 在每一个p元素前插入内容 */
-p::before { content: &amp;quot;Hello world!&amp;quot;; } 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;MDN上关于这一节的最后一个例子不错，大家可以尝试一下！&lt;/p&gt;
 </description>
     </item>
     

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/gitreset-translation/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/gitreflog/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Git Reflog | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="Git Reflog | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Git Reflog",
+    "headline" : "Git Reflog",
+    "description" : "是不是 git reset \x26ndash;hard 之后傻眼了~~~嗯？ 来咯来咯~ git reflog 真的来咯~~\ngit reflog git reflog 工具会记录你每次对HEAD的更改，即当你提交、切换分支或者reset后，HEAD都会更改，reflog都会记录下来你的操作。\n比如：\n\/\/ git log --oneline b2d387d (HEAD -\x26gt; master) add index.css 9515998 initial reset 29adb97 (origin\/master, origin\/HEAD) add branch_learn 1563c0f add log.md 53b7acc add What\x27s commit\/log.md f318db2 git add --all \/\/ 现在我们不小心回退到 1563c0f 这个提交 \/\/ git reset --hard 1563c0f \/\/ git log --oneline 1563c0f (HEAD -\x26gt; master) add log.md 53b7acc add What\x27s commit\/log.md f318db2 git add --all \/\/ 此时，暂存区和工作目录都回退到了指定的提交，那些未保存的修改都没了.",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-10-07 22:13:09 \x2b0800 CST",
+    "dateModified" : "2019-10-07 22:13:09 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/gitreflog\/",
+    "wordCount" : "144",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Git Reflog</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-10-07 itemprop="datePublished">October 7, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/git/"> Git </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<h1 id="是不是-git-reset-hard-之后傻眼了-嗯">是不是 git reset &ndash;hard 之后傻眼了~~~嗯？</h1>
+
+<p>来咯来咯~ git reflog 真的来咯~~</p>
+
+<h3 id="git-reflog">git reflog</h3>
+
+<p>git reflog 工具会记录你每次对HEAD的更改，即当你提交、切换分支或者reset后，HEAD都会更改，reflog都会记录下来你的操作。</p>
+
+<p>比如：</p>
+
+<pre><code class="language-javascript">// git log --oneline
+b2d387d (HEAD -&gt; master) add index.css
+9515998 initial reset
+29adb97 (origin/master, origin/HEAD) add branch_learn
+1563c0f add log.md
+53b7acc add What's commit/log.md
+f318db2 git add --all
+
+// 现在我们不小心回退到 1563c0f 这个提交
+// git reset --hard 1563c0f
+// git log --oneline
+1563c0f (HEAD -&gt; master) add log.md
+53b7acc add What's commit/log.md
+f318db2 git add --all
+// 此时，暂存区和工作目录都回退到了指定的提交，那些未保存的修改都没了......
+
+// 因为Git记录下来了我们每次对HEAD进行的更改，所以我们可以使用git reflog命令查看所有的HEAD改动记录。
+// git reflog
+1563c0f (HEAD -&gt; master) HEAD@{0}: reset: moving to 1563c0f
+b2d387d HEAD@{1}: commit: add index.css
+9515998 HEAD@{2}: commit: initial reset
+// 可以看到，第一条就是我们的reset命令。
+// 第二条是最近的一次提交记录，即我们刚刚回退的记录，前面有它的散列值。
+// 我们再次执行 git reset --hard，为什么要加上hard呢？因为我们要复原，暂存索引和工作目录都要。
+// git reset --hard b2d387d
+// git log --oneline
+b2d387d (HEAD -&gt; master) add index.css
+9515998 initial reset
+29adb97 (origin/master, origin/HEAD) add branch_learn
+1563c0f add log.md
+53b7acc add What's commit/log.md
+f318db2 git add --all
+// 看！又回来了！
+</code></pre>
+
+<p>其实，我只是为了简单介绍这个命令而举的这个例子，并不具有代表性，在实际过程中遇到的问题比这个复杂得多，所以还要随机应变，和其他命令配合。</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/gitreflog/>https://hueralin.github.io/2019/gitreflog/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/gitreset-translation/" class="prev" rel="prev" title="LearnGitWithBitbucketCloud(3-4-4)-Git Reset"><i class="iconfont icon-left"></i>&nbsp;LearnGitWithBitbucketCloud(3-4-4)-Git Reset</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

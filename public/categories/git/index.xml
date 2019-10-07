@@ -6,10 +6,22 @@
     <description>Recent content in Git on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Oct 2019 11:30:54 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 07 Oct 2019 22:13:09 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/git/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Git Reflog</title>
+      <link>https://hueralin.github.io/2019/gitreflog/</link>
+      <pubDate>Mon, 07 Oct 2019 22:13:09 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/gitreflog/</guid>
+      <description>是不是 git reset &amp;ndash;hard 之后傻眼了~~~嗯？ 来咯来咯~ git reflog 真的来咯~~
+git reflog git reflog 工具会记录你每次对HEAD的更改，即当你提交、切换分支或者reset后，HEAD都会更改，reflog都会记录下来你的操作。
+比如：
+// git log --oneline b2d387d (HEAD -&amp;gt; master) add index.css 9515998 initial reset 29adb97 (origin/master, origin/HEAD) add branch_learn 1563c0f add log.md 53b7acc add What&#39;s commit/log.md f318db2 git add --all // 现在我们不小心回退到 1563c0f 这个提交 // git reset --hard 1563c0f // git log --oneline 1563c0f (HEAD -&amp;gt; master) add log.md 53b7acc add What&#39;s commit/log.md f318db2 git add --all // 此时，暂存区和工作目录都回退到了指定的提交，那些未保存的修改都没了.</description>
+    </item>
     
     <item>
       <title>LearnGitWithBitbucketCloud(3-4-4)-Git Reset</title>
