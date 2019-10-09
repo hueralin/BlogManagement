@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/float/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/httpcache/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           浏览器缓存策略 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="浏览器缓存策略 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "浏览器缓存策略",
+    "headline" : "浏览器缓存策略",
+    "description" : "我再也不废话了\x26hellip;\x26hellip;切入正题!\n缓存是干啥的也不用咱说了,浏览器缓存即基于HTTP头的缓存.\n浏览器缓存策略有两种:强缓存和协商缓存.\n先大体说一下浏览器缓存的过程:\n 浏览器向服务器发起请求前首先向浏览器缓存查询是否有该请求的结果及缓存标识.\n 有,则从缓存中读取(强缓存成功),否则再去询问服务器(协商缓存 or 直接请求).  强缓存策略 强缓存的三种情况:\n 请求前先去询问浏览器缓存,若有缓存且未失效,则直接从浏览器缓存读取结果,此被称之为\x26rdquo;强缓存成功\x26rdquo;.\n \x26ldquo;强缓存失败\x26rdquo;, 若有缓存,但已失效,则执行\x26ldquo;协商缓存\x26rdquo;策略.\n \x26ldquo;强缓存失败\x26rdquo;, 若无缓存, 则向服务器正式发起请求.  强缓存策略涉及到的HTTP头部: Cache-Control \/ expires\nexpires 是 HTTP\/1.0 的产物,它的值是一个绝对值,即缓存失效的时间.浏览器会拿客户端的时间和缓存中的此标识做对比,来判断缓存是否过期.所以它的缺陷比较明显,因为客户端和服务器的时间并不总是同步的,也就是说可能出现误差.(可能影响并不多大,别喷我\x26hellip;\x26hellip;)\nCache-Control 是 HTTP\/1.1 的产物,它的值就丰富多了:\n public 所有内容都将被缓存(客户端和代理服务器都可以)\n private 默认值,只有客户端才能缓存\n no-cache 只有客户端缓存,但是否使用缓存需要经过协商缓存来确定\n no-store 所有内容都不缓存\n max-age=xxx 缓存将于xxx秒后失效  我们一般使用第五种方式\n可以看到cache-control使用的是相对时间,弥补了expires的时间误差缺陷. 在实际应用过程中这两种方式都会有,但是cache-control的优先级要高一些.\n协商缓存策略 协商缓存发生在有缓存但到期的情况下. 实际上, 服务器设置的过期时间是用来表明此时的缓存可能会过期, 但我不能保证, 届时你得向我确认一下, 所以, 缓存并不一定失效了. 和商品的保质期一个道理.\n此时, 我们需要向服务器发起请求, 询问这个缓存能不能用, 如果服务器表示能用, 返回304, 那我们就去缓存中读取, 否则我们再向服务器请求新的数据.",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-10-09 20:00:01 \x2b0800 CST",
+    "dateModified" : "2019-10-09 20:00:01 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/httpcache\/",
+    "wordCount" : "135",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">浏览器缓存策略</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-10-09 itemprop="datePublished">October 9, 2019</time>
+                </span>
+                in
+                
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<p>我再也不废话了&hellip;&hellip;切入正题!</p>
+
+<p>缓存是干啥的也不用咱说了,浏览器缓存即基于HTTP头的缓存.</p>
+
+<p>浏览器缓存策略有两种:强缓存和协商缓存.</p>
+
+<p>先大体说一下浏览器缓存的过程:</p>
+
+<ol>
+<li>浏览器向服务器发起请求前首先向浏览器缓存查询是否有该请求的结果及缓存标识.<br /></li>
+<li>有,则从缓存中读取(强缓存成功),否则再去询问服务器(协商缓存 or 直接请求).</li>
+</ol>
+
+<h3 id="强缓存策略">强缓存策略</h3>
+
+<p><strong>强缓存的三种情况:</strong></p>
+
+<ol>
+<li>请求前先去询问浏览器缓存,若有缓存且未失效,则直接从浏览器缓存读取结果,此被称之为&rdquo;强缓存成功&rdquo;.<br /></li>
+<li>&ldquo;强缓存失败&rdquo;, 若有缓存,但已失效,则执行<strong>&ldquo;协商缓存&rdquo;策略.</strong><br /></li>
+<li>&ldquo;强缓存失败&rdquo;, 若无缓存, 则向服务器正式发起请求.</li>
+</ol>
+
+<p>强缓存策略涉及到的HTTP头部: <strong>Cache-Control / expires</strong></p>
+
+<p>expires 是 HTTP/1.0 的产物,它的值是一个绝对值,即缓存失效的时间.浏览器会拿客户端的时间和缓存中的此标识做对比,来判断缓存是否过期.所以它的缺陷比较明显,因为客户端和服务器的时间并不总是同步的,也就是说可能出现误差.(可能影响并不多大,别喷我&hellip;&hellip;)</p>
+
+<p>Cache-Control 是 HTTP/1.1 的产物,它的值就丰富多了:</p>
+
+<ol>
+<li><strong>public</strong>   所有内容都将被缓存(客户端和代理服务器都可以)<br /></li>
+<li><strong>private</strong>  默认值,只有客户端才能缓存<br /></li>
+<li><strong>no-cache</strong> 只有客户端缓存,但是否使用缓存需要经过协商缓存来确定<br /></li>
+<li><strong>no-store</strong> 所有内容都不缓存<br /></li>
+<li><strong>max-age=xxx</strong>  缓存将于xxx秒后失效</li>
+</ol>
+
+<p>我们一般使用第五种方式</p>
+
+<p>可以看到cache-control使用的是相对时间,弥补了expires的时间误差缺陷. 在实际应用过程中这两种方式都会有,但是cache-control的优先级要高一些.</p>
+
+<h3 id="协商缓存策略">协商缓存策略</h3>
+
+<p>协商缓存发生在有缓存但到期的情况下. 实际上, 服务器设置的过期时间是用来表明此时的缓存可能会过期, 但我不能保证, 届时你得向我确认一下, 所以, 缓存并不一定失效了. 和商品的保质期一个道理.</p>
+
+<p>此时, 我们需要向服务器发起请求, 询问这个缓存能不能用, 如果服务器表示能用, 返回304, 那我们就去缓存中读取, 否则我们再向服务器请求新的数据.</p>
+
+<p>协商缓存策略涉及到的HTTP头部: <strong>Last-Modified / If-Modified-Since 以及 Etag / If-None-Match</strong></p>
+
+<p><strong>Last-Modified / If-Modified-Since</strong> 是 HTTP/1.1 的产物, last-modified 标识的是资源的最后修改时间, 协商缓存开始时会发请求, 将last-modified的值赋给 请求头 if-modified-since, 向服务器发起询问 &ldquo;这个资源在这个时间后修改了么?&rdquo; 如果没有修改, 则返回304, 浏览器就会从缓存中读取数据, 否则会请求新的数据, 并更新缓存.</p>
+
+<p><strong>Etag / If-None-Match</strong> 也是 HTTP/1.1 的产物, 过程和上面一样, 只不过Etag是由服务器根据资源内容生成的唯一标识, 具有唯一性. 用资源的最后修改时间作为标识的话不太准确, 因为可能会在1秒内多次修改文件的情况.</p>
+
+<p>Etag / If-None-Match 的优先级比 Last-Modified / If-Modified-Since 高.</p>
+
+<h3 id="缓存的位置">缓存的位置</h3>
+
+<p>浏览器缓存的位置一般有两个: 硬盘缓存(disk cache) 和 内存缓存(memory cache), 我们打开F12, 可在network选项卡中网络请求的size列查看.<br />
+内存缓存会将编译解析后的文件存放在当前标签页进程的内存中, 读取速度较快.</p>
+
+<p>硬盘缓存则是将资源放入硬盘中, 需要进行对硬盘文件做I/O操作, 速度较慢.</p>
+
+<p>存在内存中的缓存文件, 会在刷新页面后被直接读取, 如果关闭了该标签页, 再次打开页面会重新请求. 而在硬盘中的缓存文件不会这样.</p>
+
+<p>浏览器对不同类型的文件选取不同的存储位置, 像JS, img等会被放进内存缓存, 而CSS会被放进硬盘缓存.</p>
+
+<h3 id="总结">总结</h3>
+
+<p>强缓存的优先级高于协商缓存, 强缓存失效才会进行协商缓存. 强缓存失效不代表缓存过期, 只是不确定其是否真的过期, 所以需要协商缓存过程来确认一下.</p>
+
+<p>桥豆麻袋! 不够细, 还有些没深入&hellip;&hellip;</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/httpcache/>https://hueralin.github.io/2019/httpcache/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/float/" class="prev" rel="prev" title="清除浮动"><i class="iconfont icon-left"></i>&nbsp;清除浮动</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

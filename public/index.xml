@@ -5,8 +5,90 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 09 Oct 2019 15:16:09 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 09 Oct 2019 20:00:01 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>浏览器缓存策略</title>
+      <link>https://hueralin.github.io/2019/httpcache/</link>
+      <pubDate>Wed, 09 Oct 2019 20:00:01 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/httpcache/</guid>
+      <description>
+
+&lt;p&gt;我再也不废话了&amp;hellip;&amp;hellip;切入正题!&lt;/p&gt;
+
+&lt;p&gt;缓存是干啥的也不用咱说了,浏览器缓存即基于HTTP头的缓存.&lt;/p&gt;
+
+&lt;p&gt;浏览器缓存策略有两种:强缓存和协商缓存.&lt;/p&gt;
+
+&lt;p&gt;先大体说一下浏览器缓存的过程:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;浏览器向服务器发起请求前首先向浏览器缓存查询是否有该请求的结果及缓存标识.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;有,则从缓存中读取(强缓存成功),否则再去询问服务器(协商缓存 or 直接请求).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;强缓存策略&#34;&gt;强缓存策略&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;强缓存的三种情况:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;请求前先去询问浏览器缓存,若有缓存且未失效,则直接从浏览器缓存读取结果,此被称之为&amp;rdquo;强缓存成功&amp;rdquo;.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;强缓存失败&amp;rdquo;, 若有缓存,但已失效,则执行&lt;strong&gt;&amp;ldquo;协商缓存&amp;rdquo;策略.&lt;/strong&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;强缓存失败&amp;rdquo;, 若无缓存, 则向服务器正式发起请求.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;强缓存策略涉及到的HTTP头部: &lt;strong&gt;Cache-Control / expires&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;expires 是 HTTP/1.0 的产物,它的值是一个绝对值,即缓存失效的时间.浏览器会拿客户端的时间和缓存中的此标识做对比,来判断缓存是否过期.所以它的缺陷比较明显,因为客户端和服务器的时间并不总是同步的,也就是说可能出现误差.(可能影响并不多大,别喷我&amp;hellip;&amp;hellip;)&lt;/p&gt;
+
+&lt;p&gt;Cache-Control 是 HTTP/1.1 的产物,它的值就丰富多了:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;public&lt;/strong&gt;   所有内容都将被缓存(客户端和代理服务器都可以)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;private&lt;/strong&gt;  默认值,只有客户端才能缓存&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;no-cache&lt;/strong&gt; 只有客户端缓存,但是否使用缓存需要经过协商缓存来确定&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;no-store&lt;/strong&gt; 所有内容都不缓存&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;max-age=xxx&lt;/strong&gt;  缓存将于xxx秒后失效&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;我们一般使用第五种方式&lt;/p&gt;
+
+&lt;p&gt;可以看到cache-control使用的是相对时间,弥补了expires的时间误差缺陷. 在实际应用过程中这两种方式都会有,但是cache-control的优先级要高一些.&lt;/p&gt;
+
+&lt;h3 id=&#34;协商缓存策略&#34;&gt;协商缓存策略&lt;/h3&gt;
+
+&lt;p&gt;协商缓存发生在有缓存但到期的情况下. 实际上, 服务器设置的过期时间是用来表明此时的缓存可能会过期, 但我不能保证, 届时你得向我确认一下, 所以, 缓存并不一定失效了. 和商品的保质期一个道理.&lt;/p&gt;
+
+&lt;p&gt;此时, 我们需要向服务器发起请求, 询问这个缓存能不能用, 如果服务器表示能用, 返回304, 那我们就去缓存中读取, 否则我们再向服务器请求新的数据.&lt;/p&gt;
+
+&lt;p&gt;协商缓存策略涉及到的HTTP头部: &lt;strong&gt;Last-Modified / If-Modified-Since 以及 Etag / If-None-Match&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Last-Modified / If-Modified-Since&lt;/strong&gt; 是 HTTP/1.1 的产物, last-modified 标识的是资源的最后修改时间, 协商缓存开始时会发请求, 将last-modified的值赋给 请求头 if-modified-since, 向服务器发起询问 &amp;ldquo;这个资源在这个时间后修改了么?&amp;rdquo; 如果没有修改, 则返回304, 浏览器就会从缓存中读取数据, 否则会请求新的数据, 并更新缓存.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Etag / If-None-Match&lt;/strong&gt; 也是 HTTP/1.1 的产物, 过程和上面一样, 只不过Etag是由服务器根据资源内容生成的唯一标识, 具有唯一性. 用资源的最后修改时间作为标识的话不太准确, 因为可能会在1秒内多次修改文件的情况.&lt;/p&gt;
+
+&lt;p&gt;Etag / If-None-Match 的优先级比 Last-Modified / If-Modified-Since 高.&lt;/p&gt;
+
+&lt;h3 id=&#34;缓存的位置&#34;&gt;缓存的位置&lt;/h3&gt;
+
+&lt;p&gt;浏览器缓存的位置一般有两个: 硬盘缓存(disk cache) 和 内存缓存(memory cache), 我们打开F12, 可在network选项卡中网络请求的size列查看.&lt;br /&gt;
+内存缓存会将编译解析后的文件存放在当前标签页进程的内存中, 读取速度较快.&lt;/p&gt;
+
+&lt;p&gt;硬盘缓存则是将资源放入硬盘中, 需要进行对硬盘文件做I/O操作, 速度较慢.&lt;/p&gt;
+
+&lt;p&gt;存在内存中的缓存文件, 会在刷新页面后被直接读取, 如果关闭了该标签页, 再次打开页面会重新请求. 而在硬盘中的缓存文件不会这样.&lt;/p&gt;
+
+&lt;p&gt;浏览器对不同类型的文件选取不同的存储位置, 像JS, img等会被放进内存缓存, 而CSS会被放进硬盘缓存.&lt;/p&gt;
+
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
+
+&lt;p&gt;强缓存的优先级高于协商缓存, 强缓存失效才会进行协商缓存. 强缓存失效不代表缓存过期, 只是不确定其是否真的过期, 所以需要协商缓存过程来确认一下.&lt;/p&gt;
+
+&lt;p&gt;桥豆麻袋! 不够细, 还有些没深入&amp;hellip;&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>清除浮动</title>
@@ -1668,77 +1750,6 @@ NB()
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;未完待续&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Git Stash</title>
-      <link>https://hueralin.github.io/2019/gitstash/</link>
-      <pubDate>Mon, 26 Aug 2019 20:09:47 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/gitstash/</guid>
-      <description>
-
-&lt;h3 id=&#34;emmmm&#34;&gt;Emmmm&lt;/h3&gt;
-
-&lt;p&gt;最近在实习的项目中经常使用 git stash 这个命令，现在来做一些总结。&lt;/p&gt;
-
-&lt;p&gt;你可能会遇到这样一种情况，就是当你在进行开发或修改某个BUG的时候突然来了一个新任务（新任务与当前的开发项目属于同一个项目），时间紧迫，你需要立即切换分支去执行，可是你当前的任务还没有做完，切分支的话会被拒绝，怎么办呢？有种方法是先add再commit，确实可以，但是我感觉这么做的话会添加一个毫无意义的提交记录，虽然以后可以修改，但是太过麻烦。那么，就来试试 git stash 吧。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E5%82%A8%E8%97%8F%EF%BC%88Stashing%EF%BC%89&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;git stash 官方文档第一版&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&#34;https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%82%A8%E8%97%8F%E4%B8%8E%E6%B8%85%E7%90%86&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;git stash 官方文档第二版&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;git-stash-应用场景&#34;&gt;git stash 应用场景&lt;/h3&gt;
-
-&lt;p&gt;git stash 的作用是将当前为提交的修改存储起来，让仓库还原到最后一次提交的状态。&lt;br /&gt;
-使用场景：&lt;br /&gt;
-1. 工作未完成，需要切换分支，但不想提交（常用）。&lt;br /&gt;
-2. 开发一个feature分支（未完成），此时想要合并一下主分支，看看做了哪些修改，提前解决冲突。&lt;/p&gt;
-
-&lt;p&gt;现在来看看场景二的解决方法：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 假设我在feature分支上开发，突然得知主分支更新了，于是我想要将主分支合并到当前分支，看看有没有冲突，有的话直接解决。
-git checkout master  // 报错！会提示当前某些修改未存储提交  
-// 当然，我是不想提交的，毕竟还没做完...于是，
-git stash save &amp;quot;先搁这儿，我去瞅瞅主分支，拉下代码～&amp;quot;   // save 类似于 commit 的 -m 选项，即注释信息  
-git stash list // 列出来所有的存储信息，看看有木有～  
-git checkout master  // 切换到主分支
-git pull origin master // 将远程主机的master分支拉下来  
-git checkout feature    // 切回feature分支  
-git merge master    // 将master分支合并到feature（可能会有冲突）  
-git stash pop   // 将先前feature分支做的修改释放出来（可能会有冲突）  
-// 有冲突合并即可，合并完，feature拥有了master分支最新的修改以及当前的特性开发。
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;git-stash&#34;&gt;git stash&lt;/h3&gt;
-
-&lt;p&gt;git stash 实际上是一个栈结构，它可以获取工作目录中的中间状态（包括对已追踪文件的修改和暂存的变更，使用 git status 查看），将它保存在一个栈结构中，方便以后使用。（注意！未被追踪的文件不在存储的范围内！）&lt;/p&gt;
-
-&lt;p&gt;git stash 命令：&lt;br /&gt;
-1. git stash（git stash push的简写）将当前工作目录的中间状态保存在栈中。&lt;br /&gt;
-2. git stash list 列出所有的存储。&lt;br /&gt;
-3. git stash apply stash@{0} apply后面是名字，表示要应用的存储（省略名字则应用最近的存储到仓库中），apply只是应用，并不会将存储弹出栈。&lt;br /&gt;
-4. git stash pop 将最近的存储应用到仓库中（但会将存储弹出栈），也可以指定存储的名字，将指定的存储应用到仓库后弹出栈。&lt;br /&gt;
-5. git stash clear 清空存储栈。&lt;br /&gt;
-6. git stash drop 删除最近的存储，也可以指定名字（但不会被应用到仓库）。&lt;br /&gt;
-7. git stash branch name 根据最近的stash创建一个分支，然后删除最近的stash，也可以指定存储名。（如场景二，如果最后应用stash的时候发生了冲突，可以使用这个命令，牵引出一个未合并的分支做副本）。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;讲解一下 git stash push 和 git stash save&lt;/strong&gt;&lt;br /&gt;
-这两个命令都可以存储当前工作区中被追踪文件的修改，但是也有些区别。&lt;br /&gt;
-语法：&lt;br /&gt;
-1. git stash push -m &amp;lsquo;xxxxx&amp;rsquo; src/xxx&lt;br /&gt;
-2. git stash save &amp;lsquo;xxxxx&amp;rsquo;&lt;br /&gt;
-其中，git stash push能指定路径，存储指定的文件，而指定路径对git stash save来说无效，它会存储工作区中所有的被追踪文件的修改。&lt;/p&gt;
-
-&lt;h3 id=&#34;使用-git-stash-出现的问题&#34;&gt;使用 git stash 出现的问题&lt;/h3&gt;
-
-&lt;p&gt;Q：“我新建了一个文件，用stash存储了一下，切分支后发现该文件被带进了另一个分支”&lt;br /&gt;
-A：前面说过，新建的文件，如果没有add进暂存区，那么是不受stash管理的，git也不会追踪。所以对于新建的文件，应该在使用stash前先add一下。&lt;/p&gt;
-
-&lt;p&gt;Q：“不是说我BUG还没改完切到其他分支会报错吗，要我必须提交修改。可是我没提交修改，切master分支成功了。但是！BUG修复的代码被带到master了！”&lt;br /&gt;
-A：Emmmm&amp;hellip;&lt;/p&gt;
 </description>
     </item>
     
