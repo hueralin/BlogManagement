@@ -6,10 +6,37 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Oct 2019 22:13:09 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 09 Oct 2019 15:16:09 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>清除浮动</title>
+      <link>https://hueralin.github.io/2019/float/</link>
+      <pubDate>Wed, 09 Oct 2019 15:16:09 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/float/</guid>
+      <description>清除浮动是个老生常谈的问题了，面对这个问题我们往往能说出一两个解决方法，但你是否知道其背后的原理呢？《CSS世界》这本书给出了很好的解答，现推荐下张鑫旭近10年前的博客。
+CSS float浮动的深入研究、详解及拓展(一)
+CSS float浮动的深入研究、详解及拓展(二)
+别废话!切入正题!
+ 清除浮动的原因 浮动布局时不小心高度塌陷了呗~
+浮动的真正目的 浮动的出现仅仅是为了让文字围绕图片而已，就像WORD中的“文字环绕”一样。
+浮动的原理 在张鑫旭的两篇文章中将浮动的本质定义为“包裹与破坏”。
+1. 浮动的包裹性
+浮动就是个带有方位的display: inline-block; inline-block就是让一个块级盒子变成一个内联盒子，不让其独占一行，而是将其内容紧紧地包裹起来。而在块级盒子上应用了浮动，你会发现其确实变成了一个内联盒子。
+2. 浮动的破坏性
+结合“浮动的本职工作是实现文字环绕图片”来说明其“破坏性”。
+文字之所以会环绕含有float属性的图片时因为浮动破坏了正常的line boxes
+line box模型:
+&amp;lt;p&amp;gt;float的本职工作是实现&amp;lt;em&amp;gt;文字环绕图片&amp;lt;/em&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;!-- 上面代码包含四个box 1. inline box：‘float的本职工作是实现’是匿名的inline box，‘&amp;lt;em&amp;gt;文字环绕图片&amp;lt;/em&amp;gt;’是inline box。 2. line box：一个个的inline box排成一行就是一个line box，多行则有多个line box。 3. content area：在我理解就是内容区域包含上面所有的一种box。 4. &amp;lt;p&amp;gt;标签所在的containing box，此box包含了其他的boxes。 以上3，4解释不够严谨或有错误，可不做参考，日后修正。 --&amp;gt;  默认无浮动的图文混排是这个样子的（借用下图片）：
+图片本身就是个inline box，和两侧的inline box共同组成了line box，line box的高度由最高的inline box决定，第二行文本属于另一个line box，且一张图片只能与一个line box对其。
+给图片加了浮动之后：
+图片不再和其他的inline box在一块了，可见浮动使图片丧失了inline box特性。而丧失了inline box特性的后果就是高度塌陷。为什么呢？
+在CSS中，所有的高度都是有两个CSS模型产生的。box模型，line box模型。
+box模型：height + padding + margin</description>
+    </item>
     
     <item>
       <title>Git Reflog</title>

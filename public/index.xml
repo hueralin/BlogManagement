@@ -5,8 +5,156 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Oct 2019 22:13:09 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 09 Oct 2019 15:16:09 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>清除浮动</title>
+      <link>https://hueralin.github.io/2019/float/</link>
+      <pubDate>Wed, 09 Oct 2019 15:16:09 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/float/</guid>
+      <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;清除浮动是个老生常谈的问题了，面对这个问题我们往往能说出一两个解决方法，但你是否知道其背后的原理呢？《CSS世界》这本书给出了很好的解答，现推荐下张鑫旭近10年前的博客。&lt;br /&gt;
+&lt;a href=&#34;https://www.zhangxinxu.com/wordpress/2010/01/css-float%e6%b5%ae%e5%8a%a8%e7%9a%84%e6%b7%b1%e5%85%a5%e7%a0%94%e7%a9%b6%e3%80%81%e8%af%a6%e8%a7%a3%e5%8f%8a%e6%8b%93%e5%b1%95%e4%b8%80/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;CSS float浮动的深入研究、详解及拓展(一)&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://www.zhangxinxu.com/wordpress/2010/01/css-float%e6%b5%ae%e5%8a%a8%e7%9a%84%e6%b7%b1%e5%85%a5%e7%a0%94%e7%a9%b6%e3%80%81%e8%af%a6%e8%a7%a3%e5%8f%8a%e6%8b%93%e5%b1%95%e4%ba%8c/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;CSS float浮动的深入研究、详解及拓展(二)&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#39;#4&#39;&gt;别废话!切入正题!&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;a-href-1-name-1-清除浮动的原因-a&#34;&gt;&lt;a href=&#39;#1&#39; name=&#39;1&#39;&gt;清除浮动的原因&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;浮动布局时不小心高度塌陷了呗~&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-2-name-2-浮动的真正目的-a&#34;&gt;&lt;a href=&#39;#2&#39; name=&#39;2&#39;&gt;浮动的真正目的&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;浮动的出现仅仅是为了让&lt;strong&gt;文字围绕图片&lt;/strong&gt;而已，就像WORD中的“文字环绕”一样。&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-3-name-3-浮动的原理-a&#34;&gt;&lt;a href=&#39;#3&#39; name=&#39;3&#39;&gt;浮动的原理&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;在张鑫旭的两篇文章中将浮动的本质定义为“包裹与破坏”。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#39;#31&#39; name=&#39;31&#39;&gt;1. 浮动的包裹性&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;浮动就是个带有方位的display: inline-block; inline-block就是让一个块级盒子变成一个内联盒子，不让其独占一行，而是将其内容紧紧地包裹起来。而在块级盒子上应用了浮动，你会发现其确实变成了一个内联盒子。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#39;#32&#39; name=&#39;32&#39;&gt;2. 浮动的破坏性&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;结合“浮动的本职工作是实现文字环绕图片”来说明其&lt;strong&gt;“破坏性”&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;文字之所以会环绕含有float属性的图片时因为&lt;strong&gt;浮动破坏了正常的line boxes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#39;#33&#39; name=&#39;33&#39;&gt;line box模型&lt;/a&gt;&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;p&amp;gt;float的本职工作是实现&amp;lt;em&amp;gt;文字环绕图片&amp;lt;/em&amp;gt;&amp;lt;/p&amp;gt;
+
+&amp;lt;!-- 
+    上面代码包含四个box
+    1. inline box：‘float的本职工作是实现’是匿名的inline box，‘&amp;lt;em&amp;gt;文字环绕图片&amp;lt;/em&amp;gt;’是inline box。
+    2. line box：一个个的inline box排成一行就是一个line box，多行则有多个line box。
+    3. content area：在我理解就是内容区域包含上面所有的一种box。
+    4. &amp;lt;p&amp;gt;标签所在的containing box，此box包含了其他的boxes。
+    以上3，4解释不够严谨或有错误，可不做参考，日后修正。
+--&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;默认无浮动的图文混排是这个样子的（借用下图片）：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://image.zhangxinxu.com/image/blog/201001/2010-01-20_230801.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;图片本身就是个inline box，和两侧的inline box共同组成了line box，line box的高度由最高的inline box决定，第二行文本属于另一个line box，且一张图片只能与一个line box对其。&lt;/p&gt;
+
+&lt;p&gt;给图片加了浮动之后：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://image.zhangxinxu.com/image/blog/201001/2010-01-20_234149.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;图片不再和其他的inline box在一块了，可见浮动使图片丧失了inline box特性。而&lt;strong&gt;丧失了inline box特性的后果就是高度塌陷&lt;/strong&gt;。为什么呢？&lt;/p&gt;
+
+&lt;p&gt;在CSS中，所有的高度都是有两个CSS模型产生的。box模型，line box模型。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;box模型&lt;/strong&gt;：height + padding + margin&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;line box模型&lt;/strong&gt;：line-height&lt;/p&gt;
+
+&lt;p&gt;HEIGHT（line box） = HEIGHT（inline box）* n&lt;/p&gt;
+
+&lt;p&gt;HEIGHT（containing box） = HEIGHT（line box）* n  即div或p标签的高度。&lt;/p&gt;
+
+&lt;p&gt;而一旦没了inline box特性，这个高度势必大打折扣。要么完全塌陷，要么由其他inline box的高度顶替。&lt;/p&gt;
+
+&lt;p&gt;个人认为，line boxes掌管的是box内容的高度。而一个元素真正的高度由box代表的外层高度和line box代表的内层高度组成。&lt;/p&gt;
+
+&lt;p&gt;我们要实现文字环绕就必须使图片和多行文本对齐，而如果不能打破inline box特性，就只能和一行文本对齐。所以浮动一定要打破inline box特性。&lt;/p&gt;
+
+&lt;p&gt;浮动的元素并没有脱离文档流，所以其他文本（inline box）并不会与之发生重合。并且，丧失inline box特性仅仅让其&lt;strong&gt;不在容器中占据高度&lt;/strong&gt;，其自身高度还是有的，而且在容器中还占据着宽度，这就实现了文本绕它而行，给围了起来。&lt;/p&gt;
+
+&lt;p&gt;接下来说包裹性，实际上浮动只是将元素变成了类似inline-box的样式，只保留了其包裹性，而inline box的特性被抛弃了。&lt;/p&gt;
+
+&lt;p&gt;下面我们来看一下张鑫旭大神给个例子：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;单个无浮动的li&lt;br /&gt;
+&lt;img src=&#34;http://image.zhangxinxu.com/image/blog/201001/2010-01-21_202917.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;单个左浮动的li&lt;br /&gt;
+&lt;img src=&#34;https://image.zhangxinxu.com/image/blog/201001/2010-01-21_205119.png&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+呈现了包裹性。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;多个左浮动的li&lt;br /&gt;
+&lt;img src=&#34;https://image.zhangxinxu.com/image/blog/201001/2010-01-21_214516.png&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+呈现了包裹性，于是排列成一行。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;一个左浮动一个无浮动&lt;br /&gt;
+&lt;img src=&#34;https://image.zhangxinxu.com/image/blog/201001/2010-01-21_230302.png&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+第一个li因为浮动导致其“上浮”，为什么会“上浮”？因为它失去了inline box的特性，没了高度，第二个li顶了上来，呈现了第一个li上浮的假象。即便“上浮”，但并没有覆盖掉下面的li内容，因为浮动并没有使其内容脱离文档流，第一个li中的图片仍占据着空间，导致第二个li的图片紧贴在第一张图片的后面（第二个li没有浮动，其宽度是100%）。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;原理部分就讲那么多，其实原文牵扯了不少内容，我总结引用的也不是很好。下面来终于到了重点内容！&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-4-name-4-如何清除浮动-解决高度塌陷-a&#34;&gt;&lt;a href=&#39;#4&#39; name=&#39;4&#39;&gt;如何清除浮动，解决高度塌陷&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;高度为什么会塌陷？&lt;/p&gt;
+
+&lt;p&gt;浮动使元素变成了inline-box，然后破坏其inline box特性，导致line box没了高度，进而使contain box（div、p等的内容高度）没了高度，于是塌陷。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1.最简洁的方法&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;!-- 将下面代码放到父元素中作为最后一个子标签 --&amp;gt;
+&amp;lt;div class=&#39;clear&#39;&amp;gt;.clear { clear: both; }&amp;lt;/div&amp;gt;
+&amp;lt;!-- 我觉得挺好的，不过别人都说增加了无意义的标签，Emmm --&amp;gt;
+&amp;lt;!-- 张鑫旭大大的原话 --&amp;gt;
+&amp;lt;!-- 我从来不用，因为我看到的是个巨大的浪费，浪费了一个标签，
+而且只能使用一次，我个人是无法容忍的，所以这个方法不推荐。
+而且有时候一不留神中间多了个空格会产生一段空白高度的。 --&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;2.overflow + zoom方法&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;.parent{
+    overflow:hidden; 
+    zoom:1; /* 值可为 normal, 倍数, 百分比 */
+}
+/* zoom是设置或检索对象的缩放比例的,除了火狐其他浏览器都兼容. */
+/* 不过overflow:hidden容易裁剪 */
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;3.after + zoom方法&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;.parent{zoom:1;}
+.parent:after{display:block; content:&#39;clear&#39;; clear:both; line-height:0; visibility:hidden;}
+/* 张鑫旭大大鼎力推荐,after里可以只写display,content,clear. */
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;4.破罐破摔法&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;手动给父元素加高度&amp;hellip;&amp;hellip;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;zoom这个属性是&lt;strong&gt;ie&lt;/strong&gt;专有属性，除了设置或者检索对象的缩放比例之外，它还有可以触发ie的haslayout属性，清除浮动，清除margin重叠等作用。 不过值得注意的一点就是火狐浏览器不支持zoom属性，但是在webkit内核浏览器中zoom这个属性也是可以被支持的。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>Git Reflog</title>
@@ -1591,22 +1739,6 @@ A：前面说过，新建的文件，如果没有add进暂存区，那么是不�
 
 &lt;p&gt;Q：“不是说我BUG还没改完切到其他分支会报错吗，要我必须提交修改。可是我没提交修改，切master分支成功了。但是！BUG修复的代码被带到master了！”&lt;br /&gt;
 A：Emmmm&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Mock 前端假数据</title>
-      <link>https://hueralin.github.io/2019/mock/</link>
-      <pubDate>Wed, 21 Aug 2019 16:09:41 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/mock/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;为什么需要前端做假数据？Emmmm，不用我说了吧～&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;官方文档看这里&lt;a href=&#34;http://mockjs.com/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;MockJs&lt;/a&gt;！&lt;/p&gt;
-
-&lt;p&gt;数据模版之类的语法去看官方文档，我这里只简单介绍一下我的使用情况。&lt;/p&gt;
 </description>
     </item>
     
