@@ -2,6 +2,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
     <url>
+      <loc>https://hueralin.github.io/2019/httpcache/</loc>
+      
+      <lastmod>2019-10-09T20:00:01+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
       <loc>https://hueralin.github.io/posts/</loc>
       
       <lastmod>2019-10-09T20:00:01+08:00</lastmod>
@@ -9,16 +19,6 @@
       
       
       <priority>0</priority>
-      
-      
-    </url>
-  
-    <url>
-      <loc>https://hueralin.github.io/2019/httpcache/</loc>
-      
-      <lastmod>2019-10-09T20:00:01+08:00</lastmod>
-      
-      
       
       
     </url>

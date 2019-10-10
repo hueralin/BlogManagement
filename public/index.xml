@@ -9,7 +9,7 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>浏览器缓存策略</title>
+      <title>HTTP缓存策略</title>
       <link>https://hueralin.github.io/2019/httpcache/</link>
       <pubDate>Wed, 09 Oct 2019 20:00:01 +0800</pubDate>
       
@@ -18,9 +18,7 @@
 
 &lt;p&gt;我再也不废话了&amp;hellip;&amp;hellip;切入正题!&lt;/p&gt;
 
-&lt;p&gt;缓存是干啥的也不用咱说了,浏览器缓存即基于HTTP头的缓存.&lt;/p&gt;
-
-&lt;p&gt;浏览器缓存策略有两种:强缓存和协商缓存.&lt;/p&gt;
+&lt;p&gt;HTTP缓存策略有两种:强缓存和协商缓存.&lt;/p&gt;
 
 &lt;p&gt;先大体说一下浏览器缓存的过程:&lt;/p&gt;
 
@@ -41,14 +39,14 @@
 
 &lt;p&gt;强缓存策略涉及到的HTTP头部: &lt;strong&gt;Cache-Control / expires&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;expires 是 HTTP/1.0 的产物,它的值是一个绝对值,即缓存失效的时间.浏览器会拿客户端的时间和缓存中的此标识做对比,来判断缓存是否过期.所以它的缺陷比较明显,因为客户端和服务器的时间并不总是同步的,也就是说可能出现误差.(可能影响并不多大,别喷我&amp;hellip;&amp;hellip;)&lt;/p&gt;
+&lt;p&gt;expires 是 HTTP/1.0 的产物,它的值是一个绝对值,即缓存失效的时间点.浏览器会拿客户端的时间和缓存中的此标识做对比,来判断缓存是否过期.所以它的缺陷比较明显,因为客户端和服务器的时间并不总是同步的,也就是说可能出现误差.(可能影响并不多大,别喷我&amp;hellip;&amp;hellip;)&lt;/p&gt;
 
 &lt;p&gt;Cache-Control 是 HTTP/1.1 的产物,它的值就丰富多了:&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;public&lt;/strong&gt;   所有内容都将被缓存(客户端和代理服务器都可以)&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;private&lt;/strong&gt;  默认值,只有客户端才能缓存&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;no-cache&lt;/strong&gt; 只有客户端缓存,但是否使用缓存需要经过协商缓存来确定&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;private&lt;/strong&gt;  默认值,只有客户端才能缓存，表明响应只能被单个用户（可能是操作系统用户、浏览器用户）缓存，是非共享的&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;no-cache&lt;/strong&gt; 只有客户端缓存，强制所有缓存了该响应的用户，在使用已缓存的数据前，发送带验证器的请求到服务器，即必须经过协商缓存&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;no-store&lt;/strong&gt; 所有内容都不缓存&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;max-age=xxx&lt;/strong&gt;  缓存将于xxx秒后失效&lt;/li&gt;
 &lt;/ol&gt;
@@ -63,30 +61,39 @@
 
 &lt;p&gt;此时, 我们需要向服务器发起请求, 询问这个缓存能不能用, 如果服务器表示能用, 返回304, 那我们就去缓存中读取, 否则我们再向服务器请求新的数据.&lt;/p&gt;
 
+&lt;p&gt;&lt;img src=&#34;https://hueralin.github.io/img/posts/304.png&#34; alt=&#34;304 Not Modified&#34; /&gt;&lt;br /&gt;
+看这个图，请求的时候将缓存中的浏览器标识（if-modified-since）带了上去，响应的时候返回了304以及Last-modified，返回的Last-modified可能会更新。&lt;/p&gt;
+
 &lt;p&gt;协商缓存策略涉及到的HTTP头部: &lt;strong&gt;Last-Modified / If-Modified-Since 以及 Etag / If-None-Match&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Last-Modified / If-Modified-Since&lt;/strong&gt; 是 HTTP/1.1 的产物, last-modified 标识的是资源的最后修改时间, 协商缓存开始时会发请求, 将last-modified的值赋给 请求头 if-modified-since, 向服务器发起询问 &amp;ldquo;这个资源在这个时间后修改了么?&amp;rdquo; 如果没有修改, 则返回304, 浏览器就会从缓存中读取数据, 否则会请求新的数据, 并更新缓存.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Last-Modified / If-Modified-Since&lt;/strong&gt; 是 HTTP/1.1 的产物, last-modified 标识的是资源的最后修改时间, 协商缓存开始时会发请求, 将last-modified的值赋给 请求头 if-modified-since, 向服务器发起询问 &amp;ldquo;这个资源在这个时间后修改了么?&amp;rdquo; 如果没有修改, 则返回304, 浏览器就会从缓存中读取数据, 否则会请求新的数据, 并更新缓存。这个时间是以秒为单位的，所以不太准确。如果文件是通过服务器动态生成的，那么该方法的更新时间永远是生成的时间，尽管文件可能没有变化，所以起不到缓存的作用。&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Etag / If-None-Match&lt;/strong&gt; 也是 HTTP/1.1 的产物, 过程和上面一样, 只不过Etag是由服务器根据资源内容生成的唯一标识, 具有唯一性. 用资源的最后修改时间作为标识的话不太准确, 因为可能会在1秒内多次修改文件的情况.&lt;/p&gt;
 
 &lt;p&gt;Etag / If-None-Match 的优先级比 Last-Modified / If-Modified-Since 高.&lt;/p&gt;
 
+&lt;p&gt;协商缓存在请求数量上和没有缓存是一样的，但是协商缓存命中的话只返回一个状态码，并没有数据，所以体积上要小不少。&lt;/p&gt;
+
 &lt;h3 id=&#34;缓存的位置&#34;&gt;缓存的位置&lt;/h3&gt;
 
 &lt;p&gt;浏览器缓存的位置一般有两个: 硬盘缓存(disk cache) 和 内存缓存(memory cache), 我们打开F12, 可在network选项卡中网络请求的size列查看.&lt;br /&gt;
-内存缓存会将编译解析后的文件存放在当前标签页进程的内存中, 读取速度较快.&lt;/p&gt;
+内存缓存会将编译解析后的文件存放在当前标签页进程的内存中, 读取速度较快。在从内存缓存中获取缓存内容时，浏览器会忽视例如 max-age=0, no-cache 等头部配置（no-store除外）。&lt;/p&gt;
 
-&lt;p&gt;硬盘缓存则是将资源放入硬盘中, 需要进行对硬盘文件做I/O操作, 速度较慢.&lt;/p&gt;
+&lt;p&gt;硬盘缓存则是将资源放入硬盘中, 需要进行对硬盘文件做I/O操作, 速度较慢。而正因为硬盘缓存是将资源存放在硬盘中的，是持久存储的，所以允许同一个资源在跨会话甚至跨站点（一般不太可能）的情况下使用。硬盘缓存会严格按照HTTP响应头的缓存标识来缓存资源，不会像内存缓存那样忽视某些缓存标识。&lt;/p&gt;
 
-&lt;p&gt;存在内存中的缓存文件, 会在刷新页面后被直接读取, 如果关闭了该标签页, 再次打开页面会重新请求. 而在硬盘中的缓存文件不会这样.&lt;/p&gt;
-
-&lt;p&gt;浏览器对不同类型的文件选取不同的存储位置, 像JS, img等会被放进内存缓存, 而CSS会被放进硬盘缓存.&lt;/p&gt;
+&lt;p&gt;存在内存中的缓存文件, 会在刷新页面后被直接读取, 如果关闭了该标签页, 再次打开页面会重新请求。而在硬盘中的缓存文件不会这样。&lt;/p&gt;
 
 &lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
 
 &lt;p&gt;强缓存的优先级高于协商缓存, 强缓存失效才会进行协商缓存. 强缓存失效不代表缓存过期, 只是不确定其是否真的过期, 所以需要协商缓存过程来确认一下.&lt;/p&gt;
 
 &lt;p&gt;桥豆麻袋! 不够细, 还有些没深入&amp;hellip;&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;参考资料：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/44789005&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;一文读懂前端缓存&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://zhuanlan.zhihu.com/p/29750583&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;HTTP 缓存机制一二三&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://juejin.im/entry/5ad86c16f265da505a77dca4&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;彻底理解浏览器的缓存机制&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
