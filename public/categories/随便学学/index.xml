@@ -6,10 +6,36 @@
     <description>Recent content in 随便学学 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 06 Oct 2019 13:27:32 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 09 Oct 2019 20:00:01 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%AD%A6%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HTTP缓存策略</title>
+      <link>https://hueralin.github.io/2019/httpcache/</link>
+      <pubDate>Wed, 09 Oct 2019 20:00:01 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/httpcache/</guid>
+      <description>我再也不废话了&amp;hellip;&amp;hellip;切入正题!
+HTTP缓存策略有两种:强缓存和协商缓存.
+先大体说一下浏览器缓存的过程:
+ 浏览器向服务器发起请求前首先向浏览器缓存查询是否有该请求的结果及缓存标识.
+ 有,则从缓存中读取(强缓存成功),否则再去询问服务器(协商缓存 or 直接请求).  强缓存策略 强缓存的三种情况:
+ 请求前先去询问浏览器缓存,若有缓存且未失效,则直接从浏览器缓存读取结果,此被称之为&amp;rdquo;强缓存成功&amp;rdquo;.
+ &amp;ldquo;强缓存失败&amp;rdquo;, 若有缓存,但已失效,则执行&amp;ldquo;协商缓存&amp;rdquo;策略.
+ &amp;ldquo;强缓存失败&amp;rdquo;, 若无缓存, 则向服务器正式发起请求.  强缓存策略涉及到的HTTP头部: Cache-Control / expires
+expires 是 HTTP/1.0 的产物,它的值是一个绝对值,即缓存失效的时间点.浏览器会拿客户端的时间和缓存中的此标识做对比,来判断缓存是否过期.所以它的缺陷比较明显,因为客户端和服务器的时间并不总是同步的,也就是说可能出现误差.(可能影响并不多大,别喷我&amp;hellip;&amp;hellip;)
+Cache-Control 是 HTTP/1.1 的产物,它的值就丰富多了:
+ public 所有内容都将被缓存(客户端和代理服务器都可以)
+ private 默认值,只有客户端才能缓存，表明响应只能被单个用户（可能是操作系统用户、浏览器用户）缓存，是非共享的
+ no-cache 只有客户端缓存，强制所有缓存了该响应的用户，在使用已缓存的数据前，发送带验证器的请求到服务器，即必须经过协商缓存
+ no-store 所有内容都不缓存
+ max-age=xxx 缓存将于xxx秒后失效  我们一般使用第五种方式
+可以看到cache-control使用的是相对时间,弥补了expires的时间误差缺陷. 在实际应用过程中这两种方式都会有,但是cache-control的优先级要高一些.
+协商缓存策略 协商缓存发生在有缓存但到期的情况下. 实际上, 服务器设置的过期时间是用来表明此时的缓存可能会过期, 但我不能保证, 届时你得向我确认一下, 所以, 缓存并不一定失效了. 和商品的保质期一个道理.
+此时, 我们需要向服务器发起请求, 询问这个缓存能不能用, 如果服务器表示能用, 返回304, 那我们就去缓存中读取, 否则我们再向服务器请求新的数据.</description>
+    </item>
     
     <item>
       <title>call, apply, bind</title>
@@ -24,16 +50,6 @@
 3. 数值/字符串/布尔值 Func的this &amp;mdash;-&amp;gt; Number/String/Boolean
 4. 对象 Func的this &amp;mdash;-&amp;gt; 对象
 function Func(){ console.log(this) } function Test(){console.log(&#39;Test&#39;)} var obj = { name: &#39;huer&#39; } Func.call() // window Func.call(null) // window Func.call(undefined) // window Func.call(Test) // Test(){console.log(&#39;Test&#39;)} Func.call(666) // Number {666} Func.call(&#39;666&#39;) // String {&amp;quot;666&amp;quot;} Func.call(true) // Boolean {true} Func.call(obj) // {name: &amp;quot;huer&amp;quot;}  这三个函数除了由上面的功能外，还有一个功能。还能给对象添加新属性，例如在继承中：</description>
-    </item>
-    
-    <item>
-      <title>技术分享之Redux思想</title>
-      <link>https://hueralin.github.io/2019/share/</link>
-      <pubDate>Wed, 18 Sep 2019 13:40:10 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/share/</guid>
-      <description>Redux 普通的状态管理 // 状态 let state = { // 计数 count: 0 }··· // 修改状态 state.count = 1 // 获取状态 console.log(state.count)  缺点：状态改变，依赖状态的地方得不到通知
-带有发布订阅的状态管理 // 状态 let state = { // 计数 count: 0 } // 集中管理订阅 let listeners = [] // 订阅函数 function subscribe(callback) { listeners.push(callback) } // 修改状态的函数 function changState(newVal) { state.count = newVal for(let i=0;i&amp;lt;listeners.length;i++){ listeners[i]() } } // main subscribe(() =&amp;gt; { console.log(&#39;count&#39;, state.count) }) changState(1) // 1 changState(2) // 2 changState(3) // 3  缺点：只对count（即单个状态）有效，应将公共操作封装起来。</description>
     </item>
     
     <item>

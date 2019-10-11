@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>开发工具 on 狐耳的雪原</title>
+    <link>https://hueralin.github.io/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/</link>
+    <description>Recent content in 开发工具 on 狐耳的雪原</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 27 Jul 2019 17:21:45 +0800</lastBuildDate>
+    
+	<atom:link href="https://hueralin.github.io/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Mac使用技巧</title>
+      <link>https://hueralin.github.io/2019/mactips/</link>
+      <pubDate>Sat, 27 Jul 2019 17:21:45 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/mactips/</guid>
+      <description>VSCODE使用命令行打开目录
+&amp;gt;相关知识：环境变量的设置
+环境变量的分类：系统级和用户级
+系统级：对所有用户生效的永久性变量（/etc/profile）
+用户级：对单一用户生效的永久性变量（～/.bash_profile）
+ 查看单个环境变量echo $PATH
+ 查看所有环境变量env
+ 修改环境变量PATH=&amp;quot;xxxx&amp;quot; 查看所有本地定义的shell变量set
+ 删除变量unset VNAME
+ 设置只读变量readonly VNAME  使用export指令添加环境变量：
+vim ~/.bash_profile
+输入 export JAVA_HOME=/usr/java/jdk
+输入 export PATH=$JAVA_HOME/bin:$PATH
+添加完成后新的环境变量不会立即生效，调用source ~/.bash_profile 该文件才会生效
+使用export命令添加临时环境变量：
+命令行下输入 export MALIN=&#39;malin&#39;
+使用code命令用VSCODE打开目录：
+1. 在VSCODE中 command+shift+P -&amp;gt; 输入shell command -&amp;gt; 点击提示Shell Command: Install ‘code’ command in PATH运行
+2. 在终端中使用 code 目录路径 打开目录（vscode）</description>
+    </item>
+    
+  </channel>
+</rss>

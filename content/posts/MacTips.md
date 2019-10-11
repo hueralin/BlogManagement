@@ -2,7 +2,7 @@
 title: "Mac使用技巧"
 date: 2019-07-27T17:21:45+08:00
 draft: false,
-categories: ["Mac"]
+categories: ["开发工具"]
 ---
 
 **VSCODE使用命令行打开目录**  

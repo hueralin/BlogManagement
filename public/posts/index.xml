@@ -6,10 +6,28 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 09 Oct 2019 20:00:01 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 11 Oct 2019 10:49:22 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CSS Grid 布局</title>
+      <link>https://hueralin.github.io/2019/grid/</link>
+      <pubDate>Fri, 11 Oct 2019 10:49:22 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/grid/</guid>
+      <description>推荐教程：阮一峰
+妈耶~好长~
+术语 容器和项目
+容器就是外面的壳儿~，项目就是它的孩儿（第一层子元素），孙子不算哦~~~
+网格线
+m行n列，就有m+1个水平网格线和n+1个垂直网格线
+CSS属性 CSS属性有两种：容器属性 和 项目属性
+容器属性 display  grid：指定一个容器采用网格布局，当然这个容器时块级元素。 inline-grid：将块级元素变为行内的元素，采取网格布局。  “注意，设为网格布局以后，容器子元素（项目）的float、display: inline-block、display: table-cell、vertical-align和column-*等设置都将失效。”
+grid-template-rows/columns 划分行高和列宽
+/* 3行3列 */ .container { display: grid; grid-template-columns: 100px 100px 100px; grid-template-rows: 100px 100px 100px; } /* 也可以使用百分比 */ /* 如果行列很多的话，这样会比较麻烦，可以使用repeat() repeat(n, item) 重复item n次 */ .container { display: grid; grid-template-columns: repeat(3, 33.33%); grid-template-rows: repeat(3, 33.33%); }  repeat关键字 /* 当然，item也可以是某种模式，比如： */ grid-template-columns: repeat(2, 100px 20px 80px); /* 这样的话会出现6列，按上面的次序重复排列，但是如果超出容器的宽度呢， 实际上可以给容器设置宽度，但是对内部的项目无效，即使容器的宽度被设为10， 项目也会按照6列排列 */  auto-fill关键字 /* n 也不止是次数，也可以是 auto-fill 关键字 ，该关键字表明会自动排列， 即容器只要有空间就会一直排下去，直到换行。*/ grid-template-columns: repeat(auto-fill, 200px)  fr 关键字 /* fr关键字表示比例关系，如下，第二列宽度是第一列的2倍 */ .</description>
+    </item>
     
     <item>
       <title>HTTP缓存策略</title>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CSS与布局 on 狐耳的雪原</title>
+    <link>https://hueralin.github.io/categories/css%E4%B8%8E%E5%B8%83%E5%B1%80/</link>
+    <description>Recent content in CSS与布局 on 狐耳的雪原</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Oct 2019 10:49:22 +0800</lastBuildDate>
+    
+	<atom:link href="https://hueralin.github.io/categories/css%E4%B8%8E%E5%B8%83%E5%B1%80/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CSS Grid 布局</title>
+      <link>https://hueralin.github.io/2019/grid/</link>
+      <pubDate>Fri, 11 Oct 2019 10:49:22 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/grid/</guid>
+      <description>推荐教程：阮一峰
+妈耶~好长~
+术语 容器和项目
+容器就是外面的壳儿~，项目就是它的孩儿（第一层子元素），孙子不算哦~~~
+网格线
+m行n列，就有m+1个水平网格线和n+1个垂直网格线
+CSS属性 CSS属性有两种：容器属性 和 项目属性
+容器属性 display  grid：指定一个容器采用网格布局，当然这个容器时块级元素。 inline-grid：将块级元素变为行内的元素，采取网格布局。  “注意，设为网格布局以后，容器子元素（项目）的float、display: inline-block、display: table-cell、vertical-align和column-*等设置都将失效。”
+grid-template-rows/columns 划分行高和列宽
+/* 3行3列 */ .container { display: grid; grid-template-columns: 100px 100px 100px; grid-template-rows: 100px 100px 100px; } /* 也可以使用百分比 */ /* 如果行列很多的话，这样会比较麻烦，可以使用repeat() repeat(n, item) 重复item n次 */ .container { display: grid; grid-template-columns: repeat(3, 33.33%); grid-template-rows: repeat(3, 33.33%); }  repeat关键字 /* 当然，item也可以是某种模式，比如： */ grid-template-columns: repeat(2, 100px 20px 80px); /* 这样的话会出现6列，按上面的次序重复排列，但是如果超出容器的宽度呢， 实际上可以给容器设置宽度，但是对内部的项目无效，即使容器的宽度被设为10， 项目也会按照6列排列 */  auto-fill关键字 /* n 也不止是次数，也可以是 auto-fill 关键字 ，该关键字表明会自动排列， 即容器只要有空间就会一直排下去，直到换行。*/ grid-template-columns: repeat(auto-fill, 200px)  fr 关键字 /* fr关键字表示比例关系，如下，第二列宽度是第一列的2倍 */ .</description>
+    </item>
+    
+    <item>
+      <title>清除浮动</title>
+      <link>https://hueralin.github.io/2019/float/</link>
+      <pubDate>Wed, 09 Oct 2019 15:16:09 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/float/</guid>
+      <description>清除浮动是个老生常谈的问题了，面对这个问题我们往往能说出一两个解决方法，但你是否知道其背后的原理呢？《CSS世界》这本书给出了很好的解答，现推荐下张鑫旭近10年前的博客。
+CSS float浮动的深入研究、详解及拓展(一)
+CSS float浮动的深入研究、详解及拓展(二)
+别废话!切入正题!
+ 清除浮动的原因 浮动布局时不小心高度塌陷了呗~
+浮动的真正目的 浮动的出现仅仅是为了让文字围绕图片而已，就像WORD中的“文字环绕”一样。
+浮动的原理 在张鑫旭的两篇文章中将浮动的本质定义为“包裹与破坏”。
+1. 浮动的包裹性
+浮动就是个带有方位的display: inline-block; inline-block就是让一个块级盒子变成一个内联盒子，不让其独占一行，而是将其内容紧紧地包裹起来。而在块级盒子上应用了浮动，你会发现其确实变成了一个内联盒子。
+2. 浮动的破坏性
+结合“浮动的本职工作是实现文字环绕图片”来说明其“破坏性”。
+文字之所以会环绕含有float属性的图片时因为浮动破坏了正常的line boxes
+line box模型:
+&amp;lt;p&amp;gt;float的本职工作是实现&amp;lt;em&amp;gt;文字环绕图片&amp;lt;/em&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;!-- 上面代码包含四个box 1. inline box：‘float的本职工作是实现’是匿名的inline box，‘&amp;lt;em&amp;gt;文字环绕图片&amp;lt;/em&amp;gt;’是inline box。 2. line box：一个个的inline box排成一行就是一个line box，多行则有多个line box。 3. content area：在我理解就是内容区域包含上面所有的一种box。 4. &amp;lt;p&amp;gt;标签所在的containing box，此box包含了其他的boxes。 以上3，4解释不够严谨或有错误，可不做参考，日后修正。 --&amp;gt;  默认无浮动的图文混排是这个样子的（借用下图片）：
+图片本身就是个inline box，和两侧的inline box共同组成了line box，line box的高度由最高的inline box决定，第二行文本属于另一个line box，且一张图片只能与一个line box对其。
+给图片加了浮动之后：
+图片不再和其他的inline box在一块了，可见浮动使图片丧失了inline box特性。而丧失了inline box特性的后果就是高度塌陷。为什么呢？
+在CSS中，所有的高度都是有两个CSS模型产生的。box模型，line box模型。
+box模型：height + padding + margin</description>
+    </item>
+    
+    <item>
+      <title>伪类 与 伪元素</title>
+      <link>https://hueralin.github.io/2019/weilei/</link>
+      <pubDate>Wed, 21 Aug 2019 15:17:26 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/weilei/</guid>
+      <description>“请说一下伪类和伪元素的区别”，之前的面试中遇到过这个问题，当初表示只见过伪类，回答的基本上都是:hover之流，这道题就挂了&amp;hellip;&amp;hellip;
+ 如今，在实习中遇到了相关的需求，看来是时候深入学习一下了。其实，区分伪类和伪元素并不难，它俩最大的区别就在于应用场景。
+伪类 顾名思义，它相当于一个类，是用来设置样式的；当你需要让一个元素在某种特殊状态下显示特殊的样式时（如：按钮悬浮特效），就该使用伪类。 下面我们来实现一下伪类：
+需求：实现消息列表悬浮特效
+&amp;lt;!-- 需求很明确，li元素在悬浮情况下应用样式 --&amp;gt; &amp;lt;ul&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;React&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Vue&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Angular&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;jQuery&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;Webpack&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;NPM&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; li:hover { background: #eee; } &amp;lt;!-- 再简单不过了，当然也可以设置奇偶行样式不一 --&amp;gt;  其他的伪类：
+:active :empty :enabled :first :first-child :first-child :first-of-type :focus :hover :visited :nth-child :nth-of-type :link  伪元素 顾名思义，它是一个元素，可以是现有的元素，也可以是新增的元素，这些元素往往有自己的特殊位置（如：段落首字母突出样式）往往被作为附加的标记。 下面我们来实现一下伪元素
+需求：表单必填项前面加一个标识（这也是我这次的需求）
+&amp;lt;label&amp;gt;页面地址&amp;lt;/label&amp;gt; &amp;lt;input type=&#39;text&#39; placeholder=&amp;quot;请输入页面地址&amp;quot;/&amp;gt; label::before { content: &#39;*&#39;; color: red; }  效果：伪元素并不多：
+1. ::before
+2. ::after</description>
+    </item>
+    
+  </channel>
+</rss>

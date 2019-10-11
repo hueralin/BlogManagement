@@ -2,7 +2,7 @@
 title: "技术分享之Redux思想"
 date: 2019-09-18T13:40:10+08:00
 draft: false
-categories: ['随便学学']
+categories: ['React']
 ---
 
 # Redux  
