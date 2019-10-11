@@ -30,6 +30,17 @@ grid-template-rows/columns 划分行高和列宽
     </item>
     
     <item>
+      <title>圣杯布局</title>
+      <link>https://hueralin.github.io/2019/shengbeibuju/</link>
+      <pubDate>Fri, 11 Oct 2019 10:01:26 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/shengbeibuju/</guid>
+      <description>圣杯布局：
+ 顶部和底部占满屏幕宽度 中间的部分是一个三栏布局 三栏布局两侧固定宽度，中间部分自适应 中间部分的高度是三栏中最高的区域的高度  总体来说，还是一个三栏布局，这也是重点部分。
+浮动实现 &amp;lt;style&amp;gt; .top,.bottom { height: 100px; margin: 5px 0; background-color: orange; } .middle { margin:5px 0; } .left,.right { width: 200px; height: 400px; background-color: skyblue; } .left { float: left; } .right { float: right; } .content { overflow: hidden; /* 形成BFC，防止文本环绕 */ padding: 0 5px; background-color: #eee; } &amp;lt;/style&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div class=&amp;quot;container&amp;quot;&amp;gt; &amp;lt;div class=&amp;quot;top&amp;quot;&amp;gt;顶部&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;quot;middle&amp;quot;&amp;gt; &amp;lt;div class=&amp;quot;left&amp;quot;&amp;gt;左侧&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;quot;right&amp;quot;&amp;gt;右侧&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;quot;content&amp;quot;&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;哈哈哈哈哈哈&amp;lt;/p&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;quot;bottom&amp;quot;&amp;gt;底部&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/body&amp;gt;  flex实现 &amp;lt;style&amp;gt; .</description>
+    </item>
+    
+    <item>
       <title>HTTP缓存策略</title>
       <link>https://hueralin.github.io/2019/httpcache/</link>
       <pubDate>Wed, 09 Oct 2019 20:00:01 +0800</pubDate>

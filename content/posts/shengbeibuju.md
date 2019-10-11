@@ -125,3 +125,50 @@ categories: ['CSS与布局']
 
 ![flex实现的圣杯布局](/img/posts/shengbei2.png)
 
+
+### Grid实现
+
+```html
+<style>
+    .container {
+        display: grid;
+        grid-template-rows: 100px auto 100px;
+    }
+    header {
+        background-color: orange;
+    }
+    main {
+        display: grid;
+        grid-template-columns: 200px auto 300px;
+        grid-template-rows: 100px 100px 100px;
+    }
+    main .left {
+        grid-row: 1/2;
+        background-color: red;
+    }
+    main .content {
+        grid-row: 1/4;
+        background-color: yellow;
+    }
+    main .right {
+        grid-row: 1/3;
+        background-color: blue;
+    }
+    footer {
+        background-color: #000;
+    }
+</style>
+<body>
+    <div class="container">
+        <header>顶部</header>
+        <main>
+            <div class="left">左边</div>
+            <div class="content">中间</div>
+            <div class="right">右边</div>
+        </main>
+        <footer>底部</footer>
+    </div>
+</body>
+```
+
+![圣杯布局的Grid实现](/img/posts/grid2.png)
