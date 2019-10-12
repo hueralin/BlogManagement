@@ -5,8 +5,228 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Oct 2019 10:49:22 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 12 Oct 2019 14:11:39 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>HTTPS</title>
+      <link>https://hueralin.github.io/2019/https/</link>
+      <pubDate>Sat, 12 Oct 2019 14:11:39 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/https/</guid>
+      <description>
+
+&lt;h2 id=&#34;http协议的弊端&#34;&gt;HTTP协议的弊端&lt;/h2&gt;
+
+&lt;h3 id=&#34;报文明文通信&#34;&gt;报文明文通信&lt;/h3&gt;
+
+&lt;p&gt;由于HTTP协议本身没有加密手段，所以无法对通信的内容进行加密。因此，一般情况下的HTTP通信都是明文通信的，索引很容易被截获窃听。为了保证通信的安全，必须采取某种外部加密措施。&lt;/p&gt;
+
+&lt;p&gt;加密的方式一般有两种，对&lt;strong&gt;通信的加密&lt;/strong&gt;和&lt;strong&gt;对内容的加密&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;对通信的加密&lt;/strong&gt;就是 HTTP + SSL/TLS 这种，在真正通信之前先建立一个加密的通信线路。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;对内容的加密&lt;/strong&gt;就是先对要发送的内容进行加密，把加密后的内容放进报文里发送，前提是要求客户端和服务器同 时具备加密和解密机制。&lt;/p&gt;
+
+&lt;h3 id=&#34;不进行身份验证&#34;&gt;不进行身份验证&lt;/h3&gt;
+
+&lt;p&gt;HTTP是不进行身份验证的。在TCP三次握手过程中也仅仅是验证双方的收发能力是否完好，并不对通信的双方进行身份验证。也就是说服务器对发来的请求照单全收并且会给对方一个响应。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;无法确定请求发送的目的服务器是真正的服务器。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;无法确定收到响应的客户端是真正的客户端。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;无法确定客户端用户是否有访问权限，因为服务器上的有些信息需要有权限的用户才能访问。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;服务器照单全收，包括垃圾请求（DoS）。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;无法验证报文的完整性&#34;&gt;无法验证报文的完整性&lt;/h3&gt;
+
+&lt;p&gt;因为HTTP报文是明文发送的，所以中途有可能被篡改，但是HTTP协议没有数据验证功能，对方接受到的数据可能是被篡改过的。例如中间人攻击，当我们在网站上下载一个文件时，文件在传输过程中被篡改，客户端无法确认下载的是否为正确的文件，可能是带有病毒的文件。&lt;/p&gt;
+
+&lt;p&gt;为了有效地防止上面的弊端，我们有必要使用HTTPS。既然单独使用HTTP协议无法确保安全，我们就必修将HTTP协议和其他协议结合起来，共同完成目标。&lt;/p&gt;
+
+&lt;h2 id=&#34;https&#34;&gt;HTTPS&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTPS = HTTP + 加密 + 身份认证 + 数据完整性验证&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;HTTPS 即 HTTP Secure，是身披SSL外壳的HTTP。传统的通信方式是HTTP直接和TCP通信，而HTTPS在中间加了一层SSL，演变成先和 SSL通 信，再由 SSL和 TCP 通信。有了SSL加持，HTTP 就拥有了 HTTPS 的加密、证书和完整性保护 这些功能。&lt;/p&gt;
+
+&lt;h3 id=&#34;公钥加密技术&#34;&gt;公钥加密技术&lt;/h3&gt;
+
+&lt;p&gt;现在常用的加密技术里有两种：对称加密　和　非对称加密。&lt;/p&gt;
+
+&lt;p&gt;对称加密就是双方都持有约定好的加密解密算法，但是一旦双方约定好的加密解密算法被第三方知道了，加密也就没有了意义。所以如何将约定好的加密解密算法传给对方是个问题，而且还得保存好自己手中的密钥。&lt;/p&gt;
+
+&lt;p&gt;非对称加密采用了双密钥的方法，一对公私钥。公钥加密私钥解密，或者私钥加密公钥解密。公钥可以公开，四月自己保存好。这样，传递只传公钥，不怕被别人知道，毕竟只能私钥解开。所以公钥加密，私钥解密比较安全。&lt;/p&gt;
+
+&lt;h3 id=&#34;混合加密&#34;&gt;混合加密&lt;/h3&gt;
+
+&lt;p&gt;HTTPS采取的是对称加密和非对称加密相结合的方法，因为非对称加密的开销比较大。HTTPS使用非对称加密传递对称加密所需要的密钥，保证密钥的安全，然后再使用对称加密方法进行通信。&lt;/p&gt;
+
+&lt;h3 id=&#34;证明公钥正确性-可信度-的证书&#34;&gt;证明公钥正确性（可信度）的证书&lt;/h3&gt;
+
+&lt;p&gt;即使使用了“混合加密”也是有问题的，因为我们没法确认公钥的安全性，万一拿到的公钥是假的呢？如果连SSL这一层都无法安全通过，那接下来的通信一定是不可靠的。&lt;/p&gt;
+
+&lt;p&gt;为了解决上面的问题，我们使用了一种叫做证书的东西，由数字证书颁发机构（CA）发布的一种电子凭证。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;申请流程：&lt;/strong&gt;&lt;br /&gt;
+1. 申请人向CA提出公钥证书的申请&lt;br /&gt;
+2. CA对使用自己的私钥对申请人的一些基本信息以及申请人的公钥进行签名（相当于加盖发证书机 构的公章）&lt;br /&gt;
+3. 将公钥放到公钥证书中，发给申请人&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;客户端收到服务器发来的公钥证书后的验证流程：&lt;/strong&gt;&lt;br /&gt;
+客户端使用CA的公钥（一般内置在浏览器中），对证书上的数字签名进行验证，验证通过说明是权威机构（说明机构可信）颁发的证书，该服务器的公钥可信，身份可信。&lt;/p&gt;
+
+&lt;h3 id=&#34;https通信流程&#34;&gt;HTTPS通信流程&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://hueralin.github.io/img/posts/https.png&#34; alt=&#34;《图解HTTP》&#34; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;客户端通过发送 Client Hello 报文开始 SSL通信。报文中包含客户端支持的 SSL的指定版本、加密组件列表（所使用的加密算法及密钥长度等）。（你看，我支持这些加密算法，你支持哪个？选一下吧！）&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;服务器可进行 SSL通信时，会以 Server Hello 报文作为应答。报文中包含 SSL版本以及加密组件。加密组件内容是从接收到的客户端加密组件内筛选出来的。（我支持这个，咱就用这个吧）。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;服务器发送 Certificate 报文，报文中包含公开密钥证书。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;最后服务器发送 Server Hello Done 报文通知客户端，最初阶段的&lt;strong&gt;“SSL握手协商”&lt;/strong&gt;部分结束。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;SSL第一次握手结束。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;客户端以 Client Key Exchange 报文作为回应。报文内容为用服务器公钥加密的一串随机数字。（我用你的公钥加密了一串数字，看看你能不能打开）。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;接着客户端继续发送 Change Cipher Spec 报文。该报文会提示服务器，在此报文之后的通信会采用上面那串随机数字作为密钥加密。（你一定要打开哦&amp;hellip;&amp;hellip;不然咱俩就没法通信了呢&amp;hellip;&amp;hellip;嘿嘿嘿~~~）。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;客户端发送 Finished 报文。该报文包含连接至今全部报文的整体校验值。这次握手协商是否能够成功，要以服务器是否能够正确解密该报文作为判定标准。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;服务器同样发送 Change Cipher Spec 报文。（我解出来了，你看是不是这串随机数字）。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;服务器同样发送 Finished 报文。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;服务器和客户端的 Finished 报文交换完毕之后，SSL连接 就算建立完成。当然，通信会受到 SSL的保护。从此处开始进行应用层协议的通信，即发送 HTTP 请求。&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;在以上流程中，应用层发送数据时会附加一种叫做 MAC（Message Authentication Code）的报文摘要。MAC 能够查知报文是否遭到篡改，从而保护报文的完整性。MAC是通过某种算法对报文内容做的散列，对方拿到后用同样的方法对保温内容做散列，看两个散列值是否一样，一样的话说明没有被篡改。&lt;/p&gt;
+
+&lt;h3 id=&#34;https-比-http慢&#34;&gt;HTTPS 比 HTTP慢&lt;/h3&gt;
+
+&lt;p&gt;慢！确实慢！能不慢吗，搞了那么多加密解密，情报传递，心累！《图解HTTP》上说比HTTP能慢到2-100倍！妈耶~&lt;/p&gt;
+
+&lt;p&gt;所以，HTTPS也不能滥用。如果是非敏感信息的话，可以考虑使用HTTP，但如果是账号密码等敏感信息，据不得不使用HTTPS了。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>用Node.js讲解Cookie</title>
+      <link>https://hueralin.github.io/2019/cookie/</link>
+      <pubDate>Sat, 12 Oct 2019 09:50:42 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/cookie/</guid>
+      <description>
+
+&lt;h2 id=&#34;cookie&#34;&gt;Cookie&lt;/h2&gt;
+
+&lt;p&gt;靠死记硬背是学不了东西的&amp;hellip;&lt;/p&gt;
+
+&lt;h3 id=&#34;搭建简易的服务器环境&#34;&gt;搭建简易的服务器环境&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;let express = require(&#39;express&#39;)
+let app = express()
+app.get(&#39;/&#39;, (req, res) =&amp;gt; {
+    // 在响应中添加cookie
+    res.cookie(&#39;background&#39;, &#39;skyblue&#39;)
+    res.cookie(&#39;color&#39;, &#39;green&#39;)
+    res.send(&#39;&amp;lt;h1&amp;gt;Hello World!&amp;lt;/h1&amp;gt;&#39;)
+})
+app.listen(3000)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;发起请求并分析字段&#34;&gt;发起请求并分析字段&lt;/h3&gt;
+
+&lt;p&gt;我们请求下试试看：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://hueralin.github.io/img/posts/cookie1.png&#34; alt=&#34;访问localhost:3000&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;一开始，我们假设当前域名下是没有cookie的，第一次请求的时候也不会带上cookie。第一次响应时，服务器设置了两个cookie，如上图的set-cookie字段。当我们再次请求时，浏览器会自动带上cookie，如下图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://hueralin.github.io/img/posts/cookie2.png&#34; alt=&#34;刷新页面&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：我们设置cookie前，响应报文没有set-cookie字段，请求报文也不会有cookie字段。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;因为我们设置了两个cookie，见上图，cookie字段里不同的cookie之间是通过；和 空格 分割的。&lt;/p&gt;
+
+&lt;p&gt;以上就是cookie的大体工作流程。下面我们来介绍下cookie。&lt;/p&gt;
+
+&lt;h3 id=&#34;cookie-1&#34;&gt;Cookie&lt;/h3&gt;
+
+&lt;p&gt;我们知道HTTP协议是无状态的协议，即TCP连接断开后，当浏览器再次请求访问时，服务器根本不认识这个客户端。但是我们在某些情况下却又希望服务器能记住客户端的状态，这时cookie出现了。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Cookie 的工作机制是用户识别及状态管理。Web 网站为了管理用户的状态会通过 Web 浏览器，把一些数据临时写入用户的计算机内。接着当用户访问该Web网站时，可通过通信方式取回之前发放的 Cookie。-————《图解HTTP》&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;cookie的属性&#34;&gt;Cookie的属性&lt;/h4&gt;
+
+&lt;p&gt;Cookie的属性有六种：&lt;br /&gt;
+1. NAME=VALUE
+2. expires=日期
+3. path=路径
+4. domain=域名
+5. secure
+6. httpOnly&lt;/p&gt;
+
+&lt;h4 id=&#34;expires&#34;&gt;expires&lt;/h4&gt;
+
+&lt;p&gt;指定浏览器可发送 Cookie 的有效期，若省略的话，则有效期为该会话结束，即关闭浏览器。&lt;/p&gt;
+
+&lt;p&gt;在HTTP/1.1中有个max-age属性，该属性值设置的是相对时间，以秒为单位，优先级比expires高。&lt;/p&gt;
+
+&lt;h4 id=&#34;path&#34;&gt;path&lt;/h4&gt;
+
+&lt;p&gt;限制指定 Cookie 的发送范围的文件目录&lt;/p&gt;
+
+&lt;h4 id=&#34;domain&#34;&gt;domain&lt;/h4&gt;
+
+&lt;p&gt;指定cookie发送的域名，即发送请求时如果当前URL的域名是该domain或者是该域名的子域，就可以携带该cookie。子域可以访问父域的cookie，即从子域发起请求时，cookie字段会带上父域的cookie字段，反之不行。&lt;/p&gt;
+
+&lt;h4 id=&#34;secure&#34;&gt;secure&lt;/h4&gt;
+
+&lt;p&gt;用于限制Web页面仅在HTTPS安全连接时，才可以发送 Cookie。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;app.get(&#39;/&#39;, (req, res) =&amp;gt; {
+    // 在响应中添加cookie
+    res.cookie(&#39;background&#39;, &#39;skyblue&#39;, {
+        secure: true
+    })
+    res.send(&#39;&amp;lt;h1&amp;gt;Hello World!&amp;lt;/h1&amp;gt;&#39;)
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://hueralin.github.io/img/posts/cookie.png&#34; alt=&#34;带secure的cookie&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;可见，服务端设置了secure后，浏览器发现自己的协议并不是HTTPS，所以再次刷新时没有携带cookie。&lt;/p&gt;
+
+&lt;h4 id=&#34;httponly&#34;&gt;httpOnly&lt;/h4&gt;
+
+&lt;p&gt;Cookie 的 HttpOnly 属性是 Cookie 的扩展功能，它使 JavaScript 脚本 无法获得 Cookie。其主要目的为防止跨站脚本攻击（Cross-site scripting，XSS）对 Cookie 的信息窃取。&lt;/p&gt;
+
+&lt;h3 id=&#34;cookie的生存周期&#34;&gt;Cookie的生存周期&lt;/h3&gt;
+
+&lt;p&gt;前面说到expires属性可以设置cookie的过期时间，但它毕竟是个可选项，也可以不设置。那么若不设置过期时间，cookie会保存多久呢？如果我们在服务器端不设置expires等过期时间，那么此时的cookie被称为“session cookie”，即其生命周期为会话期，当浏览器窗口关闭时就会消失，session cookie保存在内存中。比如下面：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://hueralin.github.io/img/posts/cookie4.png&#34; alt=&#34;没设置过期时间,则为session cookie&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;而设置了过期时间的cookie则放在硬盘中，存储在硬盘上的cookie可以在不同的浏览器进程间共享。&lt;/p&gt;
+
+&lt;h3 id=&#34;cookie的缺陷&#34;&gt;Cookie的缺陷&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Cookie会被附加在每个HTTP请求中，所以无形中增加了流量。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;由于在HTTP请求中的Cookie是明文传递的，所以安全性成问题，除非用HTTPS。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Cookie的大小限制在4KB左右，对于复杂的存储需求来说是不够用的。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;识别不精确，如果在同一台机器上使用多个浏览器，每个浏览器在不同的存储位置保存 Cookie，因此，Cookie 并不能定位到一个具体的人，而是用户,计算机和浏览器的组合。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;如果用户在获取了一个 Cookie 之后,点击了浏览器的&amp;rdquo;回退&amp;rdquo;按键,则浏览器的状态和获取Cookie 的状态就出现了不一致（因为父域不能访问子域的cookie，包括path）.例如, 如果网站基于 Cookie 技术实现了购物车的应用,当用户添加了物品后点击了&amp;rdquo;回退&amp;rdquo;按键, 购物车的物品状态可能并没有发生变化.（当然，购物车不会这么实现。）&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;cookie安全性&#34;&gt;Cookie安全性&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;偷cookie，利用别人的合法的cookie，入侵账户&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;修改cookie，Emmmm&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://juejin.im/entry/5766c29d6be3ff006a31b84e&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Cookie与Session的区别&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>CSS Grid 布局</title>
@@ -1853,162 +2073,6 @@ function EventEmitter () {
 
 export default debounce
 &lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>JS 事件循环</title>
-      <link>https://hueralin.github.io/2019/eventloop/</link>
-      <pubDate>Mon, 02 Sep 2019 18:56:56 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/eventloop/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;MDN 事件循环&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&#34;https://html.spec.whatwg.org/multipage/webappapis.html#event-loops&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;详细的不知道该给这个链接命什么名好!&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Ahhhhhh, 这JS学的，不断刷新世界观~&lt;/p&gt;
-
-&lt;p&gt;事件循环可谓是JS中的一大重点，如果说之前的&lt;a href=&#34;http://localhost:1313/2019/jsec/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;JS执行环境&lt;/a&gt;从微观角度上说明了函数内部的执行原理，那么事件循环则从宏观角度上说明了整个JS代码的执行情况。&lt;/p&gt;
-
-&lt;p&gt;事件循环中的关键概念：执行栈、任务源、任务队列&lt;/p&gt;
-
-&lt;h3 id=&#34;执行栈&#34;&gt;执行栈&lt;/h3&gt;
-
-&lt;p&gt;由于JS是单线程的，一定时间内只能执行一个函数，所以这些函数就得按照一定的顺序排好队，但它并不是一个队列，因为函数调用会涉及到作用域链的问题，函数调用之间有着一定的嵌套关系，所以栈结构比较合适。那么由函数调用组成的栈，也被称为 “执行栈” ，函数被调用时压入栈，执行完毕弹出栈。结合 &lt;a href=&#34;http://localhost:1313/2019/jsec/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;JS执行环境&lt;/a&gt; 中所讲的内容，函数调用栈中的每一个帧都是一个执行环境，执行环境里面包含着变量对象（函数被调用时才会有）。&lt;/p&gt;
-
-&lt;h3 id=&#34;任务源&#34;&gt;任务源&lt;/h3&gt;
-
-&lt;p&gt;这个高大上的名词可能没见过，但是它本身却很常见。顾名思义，任务源就是分发任务的源头，绝大部分是异步任务。分发异步任务的源头有哪些呢？setTimeout ！setInterval ! promise !等等都是任务源，这些函数在被执行的时候都是立即执行的，但是它们所分发的任务需要在特定的情况下才会被执行，而这些特定的环境则需要事件循环机制来处理。任务源所分发的任务才会被放进任务队列中。&lt;/p&gt;
-
-&lt;h3 id=&#34;任务队列&#34;&gt;任务队列&lt;/h3&gt;
-
-&lt;p&gt;MDN 上叫“消息队列”，好像是从前的说法，讲的有些笼统。新标准下给了它们新的名字：任务队列，给异步任务做了更细致的划分。任务队列分为：“宏任务”和“微任务”。
-宏任务包括：script(整体代码), setTimeout, setInterval, setImmediate, I/O, UI渲染。微任务包括：process.nextTick，Promise, Object.observe(已废弃), MutationObserver(html5新特性)。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;推荐两篇博客：&lt;br /&gt;
-&lt;a href=&#34;https://zhuanlan.zhihu.com/p/26229293&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;深入浅出JS事件循环机制（上）&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&#34;https://zhuanlan.zhihu.com/p/26238030&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;深入浅出JS事件循环机制（下）&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;上面两篇博客涉及到了&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/API&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;WebpAPIs&lt;/a&gt;，文中给出了三种常见的WebAPIs，DOM相关、网络相关、定时器相关。&lt;/p&gt;
-
-&lt;p&gt;下面用一个简单的例子来说明：&lt;br /&gt;
- &lt;img src=&#34;https://hueralin.github.io/img/posts/eventloop01.png&#34; alt=&#34;代码执行前&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;现在开始执行JS代码，main()入栈，执行到console.log()，log函数入栈，执行log函数，控制台输出&amp;rsquo;Hello world!&amp;rsquo;
- &lt;img src=&#34;https://hueralin.github.io/img/posts/eventloop02.png&#34; alt=&#34;main函数入栈，log函数入栈&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;log函数出栈，setTimeout函数入栈，执行栈发现setTimeout函数是WebAPIs，于是将setTimeout所分发的任务交由浏览器内核对应的timer模块处理，然后将setTimeout函数出栈。&lt;br /&gt;
- &lt;img src=&#34;https://hueralin.github.io/img/posts/eventloop03.png&#34; alt=&#34;setTimeout函数入栈&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;setTimeout函数出栈，console.log(&amp;lsquo;end&amp;rsquo;)入栈，执行完毕后控制台输出&amp;rsquo;end&amp;rsquo;，然后console.log()函数出栈，若timer模块计时结束就将回调函数放进任务队列。&lt;br /&gt;
- &lt;img src=&#34;https://hueralin.github.io/img/posts/eventloop04.png&#34; alt=&#34;console.log(&#39;end&#39;)入栈&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;然后执行栈中还剩下main()，main函数出栈，此时执行栈为空。开始检查任务队列，队列中有任务，就拿到执行栈中去执行。再依次出栈。&lt;br /&gt;
- &lt;img src=&#34;https://hueralin.github.io/img/posts/eventloop05.png&#34; alt=&#34;匿名回调函数入栈，console.log入栈&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;这个例子中只使用了setTimeout，是WebAPIs中的一个。其他的WebAPIs例如ajax请求，DOM等都由浏览器内核中不同的模块去处理。结合前面讲的任务源，来自不同任务源的任务会被放进不同的任务队列。即setTimeout分发的任务会进入setTimeout任务队列（因为可能会有多个setTimeout被调用），诸如setTimeout、setInterval等又同属于“宏任务”，而像promise等则属于“微任务”。既然有“宏任务”和“微任务”之分，那么当执行任务队列中的任务时先去哪个呢？下面来讲一下时间循环的具体流程。&lt;/p&gt;
-
-&lt;h3 id=&#34;事件循环的流程&#34;&gt;事件循环的流程&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;从script整体代码开始，执行同步任务。&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;当碰到异步任务时，会将异步任务交由对应的浏览器内核模块去执行，执行完毕后将其回调函数（即事件处理程序）放到对应的任务队列中，等待被执行。&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;第二步并不会阻塞下面同步代码的执行。&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;当执行栈为空时，就会优先去检查“微任务”，“微任务”中有“process.nexttick任务队列”、“promise队列”等，前者优先级大于后者，拿出队首任务放到执行栈中执行，执行完出栈，继续拿下一个“微任务”，直到所有的“微任务队列”清空。&lt;strong&gt;此时，一轮循环结束！&lt;/strong&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;下一轮循环从“宏任务”开始，“宏任务”包括“setTimeout任务队列”、“setInterval任务队列”等，拿出队首的宏任务放进执行栈中执行，执行完出栈。&lt;strong&gt;注意！当一个“宏任务”又创建了一个“微任务”的话，则会将该“宏任务”所在的“宏任务队列”清空后，再转去处理微任务，且微任务被清空后，才会执行下一个“宏任务队列”，也就是说，“微任务”可插队！。&lt;/strong&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;事件循环机制会一直检测执行栈、宏任务队列、微任务队列，不断循环执行。&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&#34;例题&#34;&gt;例题&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;(function test() {
-    setTimeout(function() {console.log(4)}, 0);
-    new Promise(function executor(resolve) {
-        console.log(1);
-        for( var i=0 ; i&amp;lt;10000 ; i++ ) {
-            i == 9999 &amp;amp;&amp;amp; resolve();
-        }
-        console.log(2);
-    }).then(function() {
-        console.log(5);
-    });
-    console.log(3);
-})()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;还有更复杂的例题&lt;a href=&#34;https://www.jianshu.com/p/12b9f73c5a4f&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;这波能反杀&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;q-a&#34;&gt;Q&amp;amp;A&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Q：&lt;/strong&gt; setTimeout又分发了一个setTimeout，会在当前循环中执行么？&lt;br /&gt;
-&lt;strong&gt;A：&lt;/strong&gt; 不会，宏任务不会插队，新分发的宏任务会等到下一次循环。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;console.log(&#39;start&#39;)
-setTimeout(() =&amp;gt; {
-	console.log(&#39;out&#39;)
-  	setTimeout(() =&amp;gt; {
-    	console.log(&#39;in&#39;)
-    }, 0)       // 最早1s后放进setTimeout队列
-}, 1000)        // 最早1s后放进setTimeout队列
-
-new Promise((resolve) =&amp;gt; {
-	console.log(&#39;promise&#39;)
-  	for(var i = 0;i&amp;lt;100;i++){
-    	i == 99 &amp;amp;&amp;amp; resolve()
-    }
-}).then(() =&amp;gt; {
-	console.log(&#39;then&#39;)
-})
-setInterval(() =&amp;gt; {
-	console.log(new Date().toString())
-}, 1000)       // 最早1s后放进setInterval队列
-console.log(&#39;end&#39;)
-
-/*
-start
-promise
-end
-then
-out
-Tue Sep 03 2019 16:14:57 GMT+0800 (中国标准时间)
-in
-*/
-// 可以看到，setTimeout任务队列清空后执行的是setInterval任务队列，即使中途插入了新的setTimeout也没有被执行，而是老老实实的等下个循环。
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;在其他博文还看到另一个说法，就是在任务进入执行栈前会判断是同步任务还是异步任务，是异步任务的话，会有一个事件注册表的东西，来给相应的事件注册回调函数。&lt;/p&gt;
-
-&lt;p&gt;回更!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>狐耳的技术栈</title>
-      <link>https://hueralin.github.io/2019/stack/</link>
-      <pubDate>Mon, 02 Sep 2019 17:08:32 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/stack/</guid>
-      <description>
-
-&lt;h3 id=&#34;javascript&#34;&gt;JavaScript&lt;/h3&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;a href=&#34;https://hueralin.github.io/2019/closure/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;JS闭包&lt;/a&gt;&lt;br /&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;a href=&#34;https://hueralin.github.io/2019/jsec/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;JS执行环境/AO/VO&lt;/a&gt;&lt;br /&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 事件循环&lt;br /&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; disabled class=&#34;task-list-item&#34;&gt; async/await&lt;br /&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;html&#34;&gt;HTML&lt;/h3&gt;
-
-&lt;h3 id=&#34;css&#34;&gt;CSS&lt;/h3&gt;
-
-&lt;h3 id=&#34;性能优化手段&#34;&gt;性能优化手段&lt;/h3&gt;
-
-&lt;h3 id=&#34;webpack&#34;&gt;webpack&lt;/h3&gt;
 </description>
     </item>
     

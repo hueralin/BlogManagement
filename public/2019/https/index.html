@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/cookie/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2019/https/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           HTTPS | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="HTTPS | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "HTTPS",
+    "headline" : "HTTPS",
+    "description" : "HTTP协议的弊端 报文明文通信 由于HTTP协议本身没有加密手段，所以无法对通信的内容进行加密。因此，一般情况下的HTTP通信都是明文通信的，索引很容易被截获窃听。为了保证通信的安全，必须采取某种外部加密措施。\n加密的方式一般有两种，对通信的加密和对内容的加密。\n对通信的加密就是 HTTP \x2b SSL\/TLS 这种，在真正通信之前先建立一个加密的通信线路。\n对内容的加密就是先对要发送的内容进行加密，把加密后的内容放进报文里发送，前提是要求客户端和服务器同 时具备加密和解密机制。\n不进行身份验证 HTTP是不进行身份验证的。在TCP三次握手过程中也仅仅是验证双方的收发能力是否完好，并不对通信的双方进行身份验证。也就是说服务器对发来的请求照单全收并且会给对方一个响应。\n 无法确定请求发送的目的服务器是真正的服务器。\n 无法确定收到响应的客户端是真正的客户端。\n 无法确定客户端用户是否有访问权限，因为服务器上的有些信息需要有权限的用户才能访问。\n 服务器照单全收，包括垃圾请求（DoS）。  无法验证报文的完整性 因为HTTP报文是明文发送的，所以中途有可能被篡改，但是HTTP协议没有数据验证功能，对方接受到的数据可能是被篡改过的。例如中间人攻击，当我们在网站上下载一个文件时，文件在传输过程中被篡改，客户端无法确认下载的是否为正确的文件，可能是带有病毒的文件。\n为了有效地防止上面的弊端，我们有必要使用HTTPS。既然单独使用HTTP协议无法确保安全，我们就必修将HTTP协议和其他协议结合起来，共同完成目标。\nHTTPS HTTPS = HTTP \x2b 加密 \x2b 身份认证 \x2b 数据完整性验证\nHTTPS 即 HTTP Secure，是身披SSL外壳的HTTP。传统的通信方式是HTTP直接和TCP通信，而HTTPS在中间加了一层SSL，演变成先和 SSL通 信，再由 SSL和 TCP 通信。有了SSL加持，HTTP 就拥有了 HTTPS 的加密、证书和完整性保护 这些功能。\n公钥加密技术 现在常用的加密技术里有两种：对称加密　和　非对称加密。\n对称加密就是双方都持有约定好的加密解密算法，但是一旦双方约定好的加密解密算法被第三方知道了，加密也就没有了意义。所以如何将约定好的加密解密算法传给对方是个问题，而且还得保存好自己手中的密钥。\n非对称加密采用了双密钥的方法，一对公私钥。公钥加密私钥解密，或者私钥加密公钥解密。公钥可以公开，四月自己保存好。这样，传递只传公钥，不怕被别人知道，毕竟只能私钥解开。所以公钥加密，私钥解密比较安全。\n混合加密 HTTPS采取的是对称加密和非对称加密相结合的方法，因为非对称加密的开销比较大。HTTPS使用非对称加密传递对称加密所需要的密钥，保证密钥的安全，然后再使用对称加密方法进行通信。\n证明公钥正确性（可信度）的证书 即使使用了“混合加密”也是有问题的，因为我们没法确认公钥的安全性，万一拿到的公钥是假的呢？如果连SSL这一层都无法安全通过，那接下来的通信一定是不可靠的。\n为了解决上面的问题，我们使用了一种叫做证书的东西，由数字证书颁发机构（CA）发布的一种电子凭证。\n申请流程：\n1. 申请人向CA提出公钥证书的申请\n2. CA对使用自己的私钥对申请人的一些基本信息以及申请人的公钥进行签名（相当于加盖发证书机 构的公章）\n3. 将公钥放到公钥证书中，发给申请人\n客户端收到服务器发来的公钥证书后的验证流程：\n客户端使用CA的公钥（一般内置在浏览器中），对证书上的数字签名进行验证，验证通过说明是权威机构（说明机构可信）颁发的证书，该服务器的公钥可信，身份可信。",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-10-12 14:11:39 \x2b0800 CST",
+    "dateModified" : "2019-10-12 14:11:39 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/https\/",
+    "wordCount" : "124",
+    "keywords" : [ "计算机网络","HTTP", "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">HTTPS</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-10-12 itemprop="datePublished">October 12, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"> 计算机网络 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<h2 id="http协议的弊端">HTTP协议的弊端</h2>
+
+<h3 id="报文明文通信">报文明文通信</h3>
+
+<p>由于HTTP协议本身没有加密手段，所以无法对通信的内容进行加密。因此，一般情况下的HTTP通信都是明文通信的，索引很容易被截获窃听。为了保证通信的安全，必须采取某种外部加密措施。</p>
+
+<p>加密的方式一般有两种，对<strong>通信的加密</strong>和<strong>对内容的加密</strong>。</p>
+
+<p><strong>对通信的加密</strong>就是 HTTP + SSL/TLS 这种，在真正通信之前先建立一个加密的通信线路。</p>
+
+<p><strong>对内容的加密</strong>就是先对要发送的内容进行加密，把加密后的内容放进报文里发送，前提是要求客户端和服务器同 时具备加密和解密机制。</p>
+
+<h3 id="不进行身份验证">不进行身份验证</h3>
+
+<p>HTTP是不进行身份验证的。在TCP三次握手过程中也仅仅是验证双方的收发能力是否完好，并不对通信的双方进行身份验证。也就是说服务器对发来的请求照单全收并且会给对方一个响应。</p>
+
+<ol>
+<li>无法确定请求发送的目的服务器是真正的服务器。<br /></li>
+<li>无法确定收到响应的客户端是真正的客户端。<br /></li>
+<li>无法确定客户端用户是否有访问权限，因为服务器上的有些信息需要有权限的用户才能访问。<br /></li>
+<li>服务器照单全收，包括垃圾请求（DoS）。</li>
+</ol>
+
+<h3 id="无法验证报文的完整性">无法验证报文的完整性</h3>
+
+<p>因为HTTP报文是明文发送的，所以中途有可能被篡改，但是HTTP协议没有数据验证功能，对方接受到的数据可能是被篡改过的。例如中间人攻击，当我们在网站上下载一个文件时，文件在传输过程中被篡改，客户端无法确认下载的是否为正确的文件，可能是带有病毒的文件。</p>
+
+<p>为了有效地防止上面的弊端，我们有必要使用HTTPS。既然单独使用HTTP协议无法确保安全，我们就必修将HTTP协议和其他协议结合起来，共同完成目标。</p>
+
+<h2 id="https">HTTPS</h2>
+
+<p><strong>HTTPS = HTTP + 加密 + 身份认证 + 数据完整性验证</strong></p>
+
+<p>HTTPS 即 HTTP Secure，是身披SSL外壳的HTTP。传统的通信方式是HTTP直接和TCP通信，而HTTPS在中间加了一层SSL，演变成先和 SSL通 信，再由 SSL和 TCP 通信。有了SSL加持，HTTP 就拥有了 HTTPS 的加密、证书和完整性保护 这些功能。</p>
+
+<h3 id="公钥加密技术">公钥加密技术</h3>
+
+<p>现在常用的加密技术里有两种：对称加密　和　非对称加密。</p>
+
+<p>对称加密就是双方都持有约定好的加密解密算法，但是一旦双方约定好的加密解密算法被第三方知道了，加密也就没有了意义。所以如何将约定好的加密解密算法传给对方是个问题，而且还得保存好自己手中的密钥。</p>
+
+<p>非对称加密采用了双密钥的方法，一对公私钥。公钥加密私钥解密，或者私钥加密公钥解密。公钥可以公开，四月自己保存好。这样，传递只传公钥，不怕被别人知道，毕竟只能私钥解开。所以公钥加密，私钥解密比较安全。</p>
+
+<h3 id="混合加密">混合加密</h3>
+
+<p>HTTPS采取的是对称加密和非对称加密相结合的方法，因为非对称加密的开销比较大。HTTPS使用非对称加密传递对称加密所需要的密钥，保证密钥的安全，然后再使用对称加密方法进行通信。</p>
+
+<h3 id="证明公钥正确性-可信度-的证书">证明公钥正确性（可信度）的证书</h3>
+
+<p>即使使用了“混合加密”也是有问题的，因为我们没法确认公钥的安全性，万一拿到的公钥是假的呢？如果连SSL这一层都无法安全通过，那接下来的通信一定是不可靠的。</p>
+
+<p>为了解决上面的问题，我们使用了一种叫做证书的东西，由数字证书颁发机构（CA）发布的一种电子凭证。</p>
+
+<p><strong>申请流程：</strong><br />
+1. 申请人向CA提出公钥证书的申请<br />
+2. CA对使用自己的私钥对申请人的一些基本信息以及申请人的公钥进行签名（相当于加盖发证书机 构的公章）<br />
+3. 将公钥放到公钥证书中，发给申请人</p>
+
+<p><strong>客户端收到服务器发来的公钥证书后的验证流程：</strong><br />
+客户端使用CA的公钥（一般内置在浏览器中），对证书上的数字签名进行验证，验证通过说明是权威机构（说明机构可信）颁发的证书，该服务器的公钥可信，身份可信。</p>
+
+<h3 id="https通信流程">HTTPS通信流程</h3>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/https.png" alt="《图解HTTP》" class="lazyload"><figcaption class="image-caption">《图解HTTP》</figcaption></figure></p>
+
+<ol>
+<li>客户端通过发送 Client Hello 报文开始 SSL通信。报文中包含客户端支持的 SSL的指定版本、加密组件列表（所使用的加密算法及密钥长度等）。（你看，我支持这些加密算法，你支持哪个？选一下吧！）<br /></li>
+<li>服务器可进行 SSL通信时，会以 Server Hello 报文作为应答。报文中包含 SSL版本以及加密组件。加密组件内容是从接收到的客户端加密组件内筛选出来的。（我支持这个，咱就用这个吧）。<br /></li>
+<li>服务器发送 Certificate 报文，报文中包含公开密钥证书。<br /></li>
+<li>最后服务器发送 Server Hello Done 报文通知客户端，最初阶段的<strong>“SSL握手协商”</strong>部分结束。<br /></li>
+<li>SSL第一次握手结束。<br /></li>
+<li>客户端以 Client Key Exchange 报文作为回应。报文内容为用服务器公钥加密的一串随机数字。（我用你的公钥加密了一串数字，看看你能不能打开）。<br /></li>
+<li>接着客户端继续发送 Change Cipher Spec 报文。该报文会提示服务器，在此报文之后的通信会采用上面那串随机数字作为密钥加密。（你一定要打开哦&hellip;&hellip;不然咱俩就没法通信了呢&hellip;&hellip;嘿嘿嘿~~~）。<br /></li>
+<li>客户端发送 Finished 报文。该报文包含连接至今全部报文的整体校验值。这次握手协商是否能够成功，要以服务器是否能够正确解密该报文作为判定标准。<br /></li>
+<li>服务器同样发送 Change Cipher Spec 报文。（我解出来了，你看是不是这串随机数字）。<br /></li>
+<li>服务器同样发送 Finished 报文。<br /></li>
+<li>服务器和客户端的 Finished 报文交换完毕之后，SSL连接 就算建立完成。当然，通信会受到 SSL的保护。从此处开始进行应用层协议的通信，即发送 HTTP 请求。<br /></li>
+</ol>
+
+<p>在以上流程中，应用层发送数据时会附加一种叫做 MAC（Message Authentication Code）的报文摘要。MAC 能够查知报文是否遭到篡改，从而保护报文的完整性。MAC是通过某种算法对报文内容做的散列，对方拿到后用同样的方法对保温内容做散列，看两个散列值是否一样，一样的话说明没有被篡改。</p>
+
+<h3 id="https-比-http慢">HTTPS 比 HTTP慢</h3>
+
+<p>慢！确实慢！能不慢吗，搞了那么多加密解密，情报传递，心累！《图解HTTP》上说比HTTP能慢到2-100倍！妈耶~</p>
+
+<p>所以，HTTPS也不能滥用。如果是非敏感信息的话，可以考虑使用HTTP，但如果是账号密码等敏感信息，据不得不使用HTTPS了。</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/https/>https://hueralin.github.io/2019/https/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://hueralin.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+                    #计算机网络</a></span>
+            
+            <span class="tag"><a href="https://hueralin.github.io/tags/http/">
+                    #HTTP</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/cookie/" class="prev" rel="prev" title="用Node.js讲解Cookie"><i class="iconfont icon-left"></i>&nbsp;用Node.js讲解Cookie</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

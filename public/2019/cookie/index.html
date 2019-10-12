@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/grid/" />
+  <link rel="next" href="https://hueralin.github.io/2019/https/" />
+  <link rel="canonical" href="https://hueralin.github.io/2019/cookie/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           用Node.js讲解Cookie | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="用Node.js讲解Cookie | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "用Node.js讲解Cookie",
+    "headline" : "用Node.js讲解Cookie",
+    "description" : "Cookie 靠死记硬背是学不了东西的\x26hellip;\n搭建简易的服务器环境 let express = require(\x27express\x27) let app = express() app.get(\x27\/\x27, (req, res) =\x26gt; { \/\/ 在响应中添加cookie res.cookie(\x27background\x27, \x27skyblue\x27) res.cookie(\x27color\x27, \x27green\x27) res.send(\x27\x26lt;h1\x26gt;Hello World!\x26lt;\/h1\x26gt;\x27) }) app.listen(3000)  发起请求并分析字段 我们请求下试试看：\n一开始，我们假设当前域名下是没有cookie的，第一次请求的时候也不会带上cookie。第一次响应时，服务器设置了两个cookie，如上图的set-cookie字段。当我们再次请求时，浏览器会自动带上cookie，如下图：\n注意：我们设置cookie前，响应报文没有set-cookie字段，请求报文也不会有cookie字段。\n因为我们设置了两个cookie，见上图，cookie字段里不同的cookie之间是通过；和 空格 分割的。\n以上就是cookie的大体工作流程。下面我们来介绍下cookie。\nCookie 我们知道HTTP协议是无状态的协议，即TCP连接断开后，当浏览器再次请求访问时，服务器根本不认识这个客户端。但是我们在某些情况下却又希望服务器能记住客户端的状态，这时cookie出现了。\n Cookie 的工作机制是用户识别及状态管理。Web 网站为了管理用户的状态会通过 Web 浏览器，把一些数据临时写入用户的计算机内。接着当用户访问该Web网站时，可通过通信方式取回之前发放的 Cookie。-————《图解HTTP》\n Cookie的属性 Cookie的属性有六种：\n1. NAME=VALUE 2. expires=日期 3. path=路径 4. domain=域名 5. secure 6. httpOnly\nexpires 指定浏览器可发送 Cookie 的有效期，若省略的话，则有效期为该会话结束，即关闭浏览器。\n在HTTP\/1.1中有个max-age属性，该属性值设置的是相对时间，以秒为单位，优先级比expires高。\npath 限制指定 Cookie 的发送范围的文件目录\ndomain 指定cookie发送的域名，即发送请求时如果当前URL的域名是该domain或者是该域名的子域，就可以携带该cookie。子域可以访问父域的cookie，即从子域发起请求时，cookie字段会带上父域的cookie字段，反之不行。",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-10-12 09:50:42 \x2b0800 CST",
+    "dateModified" : "2019-10-12 09:50:42 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2019\/cookie\/",
+    "wordCount" : "125",
+    "keywords" : [ "HTTP", "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">用Node.js讲解Cookie</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-10-12 itemprop="datePublished">October 12, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"> 计算机网络 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<h2 id="cookie">Cookie</h2>
+
+<p>靠死记硬背是学不了东西的&hellip;</p>
+
+<h3 id="搭建简易的服务器环境">搭建简易的服务器环境</h3>
+
+<pre><code class="language-javascript">let express = require('express')
+let app = express()
+app.get('/', (req, res) =&gt; {
+    // 在响应中添加cookie
+    res.cookie('background', 'skyblue')
+    res.cookie('color', 'green')
+    res.send('&lt;h1&gt;Hello World!&lt;/h1&gt;')
+})
+app.listen(3000)
+</code></pre>
+
+<h3 id="发起请求并分析字段">发起请求并分析字段</h3>
+
+<p>我们请求下试试看：</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/cookie1.png" alt="访问localhost:3000" class="lazyload"><figcaption class="image-caption">访问localhost:3000</figcaption></figure></p>
+
+<p>一开始，我们假设当前域名下是没有cookie的，第一次请求的时候也不会带上cookie。第一次响应时，服务器设置了两个cookie，如上图的set-cookie字段。当我们再次请求时，浏览器会自动带上cookie，如下图：</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/cookie2.png" alt="刷新页面" class="lazyload"><figcaption class="image-caption">刷新页面</figcaption></figure></p>
+
+<p><strong>注意：我们设置cookie前，响应报文没有set-cookie字段，请求报文也不会有cookie字段。</strong></p>
+
+<p>因为我们设置了两个cookie，见上图，cookie字段里不同的cookie之间是通过；和 空格 分割的。</p>
+
+<p>以上就是cookie的大体工作流程。下面我们来介绍下cookie。</p>
+
+<h3 id="cookie-1">Cookie</h3>
+
+<p>我们知道HTTP协议是无状态的协议，即TCP连接断开后，当浏览器再次请求访问时，服务器根本不认识这个客户端。但是我们在某些情况下却又希望服务器能记住客户端的状态，这时cookie出现了。</p>
+
+<blockquote>
+<p>Cookie 的工作机制是用户识别及状态管理。Web 网站为了管理用户的状态会通过 Web 浏览器，把一些数据临时写入用户的计算机内。接着当用户访问该Web网站时，可通过通信方式取回之前发放的 Cookie。-————《图解HTTP》</p>
+</blockquote>
+
+<h4 id="cookie的属性">Cookie的属性</h4>
+
+<p>Cookie的属性有六种：<br />
+1. NAME=VALUE
+2. expires=日期
+3. path=路径
+4. domain=域名
+5. secure
+6. httpOnly</p>
+
+<h4 id="expires">expires</h4>
+
+<p>指定浏览器可发送 Cookie 的有效期，若省略的话，则有效期为该会话结束，即关闭浏览器。</p>
+
+<p>在HTTP/1.1中有个max-age属性，该属性值设置的是相对时间，以秒为单位，优先级比expires高。</p>
+
+<h4 id="path">path</h4>
+
+<p>限制指定 Cookie 的发送范围的文件目录</p>
+
+<h4 id="domain">domain</h4>
+
+<p>指定cookie发送的域名，即发送请求时如果当前URL的域名是该domain或者是该域名的子域，就可以携带该cookie。子域可以访问父域的cookie，即从子域发起请求时，cookie字段会带上父域的cookie字段，反之不行。</p>
+
+<h4 id="secure">secure</h4>
+
+<p>用于限制Web页面仅在HTTPS安全连接时，才可以发送 Cookie。</p>
+
+<pre><code class="language-javascript">app.get('/', (req, res) =&gt; {
+    // 在响应中添加cookie
+    res.cookie('background', 'skyblue', {
+        secure: true
+    })
+    res.send('&lt;h1&gt;Hello World!&lt;/h1&gt;')
+})
+</code></pre>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/cookie.png" alt="带secure的cookie" class="lazyload"><figcaption class="image-caption">带secure的cookie</figcaption></figure></p>
+
+<p>可见，服务端设置了secure后，浏览器发现自己的协议并不是HTTPS，所以再次刷新时没有携带cookie。</p>
+
+<h4 id="httponly">httpOnly</h4>
+
+<p>Cookie 的 HttpOnly 属性是 Cookie 的扩展功能，它使 JavaScript 脚本 无法获得 Cookie。其主要目的为防止跨站脚本攻击（Cross-site scripting，XSS）对 Cookie 的信息窃取。</p>
+
+<h3 id="cookie的生存周期">Cookie的生存周期</h3>
+
+<p>前面说到expires属性可以设置cookie的过期时间，但它毕竟是个可选项，也可以不设置。那么若不设置过期时间，cookie会保存多久呢？如果我们在服务器端不设置expires等过期时间，那么此时的cookie被称为“session cookie”，即其生命周期为会话期，当浏览器窗口关闭时就会消失，session cookie保存在内存中。比如下面：</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/cookie4.png" alt="没设置过期时间,则为session cookie" class="lazyload"><figcaption class="image-caption">没设置过期时间,则为session cookie</figcaption></figure></p>
+
+<p>而设置了过期时间的cookie则放在硬盘中，存储在硬盘上的cookie可以在不同的浏览器进程间共享。</p>
+
+<h3 id="cookie的缺陷">Cookie的缺陷</h3>
+
+<ol>
+<li>Cookie会被附加在每个HTTP请求中，所以无形中增加了流量。<br /></li>
+<li>由于在HTTP请求中的Cookie是明文传递的，所以安全性成问题，除非用HTTPS。<br /></li>
+<li>Cookie的大小限制在4KB左右，对于复杂的存储需求来说是不够用的。<br /></li>
+<li>识别不精确，如果在同一台机器上使用多个浏览器，每个浏览器在不同的存储位置保存 Cookie，因此，Cookie 并不能定位到一个具体的人，而是用户,计算机和浏览器的组合。<br /></li>
+<li>如果用户在获取了一个 Cookie 之后,点击了浏览器的&rdquo;回退&rdquo;按键,则浏览器的状态和获取Cookie 的状态就出现了不一致（因为父域不能访问子域的cookie，包括path）.例如, 如果网站基于 Cookie 技术实现了购物车的应用,当用户添加了物品后点击了&rdquo;回退&rdquo;按键, 购物车的物品状态可能并没有发生变化.（当然，购物车不会这么实现。）</li>
+</ol>
+
+<h3 id="cookie安全性">Cookie安全性</h3>
+
+<ol>
+<li>偷cookie，利用别人的合法的cookie，入侵账户<br /></li>
+<li>修改cookie，Emmmm</li>
+</ol>
+
+<p><a href="https://juejin.im/entry/5766c29d6be3ff006a31b84e" rel="nofollow noreferrer" target="_blank">Cookie与Session的区别</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2019/cookie/>https://hueralin.github.io/2019/cookie/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://hueralin.github.io/tags/http/">
+                    #HTTP</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/grid/" class="prev" rel="prev" title="CSS Grid 布局"><i class="iconfont icon-left"></i>&nbsp;CSS Grid 布局</a>
+         
+        
+        <a href="https://hueralin.github.io/2019/https/" class="next" rel="next" title="HTTPS">HTTPS&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2019</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

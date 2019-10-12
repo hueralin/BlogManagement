@@ -6,7 +6,7 @@
     <description>Recent content in Tags on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 09 Oct 2019 20:00:01 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 12 Oct 2019 14:11:39 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,18 @@
     <item>
       <title>HTTP</title>
       <link>https://hueralin.github.io/tags/http/</link>
-      <pubDate>Wed, 09 Oct 2019 20:00:01 +0800</pubDate>
+      <pubDate>Sat, 12 Oct 2019 14:11:39 +0800</pubDate>
       
       <guid>https://hueralin.github.io/tags/http/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>计算机网络</title>
+      <link>https://hueralin.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+      <pubDate>Sat, 12 Oct 2019 14:11:39 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</guid>
       <description></description>
     </item>
     
@@ -35,15 +44,6 @@
       <pubDate>Sun, 06 Oct 2019 13:27:32 +0800</pubDate>
       
       <guid>https://hueralin.github.io/tags/javascript/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>计算机网络</title>
-      <link>https://hueralin.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
-      <pubDate>Mon, 09 Sep 2019 12:51:57 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</guid>
       <description></description>
     </item>
     

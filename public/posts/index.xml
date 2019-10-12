@@ -6,10 +6,64 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Oct 2019 10:49:22 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 12 Oct 2019 14:11:39 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HTTPS</title>
+      <link>https://hueralin.github.io/2019/https/</link>
+      <pubDate>Sat, 12 Oct 2019 14:11:39 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/https/</guid>
+      <description>HTTP协议的弊端 报文明文通信 由于HTTP协议本身没有加密手段，所以无法对通信的内容进行加密。因此，一般情况下的HTTP通信都是明文通信的，索引很容易被截获窃听。为了保证通信的安全，必须采取某种外部加密措施。
+加密的方式一般有两种，对通信的加密和对内容的加密。
+对通信的加密就是 HTTP + SSL/TLS 这种，在真正通信之前先建立一个加密的通信线路。
+对内容的加密就是先对要发送的内容进行加密，把加密后的内容放进报文里发送，前提是要求客户端和服务器同 时具备加密和解密机制。
+不进行身份验证 HTTP是不进行身份验证的。在TCP三次握手过程中也仅仅是验证双方的收发能力是否完好，并不对通信的双方进行身份验证。也就是说服务器对发来的请求照单全收并且会给对方一个响应。
+ 无法确定请求发送的目的服务器是真正的服务器。
+ 无法确定收到响应的客户端是真正的客户端。
+ 无法确定客户端用户是否有访问权限，因为服务器上的有些信息需要有权限的用户才能访问。
+ 服务器照单全收，包括垃圾请求（DoS）。  无法验证报文的完整性 因为HTTP报文是明文发送的，所以中途有可能被篡改，但是HTTP协议没有数据验证功能，对方接受到的数据可能是被篡改过的。例如中间人攻击，当我们在网站上下载一个文件时，文件在传输过程中被篡改，客户端无法确认下载的是否为正确的文件，可能是带有病毒的文件。
+为了有效地防止上面的弊端，我们有必要使用HTTPS。既然单独使用HTTP协议无法确保安全，我们就必修将HTTP协议和其他协议结合起来，共同完成目标。
+HTTPS HTTPS = HTTP + 加密 + 身份认证 + 数据完整性验证
+HTTPS 即 HTTP Secure，是身披SSL外壳的HTTP。传统的通信方式是HTTP直接和TCP通信，而HTTPS在中间加了一层SSL，演变成先和 SSL通 信，再由 SSL和 TCP 通信。有了SSL加持，HTTP 就拥有了 HTTPS 的加密、证书和完整性保护 这些功能。
+公钥加密技术 现在常用的加密技术里有两种：对称加密　和　非对称加密。
+对称加密就是双方都持有约定好的加密解密算法，但是一旦双方约定好的加密解密算法被第三方知道了，加密也就没有了意义。所以如何将约定好的加密解密算法传给对方是个问题，而且还得保存好自己手中的密钥。
+非对称加密采用了双密钥的方法，一对公私钥。公钥加密私钥解密，或者私钥加密公钥解密。公钥可以公开，四月自己保存好。这样，传递只传公钥，不怕被别人知道，毕竟只能私钥解开。所以公钥加密，私钥解密比较安全。
+混合加密 HTTPS采取的是对称加密和非对称加密相结合的方法，因为非对称加密的开销比较大。HTTPS使用非对称加密传递对称加密所需要的密钥，保证密钥的安全，然后再使用对称加密方法进行通信。
+证明公钥正确性（可信度）的证书 即使使用了“混合加密”也是有问题的，因为我们没法确认公钥的安全性，万一拿到的公钥是假的呢？如果连SSL这一层都无法安全通过，那接下来的通信一定是不可靠的。
+为了解决上面的问题，我们使用了一种叫做证书的东西，由数字证书颁发机构（CA）发布的一种电子凭证。
+申请流程：
+1. 申请人向CA提出公钥证书的申请
+2. CA对使用自己的私钥对申请人的一些基本信息以及申请人的公钥进行签名（相当于加盖发证书机 构的公章）
+3. 将公钥放到公钥证书中，发给申请人
+客户端收到服务器发来的公钥证书后的验证流程：
+客户端使用CA的公钥（一般内置在浏览器中），对证书上的数字签名进行验证，验证通过说明是权威机构（说明机构可信）颁发的证书，该服务器的公钥可信，身份可信。</description>
+    </item>
+    
+    <item>
+      <title>用Node.js讲解Cookie</title>
+      <link>https://hueralin.github.io/2019/cookie/</link>
+      <pubDate>Sat, 12 Oct 2019 09:50:42 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2019/cookie/</guid>
+      <description>Cookie 靠死记硬背是学不了东西的&amp;hellip;
+搭建简易的服务器环境 let express = require(&#39;express&#39;) let app = express() app.get(&#39;/&#39;, (req, res) =&amp;gt; { // 在响应中添加cookie res.cookie(&#39;background&#39;, &#39;skyblue&#39;) res.cookie(&#39;color&#39;, &#39;green&#39;) res.send(&#39;&amp;lt;h1&amp;gt;Hello World!&amp;lt;/h1&amp;gt;&#39;) }) app.listen(3000)  发起请求并分析字段 我们请求下试试看：
+一开始，我们假设当前域名下是没有cookie的，第一次请求的时候也不会带上cookie。第一次响应时，服务器设置了两个cookie，如上图的set-cookie字段。当我们再次请求时，浏览器会自动带上cookie，如下图：
+注意：我们设置cookie前，响应报文没有set-cookie字段，请求报文也不会有cookie字段。
+因为我们设置了两个cookie，见上图，cookie字段里不同的cookie之间是通过；和 空格 分割的。
+以上就是cookie的大体工作流程。下面我们来介绍下cookie。
+Cookie 我们知道HTTP协议是无状态的协议，即TCP连接断开后，当浏览器再次请求访问时，服务器根本不认识这个客户端。但是我们在某些情况下却又希望服务器能记住客户端的状态，这时cookie出现了。
+ Cookie 的工作机制是用户识别及状态管理。Web 网站为了管理用户的状态会通过 Web 浏览器，把一些数据临时写入用户的计算机内。接着当用户访问该Web网站时，可通过通信方式取回之前发放的 Cookie。-————《图解HTTP》
+ Cookie的属性 Cookie的属性有六种：
+1. NAME=VALUE 2. expires=日期 3. path=路径 4. domain=域名 5. secure 6. httpOnly
+expires 指定浏览器可发送 Cookie 的有效期，若省略的话，则有效期为该会话结束，即关闭浏览器。
+在HTTP/1.1中有个max-age属性，该属性值设置的是相对时间，以秒为单位，优先级比expires高。
+path 限制指定 Cookie 的发送范围的文件目录
+domain 指定cookie发送的域名，即发送请求时如果当前URL的域名是该domain或者是该域名的子域，就可以携带该cookie。子域可以访问父域的cookie，即从子域发起请求时，cookie字段会带上父域的cookie字段，反之不行。</description>
+    </item>
     
     <item>
       <title>CSS Grid 布局</title>

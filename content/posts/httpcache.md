@@ -2,8 +2,8 @@
 title: "HTTP缓存策略"
 date: 2019-10-09T20:00:01+08:00
 draft: false
-categories: ['随便学学']
-tags: ['HTTP', '浏览器']
+categories: ['计算机网络']
+tags: ['HTTP', '浏览器', '计算机网络']
 ---
 
 我再也不废话了......切入正题!  

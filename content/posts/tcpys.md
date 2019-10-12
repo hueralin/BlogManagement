@@ -2,7 +2,7 @@
 title: "TCP流量控制、拥塞控制"
 date: 2019-09-09T12:51:57+08:00
 draft: false
-categories: ["随便学学"]
+categories: ["计算机网络"]
 tags: ["计算机网络"]
 ---
 
