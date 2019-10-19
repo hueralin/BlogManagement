@@ -53,6 +53,24 @@ EC是在调用函数的时候创建的，一个EC的生命周期分为两个阶�
 作用域分为两种：全局作用域 和 局部作用域。  
 前面说过，作用域链其实就是变量对象，但并不是一个，而是一串儿😂。我们所说的局部作用域其实就是当前执行环境的变量对象，我们在查找一个变量的时候，如果在当前变量对象里面查不到的话，就会顺着作用域链一级一级的向上查找，直到全局作用域，因此全局作用域处于作用域链的末端。
 
+### 示例
+
+```javascript
+function a(name) {
+    function b(age) {
+        var x = 10
+    }
+    var name = 'ml'
+    var x = 20
+    b()
+    console.log(name)
+}
+a('huer')
+1.a函数定义时，设置a函数的[[scope]]属性为一个链表，最上面是全局上下文的活动对象，即a.[[scope]] = [ globalContext.VO ]
+2.a函数执行时，创建a函数的EC并入栈 [aContext, globalContext]，创建并初始化a函数的变量对象{name:'huer',b:func,x：undefined}，b函数创建，b.[[scope]] = [aContext.VO,globalContext.AO]
+3.a函数的变量对象创建并初始化完毕，设置aContext的scope为[aContext.VO,a.[[scope]]]，即将a函数的执行上下文的活动对象加在a函数作用域的顶端。
+4.执行a函数里面的代码，修改变量对象。执行b函数类似。
+```
 
 [最后，推荐一篇知乎上的帖子，上面讨论的很详细。（尤其是那几个图，很直观，我也就不再放图了😂）](https://www.zhihu.com/question/36393048)  
 
