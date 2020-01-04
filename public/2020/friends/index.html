@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2020/bingchaji/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2020/friends/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           LeetCode.547 朋友圈 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="LeetCode.547 朋友圈 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "LeetCode.547 朋友圈",
+    "headline" : "LeetCode.547 朋友圈",
+    "description" : "班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。\n给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。\n示例 1:\n输入: [[1,1,0], [1,1,0], [0,0,1]]\n输出: 2\n说明：已知学生0和学生1互为朋友，他们在一个朋友圈。 第2个学生自己在一个朋友圈。所以返回2。\n示例 2:\n输入: [[1,1,0], [1,1,1], [0,1,1]]\n输出: 1\n说明：已知学生0和学生1互为朋友，学生1和学生2互为朋友，所以学生0和学生2也是朋友，所以他们三个在一个朋友圈，返回1。\n注意：\nN 在[1,200]的范围内。 对于所有学生，有M[i][i] = 1。 如果有M[i][j] = 1，则有M[j][i] = 1。\n并查集解法 思路：  遍历下三角，因为是对称矩阵。\n 若i，j是朋友，则看看他俩是不是一个圈子，若不是则合并。 初始化Set数组各元素值均为自身，即Set[i]=i; 经过一番合并后，遍历Set，Set[i]=i的个数即为朋友圈数。  执行用时 :32 ms, 在所有 C 提交中击败了92.",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-01-04 20:18:21 \x2b0800 CST",
+    "dateModified" : "2020-01-04 20:18:21 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2020\/friends\/",
+    "wordCount" : "219",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">LeetCode.547 朋友圈</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-01-04 itemprop="datePublished">January 4, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/"> 刷题记录 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<p>班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。</p>
+
+<p>给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。</p>
+
+<p><strong>示例 1:</strong></p>
+
+<p>输入:
+[[1,1,0],
+ [1,1,0],
+ [0,0,1]]</p>
+
+<p>输出: 2</p>
+
+<p>说明：已知学生0和学生1互为朋友，他们在一个朋友圈。
+第2个学生自己在一个朋友圈。所以返回2。</p>
+
+<p><strong>示例 2:</strong></p>
+
+<p>输入:
+[[1,1,0],
+ [1,1,1],
+ [0,1,1]]</p>
+
+<p>输出: 1</p>
+
+<p>说明：已知学生0和学生1互为朋友，学生1和学生2互为朋友，所以学生0和学生2也是朋友，所以他们三个在一个朋友圈，返回1。</p>
+
+<p>注意：</p>
+
+<p>N 在[1,200]的范围内。
+对于所有学生，有M[i][i] = 1。
+如果有M[i][j] = 1，则有M[j][i] = 1。</p>
+
+<h3 id="并查集解法">并查集解法</h3>
+
+<h4 id="思路">思路：</h4>
+
+<ol>
+<li>遍历下三角，因为是对称矩阵。<br /></li>
+<li>若i，j是朋友，则看看他俩是不是一个圈子，若不是则合并。</li>
+<li>初始化Set数组各元素值均为自身，即Set[i]=i; 经过一番合并后，遍历Set，Set[i]=i的个数即为朋友圈数。</li>
+</ol>
+
+<pre><code class="language-c">执行用时 :32 ms, 在所有 C 提交中击败了92.68%的用户  
+内存消耗 :8.3 MB, 在所有 C 提交中击败了100.00%的用户  
+
+int Find(int set[], int x) {
+    for(;set[x]!=x;x=set[x]);
+    return x;
+}
+
+执行用时 :28 ms, 在所有 C 提交中击败了99.29%的用户
+内存消耗 :8.2 MB, 在所有 C 提交中击败了100.00%的用户
+
+// 路径压缩
+int Find2(int set[], int x) {
+    if(set[x] == x)
+        return x;
+    else return set[x] = Find(set, set[x]);
+}
+
+// 按秩归并
+void Union(int* set, int* size, int r1, int r2) {
+    if(size[r1] &gt; size[r2]) {
+        set[r2] = r1;
+        size[r1] += size[r2];
+    } else {
+        set[r1] = r2;
+        size[r2] += size[r1];
+    }
+}
+
+int findCircleNum(int** M, int MSize, int* MColSize){
+    int set[MSize], size[MSize], i, j, count=0, root1, root2;
+    // 初始化并查集
+    for(i=0;i&lt;MSize;i++) {
+        set[i]=i;
+        size[i] = 1;
+    }
+    for(i=1;i&lt;MSize;i++) {
+        for(j=0;j&lt;MSize &amp;&amp; j&lt;i;j++) {
+            // 只遍历下三角
+            if(M[i][j] == 1) {
+                // 看看他俩分别是哪个圈子的
+                root1 = Find2(set, i);
+                root2 = Find2(set, j);
+                // 圈子不同，合并！
+                if(root1 != root2) {
+                    Union(&amp;set, &amp;size, root1, root2);
+                }
+            }
+        }
+    }
+    for(i=0;i&lt;MSize;i++) {
+        if(set[i] == i) count++;
+    }
+    return count;
+}
+</code></pre>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2020/friends/>https://hueralin.github.io/2020/friends/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2020/bingchaji/" class="prev" rel="prev" title="并查集"><i class="iconfont icon-left"></i>&nbsp;并查集</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

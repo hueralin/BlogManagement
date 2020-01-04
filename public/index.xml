@@ -5,8 +5,118 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jan 2020 14:56:19 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jan 2020 20:18:21 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>LeetCode.547 朋友圈</title>
+      <link>https://hueralin.github.io/2020/friends/</link>
+      <pubDate>Sat, 04 Jan 2020 20:18:21 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2020/friends/</guid>
+      <description>
+
+&lt;p&gt;班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。&lt;/p&gt;
+
+&lt;p&gt;给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 1:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;输入:
+[[1,1,0],
+ [1,1,0],
+ [0,0,1]]&lt;/p&gt;
+
+&lt;p&gt;输出: 2&lt;/p&gt;
+
+&lt;p&gt;说明：已知学生0和学生1互为朋友，他们在一个朋友圈。
+第2个学生自己在一个朋友圈。所以返回2。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 2:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;输入:
+[[1,1,0],
+ [1,1,1],
+ [0,1,1]]&lt;/p&gt;
+
+&lt;p&gt;输出: 1&lt;/p&gt;
+
+&lt;p&gt;说明：已知学生0和学生1互为朋友，学生1和学生2互为朋友，所以学生0和学生2也是朋友，所以他们三个在一个朋友圈，返回1。&lt;/p&gt;
+
+&lt;p&gt;注意：&lt;/p&gt;
+
+&lt;p&gt;N 在[1,200]的范围内。
+对于所有学生，有M[i][i] = 1。
+如果有M[i][j] = 1，则有M[j][i] = 1。&lt;/p&gt;
+
+&lt;h3 id=&#34;并查集解法&#34;&gt;并查集解法&lt;/h3&gt;
+
+&lt;h4 id=&#34;思路&#34;&gt;思路：&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;遍历下三角，因为是对称矩阵。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;若i，j是朋友，则看看他俩是不是一个圈子，若不是则合并。&lt;/li&gt;
+&lt;li&gt;初始化Set数组各元素值均为自身，即Set[i]=i; 经过一番合并后，遍历Set，Set[i]=i的个数即为朋友圈数。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;执行用时 :32 ms, 在所有 C 提交中击败了92.68%的用户  
+内存消耗 :8.3 MB, 在所有 C 提交中击败了100.00%的用户  
+
+int Find(int set[], int x) {
+    for(;set[x]!=x;x=set[x]);
+    return x;
+}
+
+执行用时 :28 ms, 在所有 C 提交中击败了99.29%的用户
+内存消耗 :8.2 MB, 在所有 C 提交中击败了100.00%的用户
+
+// 路径压缩
+int Find2(int set[], int x) {
+    if(set[x] == x)
+        return x;
+    else return set[x] = Find(set, set[x]);
+}
+
+// 按秩归并
+void Union(int* set, int* size, int r1, int r2) {
+    if(size[r1] &amp;gt; size[r2]) {
+        set[r2] = r1;
+        size[r1] += size[r2];
+    } else {
+        set[r1] = r2;
+        size[r2] += size[r1];
+    }
+}
+
+int findCircleNum(int** M, int MSize, int* MColSize){
+    int set[MSize], size[MSize], i, j, count=0, root1, root2;
+    // 初始化并查集
+    for(i=0;i&amp;lt;MSize;i++) {
+        set[i]=i;
+        size[i] = 1;
+    }
+    for(i=1;i&amp;lt;MSize;i++) {
+        for(j=0;j&amp;lt;MSize &amp;amp;&amp;amp; j&amp;lt;i;j++) {
+            // 只遍历下三角
+            if(M[i][j] == 1) {
+                // 看看他俩分别是哪个圈子的
+                root1 = Find2(set, i);
+                root2 = Find2(set, j);
+                // 圈子不同，合并！
+                if(root1 != root2) {
+                    Union(&amp;amp;set, &amp;amp;size, root1, root2);
+                }
+            }
+        }
+    }
+    for(i=0;i&amp;lt;MSize;i++) {
+        if(set[i] == i) count++;
+    }
+    return count;
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>并查集</title>
@@ -2077,44 +2187,6 @@ A B 双方在建立TCP连接的时候，B就已经向A给出了自己的窗口�
 &lt;p&gt;&lt;strong&gt;发送方控制拥塞窗口的原则&lt;/strong&gt;：当网络没有发生拥塞时，我可以让窗口再增大一些，发出更多的分组。若出现了拥塞，就让拥塞窗口减小一些，缓解拥塞。&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;网络中出现拥塞的依据&lt;/strong&gt;：分组丢失/超时。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>字节跳动面试题</title>
-      <link>https://hueralin.github.io/2019/bytedance/</link>
-      <pubDate>Wed, 04 Sep 2019 16:18:24 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/bytedance/</guid>
-      <description>
-
-&lt;h3 id=&#34;实现sleep函数-将程序挂起一段时间-阻塞运行&#34;&gt;实现sleep函数（将程序挂起一段时间，阻塞运行）&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;我能想到的方法就是ES6的 async/await
-function my_sleep (time) {
-    return new Promise((resolve) =&amp;gt; {
-        setTimeout(() =&amp;gt; {
-            resolve()
-        }, time)
-    })
-}
-async function main() {
-    console.log(&#39;start&#39;)
-    await my_sleep(5000)
-    console.log(&#39;end&#39;)
-}
-main()
-网上还有一种解法，利用循环+Date()，不断的循环，检测当前时间是否超出了间隔时间  
-原理就是一直在执行同步任务，阻塞下面同步任务的执行
-function my_sleep (time) {
-    let start = new Date().getTime()    // 一串长数字
-    let end = start + time  // time是毫秒
-    while(new Date().getTime() &amp;lt;= end){}
-}
-console.log(&#39;start&#39;)
-my_sleep(5000)
-console.log(&#39;end&#39;)
-&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
