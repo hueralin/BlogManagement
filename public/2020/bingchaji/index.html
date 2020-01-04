@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="狐耳">
+  
+  
+  
+  <link rel="prev" href="https://hueralin.github.io/2019/redux-sourcecode/" />
+  
+  <link rel="canonical" href="https://hueralin.github.io/2020/bingchaji/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           并查集 | 狐耳的雪原
+       
+  </title>
+  <meta name="title" content="并查集 | 狐耳的雪原">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/hueralin.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "并查集",
+    "headline" : "并查集",
+    "description" : "并查集是一个用树结构表示的集合，来处理一些不相交集的合并及查询问题。 其实并查集就像朋友圈，我们之前都是一个个的个体，后来因为某些共同兴趣而走到了一起，建立了一个小圈子。随着志同道合的人越来越多，这个圈子也越来越大，我们也完全可以通过两个人将两个圈子融合到一起。\n 并查集的主要操作有两个：查询某个元素属于哪个集合，合并两个集合。\n并查集的表示 并查集是一个树结构，根结点用来代表集合，集合中的其他元素都指向根结点。即我们每个朋友圈都有个代表人物，我们只要报出各自的代表人物的名字，就可以知道我们是不是同一个圈子的人。\n#define MAXSIZE 10 typedef int SetName; typedef int Set[MAXSIZE]; \/\/ Set数组里面有好多集合 \/\/ Set[i] 表示 i 的所属圈子的大佬  初始化朋友圈 void Init() { int i; for(i=0;i\x26lt;MAXSIZE;i\x2b\x2b) Set[i] = i; \/\/ 一开始，每个人的圈子只有自己 }  你哪个圈子的？lo娘?！ void Find(Set s[], int x) { \/\/ 直到s[x]=x时循环结束 for(;s[x]!=x;x=s[x]); return x; \/\/ 返回圈内大佬 }  老妹儿啊~咱俩挺投机滴，拉我进圈儿呗~ void Union(Set s[], int a, int b) { int dalao1 = Find(s, a); int dalao2 = Find(s, b); \/\/ 若他们的大佬是同一个人，那他俩就属于同一个圈子 if(dalao1 == dalao2) return; \/\/ 否则，将a的圈子并入b的圈子 s[dalao1] = dalao2; \/\/ dalao1 认 dalao2 为大佬 \/\/ 也可以反过来 }  dalao1：“我TM不服！为什么我要认他做大哥！”",
+    "inLanguage" : "en-us",
+    "author" : "狐耳",
+    "creator" : "狐耳",
+    "publisher": "狐耳",
+    "accountablePerson" : "狐耳",
+    "copyrightHolder" : "狐耳",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-01-04 14:56:19 \x2b0800 CST",
+    "dateModified" : "2020-01-04 14:56:19 \x2b0800 CST",
+    "url" : "https:\/\/hueralin.github.io\/2020\/bingchaji\/",
+    "wordCount" : "248",
+    "keywords" : [  "狐耳的雪原"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://hueralin.github.io">狐耳的雪原</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">博客</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/collect/" title="">收藏</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">并查集</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://hueralin.github.io" rel="author">狐耳</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-01-04 itemprop="datePublished">January 4, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://hueralin.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"> 数据结构与算法 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<blockquote>
+<p>并查集是一个用树结构表示的集合，来处理一些不相交集的合并及查询问题。
+其实并查集就像朋友圈，我们之前都是一个个的个体，后来因为某些共同兴趣而走到了一起，建立了一个小圈子。随着志同道合的人越来越多，这个圈子也越来越大，我们也完全可以通过两个人将两个圈子融合到一起。</p>
+</blockquote>
+
+<p>并查集的主要操作有两个：查询某个元素属于哪个集合，合并两个集合。</p>
+
+<h3 id="并查集的表示">并查集的表示</h3>
+
+<p>并查集是一个树结构，根结点用来代表集合，集合中的其他元素都指向根结点。即我们每个朋友圈都有个代表人物，我们只要报出各自的代表人物的名字，就可以知道我们是不是同一个圈子的人。</p>
+
+<pre><code class="language-c">#define MAXSIZE 10
+typedef int SetName;
+typedef int Set[MAXSIZE];   // Set数组里面有好多集合
+// Set[i] 表示 i 的所属圈子的大佬
+</code></pre>
+
+<h3 id="初始化朋友圈">初始化朋友圈</h3>
+
+<pre><code class="language-c">void Init() {
+    int i;
+    for(i=0;i&lt;MAXSIZE;i++)
+        Set[i] = i; // 一开始，每个人的圈子只有自己
+}
+</code></pre>
+
+<h3 id="你哪个圈子的-lo娘">你哪个圈子的？lo娘?！</h3>
+
+<pre><code class="language-c">void Find(Set s[], int x) {
+    // 直到s[x]=x时循环结束
+    for(;s[x]!=x;x=s[x]);
+    return x;   // 返回圈内大佬
+}
+</code></pre>
+
+<h3 id="老妹儿啊-咱俩挺投机滴-拉我进圈儿呗">老妹儿啊~咱俩挺投机滴，拉我进圈儿呗~</h3>
+
+<pre><code class="language-c">void Union(Set s[], int a, int b) {
+    int dalao1 = Find(s, a);
+    int dalao2 = Find(s, b);
+    // 若他们的大佬是同一个人，那他俩就属于同一个圈子
+    if(dalao1 == dalao2) return;
+    // 否则，将a的圈子并入b的圈子
+    s[dalao1] = dalao2; // dalao1 认 dalao2 为大佬
+    // 也可以反过来
+}
+</code></pre>
+
+<p><strong>dalao1：“我TM不服！为什么我要认他做大哥！”</strong></p>
+
+<p>那好，你们谁手下多谁当老大好吧&hellip;&hellip;</p>
+
+<pre><code class="language-c">// 于是我们增加了一个数组size，用来存储各个圈子的大小。
+typedef int Size[MAXSIZE];
+// 初始化时 Size[i] = 1;
+void Union(Set s[], int a, int b) {
+    int dalao1 = Find(s, a);
+    int dalao2 = Find(s, b);
+    if(dalao1 == dalao2) return;
+    if(Size[dalao1] &gt; Size[dalao2]) {
+        Size[dalao1] += Size[dalao2];
+        Set[dalao2] = dalao1;
+    } else {
+        Size[dalao2] += Size[dalao1];
+        Set[dalao1] = dalao2;
+    }
+}
+</code></pre>
+
+<p><strong>Q：</strong>  上面为什么要用大小来决定哪个集合合并到哪个集合呢？<br />
+<strong>A：</strong>  因为集合是个树结构，树是有高度的，而且这个高度和Find的效率息息相关。若一直是高树合并到矮树，那么这个树会越来越高，极端情况就是这个集合是一个链表，Find的时间复杂度会达到O(n)。而我们将矮树合并到高树，整个集合树的高度并不会增加，不会给Find带来影响。</p>
+
+<h3 id="按秩归并">按秩归并</h3>
+
+<p>按秩归并就是上面那个思想，按秩归并有两种方法。</p>
+
+<p>1、按规模（见朋友圈合并）<br />
+2、按树高</p>
+
+<pre><code class="language-c">// size数组变成height数组，存储各元素所在集合的高度
+void Union(Set s[], int a,int b) {
+    int dalao1 = Find(s, a);
+    int dalao2 = Find(s, b);
+    if(dalao1 == dalao2) return;
+    if(height[dalao1] &gt; height[dalao2]) {
+        Set[dalao2] = dalao1;
+    } else {
+        if(height[dalao1] == height[dalao2]) height[dalao2]++;
+        Set[dalao1] = dalao2;
+    }
+}
+</code></pre>
+
+<h3 id="路径压缩">路径压缩</h3>
+
+<p>若我们每次都查询Set集合的最后一个元素的圈内大佬，查了n次，那最坏情况下时间复杂度为O(n^2)。<br />
+所以我们需要压缩一下，是集合树尽量扁平化。</p>
+
+<pre><code class="language-c">void Find(Set s[], int x) {
+    if(s[x] == x) {
+        return x;
+    } else {
+        return s[x] = Find(s, s[x]);
+    }
+}
+// 这样，当我们一层层查到了x的圈内大佬是谁，  
+// 就将这一查找路径上的所有人的上级直接指向圈内大佬（即都是大佬的直属小弟了），  
+// 那么下一次查找时就不用一层层的找了，节省了时间。
+</code></pre>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/bcj2.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+<hr />
+
+<p>小结：并查集有两种不同的表示形式</p>
+
+<pre><code class="language-c">// 基本形式（结构体数组）
+typedef struct Node {
+    ElemType data;
+    int parent;
+}Set[MAXSIZE];
+
+// 精简形式（普通数组）
+typedef int Set[MAXSIZE];
+// 集合中n个元素可以用下标0~n-1表示(即第一个元素为0，该元素所属圈子的大佬的下标为Set[0])。
+
+/*
+   还有一种方式是 Set[根下标] 不再为根下标本身，而是负的树高或负的集合大小。
+*/
+</code></pre>
+
+<p>当然，这两种形式的Find和Union的实现方式也不一样。</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="/img/posts/bcj.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>狐耳 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://hueralin.github.io/2020/bingchaji/>https://hueralin.github.io/2020/bingchaji/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://hueralin.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://hueralin.github.io/2019/redux-sourcecode/" class="prev" rel="prev" title="对Redux的理解"><i class="iconfont icon-left"></i>&nbsp;对Redux的理解</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2011 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://hueralin.github.io">狐耳</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

@@ -6,10 +6,22 @@
     <description>Recent content in Posts on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 15 Oct 2019 15:53:24 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jan 2020 14:56:19 +0800</lastBuildDate>
     
 	<atom:link href="https://hueralin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>并查集</title>
+      <link>https://hueralin.github.io/2020/bingchaji/</link>
+      <pubDate>Sat, 04 Jan 2020 14:56:19 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2020/bingchaji/</guid>
+      <description>并查集是一个用树结构表示的集合，来处理一些不相交集的合并及查询问题。 其实并查集就像朋友圈，我们之前都是一个个的个体，后来因为某些共同兴趣而走到了一起，建立了一个小圈子。随着志同道合的人越来越多，这个圈子也越来越大，我们也完全可以通过两个人将两个圈子融合到一起。
+ 并查集的主要操作有两个：查询某个元素属于哪个集合，合并两个集合。
+并查集的表示 并查集是一个树结构，根结点用来代表集合，集合中的其他元素都指向根结点。即我们每个朋友圈都有个代表人物，我们只要报出各自的代表人物的名字，就可以知道我们是不是同一个圈子的人。
+#define MAXSIZE 10 typedef int SetName; typedef int Set[MAXSIZE]; // Set数组里面有好多集合 // Set[i] 表示 i 的所属圈子的大佬  初始化朋友圈 void Init() { int i; for(i=0;i&amp;lt;MAXSIZE;i++) Set[i] = i; // 一开始，每个人的圈子只有自己 }  你哪个圈子的？lo娘?！ void Find(Set s[], int x) { // 直到s[x]=x时循环结束 for(;s[x]!=x;x=s[x]); return x; // 返回圈内大佬 }  老妹儿啊~咱俩挺投机滴，拉我进圈儿呗~ void Union(Set s[], int a, int b) { int dalao1 = Find(s, a); int dalao2 = Find(s, b); // 若他们的大佬是同一个人，那他俩就属于同一个圈子 if(dalao1 == dalao2) return; // 否则，将a的圈子并入b的圈子 s[dalao1] = dalao2; // dalao1 认 dalao2 为大佬 // 也可以反过来 }  dalao1：“我TM不服！为什么我要认他做大哥！”</description>
+    </item>
     
     <item>
       <title>对Redux的理解</title>

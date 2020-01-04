@@ -5,8 +5,153 @@
     <description>Recent content in 狐耳的雪原 on 狐耳的雪原</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 15 Oct 2019 15:53:24 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jan 2020 14:56:19 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>并查集</title>
+      <link>https://hueralin.github.io/2020/bingchaji/</link>
+      <pubDate>Sat, 04 Jan 2020 14:56:19 +0800</pubDate>
+      
+      <guid>https://hueralin.github.io/2020/bingchaji/</guid>
+      <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;并查集是一个用树结构表示的集合，来处理一些不相交集的合并及查询问题。
+其实并查集就像朋友圈，我们之前都是一个个的个体，后来因为某些共同兴趣而走到了一起，建立了一个小圈子。随着志同道合的人越来越多，这个圈子也越来越大，我们也完全可以通过两个人将两个圈子融合到一起。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;并查集的主要操作有两个：查询某个元素属于哪个集合，合并两个集合。&lt;/p&gt;
+
+&lt;h3 id=&#34;并查集的表示&#34;&gt;并查集的表示&lt;/h3&gt;
+
+&lt;p&gt;并查集是一个树结构，根结点用来代表集合，集合中的其他元素都指向根结点。即我们每个朋友圈都有个代表人物，我们只要报出各自的代表人物的名字，就可以知道我们是不是同一个圈子的人。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;#define MAXSIZE 10
+typedef int SetName;
+typedef int Set[MAXSIZE];   // Set数组里面有好多集合
+// Set[i] 表示 i 的所属圈子的大佬
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;初始化朋友圈&#34;&gt;初始化朋友圈&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;void Init() {
+    int i;
+    for(i=0;i&amp;lt;MAXSIZE;i++)
+        Set[i] = i; // 一开始，每个人的圈子只有自己
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;你哪个圈子的-lo娘&#34;&gt;你哪个圈子的？lo娘?！&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;void Find(Set s[], int x) {
+    // 直到s[x]=x时循环结束
+    for(;s[x]!=x;x=s[x]);
+    return x;   // 返回圈内大佬
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;老妹儿啊-咱俩挺投机滴-拉我进圈儿呗&#34;&gt;老妹儿啊~咱俩挺投机滴，拉我进圈儿呗~&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;void Union(Set s[], int a, int b) {
+    int dalao1 = Find(s, a);
+    int dalao2 = Find(s, b);
+    // 若他们的大佬是同一个人，那他俩就属于同一个圈子
+    if(dalao1 == dalao2) return;
+    // 否则，将a的圈子并入b的圈子
+    s[dalao1] = dalao2; // dalao1 认 dalao2 为大佬
+    // 也可以反过来
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;dalao1：“我TM不服！为什么我要认他做大哥！”&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;那好，你们谁手下多谁当老大好吧&amp;hellip;&amp;hellip;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;// 于是我们增加了一个数组size，用来存储各个圈子的大小。
+typedef int Size[MAXSIZE];
+// 初始化时 Size[i] = 1;
+void Union(Set s[], int a, int b) {
+    int dalao1 = Find(s, a);
+    int dalao2 = Find(s, b);
+    if(dalao1 == dalao2) return;
+    if(Size[dalao1] &amp;gt; Size[dalao2]) {
+        Size[dalao1] += Size[dalao2];
+        Set[dalao2] = dalao1;
+    } else {
+        Size[dalao2] += Size[dalao1];
+        Set[dalao1] = dalao2;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Q：&lt;/strong&gt;  上面为什么要用大小来决定哪个集合合并到哪个集合呢？&lt;br /&gt;
+&lt;strong&gt;A：&lt;/strong&gt;  因为集合是个树结构，树是有高度的，而且这个高度和Find的效率息息相关。若一直是高树合并到矮树，那么这个树会越来越高，极端情况就是这个集合是一个链表，Find的时间复杂度会达到O(n)。而我们将矮树合并到高树，整个集合树的高度并不会增加，不会给Find带来影响。&lt;/p&gt;
+
+&lt;h3 id=&#34;按秩归并&#34;&gt;按秩归并&lt;/h3&gt;
+
+&lt;p&gt;按秩归并就是上面那个思想，按秩归并有两种方法。&lt;/p&gt;
+
+&lt;p&gt;1、按规模（见朋友圈合并）&lt;br /&gt;
+2、按树高&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;// size数组变成height数组，存储各元素所在集合的高度
+void Union(Set s[], int a,int b) {
+    int dalao1 = Find(s, a);
+    int dalao2 = Find(s, b);
+    if(dalao1 == dalao2) return;
+    if(height[dalao1] &amp;gt; height[dalao2]) {
+        Set[dalao2] = dalao1;
+    } else {
+        if(height[dalao1] == height[dalao2]) height[dalao2]++;
+        Set[dalao1] = dalao2;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;路径压缩&#34;&gt;路径压缩&lt;/h3&gt;
+
+&lt;p&gt;若我们每次都查询Set集合的最后一个元素的圈内大佬，查了n次，那最坏情况下时间复杂度为O(n^2)。&lt;br /&gt;
+所以我们需要压缩一下，是集合树尽量扁平化。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;void Find(Set s[], int x) {
+    if(s[x] == x) {
+        return x;
+    } else {
+        return s[x] = Find(s, s[x]);
+    }
+}
+// 这样，当我们一层层查到了x的圈内大佬是谁，  
+// 就将这一查找路径上的所有人的上级直接指向圈内大佬（即都是大佬的直属小弟了），  
+// 那么下一次查找时就不用一层层的找了，节省了时间。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://hueralin.github.io/img/posts/bcj2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;小结：并查集有两种不同的表示形式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;// 基本形式（结构体数组）
+typedef struct Node {
+    ElemType data;
+    int parent;
+}Set[MAXSIZE];
+
+// 精简形式（普通数组）
+typedef int Set[MAXSIZE];
+// 集合中n个元素可以用下标0~n-1表示(即第一个元素为0，该元素所属圈子的大佬的下标为Set[0])。
+
+/*
+   还有一种方式是 Set[根下标] 不再为根下标本身，而是负的树高或负的集合大小。
+*/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当然，这两种形式的Find和Union的实现方式也不一样。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://hueralin.github.io/img/posts/bcj.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>对Redux的理解</title>
@@ -1969,71 +2114,6 @@ function my_sleep (time) {
 console.log(&#39;start&#39;)
 my_sleep(5000)
 console.log(&#39;end&#39;)
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>用友笔试题</title>
-      <link>https://hueralin.github.io/2019/yongyou/</link>
-      <pubDate>Wed, 04 Sep 2019 15:07:51 +0800</pubDate>
-      
-      <guid>https://hueralin.github.io/2019/yongyou/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;21题&lt;br /&gt;
-css 中经常有类似 background-image 这种通过 - 连接的字符，通过 javascript 设置样式的时候需要将这种样式转换成 backgroundImage 驼峰格式，请完成此转换功能。&lt;br /&gt;
-输入：-webkit-background-image&lt;br /&gt;
-输出：webkitBackgroundImage&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;解法一、  
-思路：将输入按照‘-’分开，得到一个数组，例如：[&#39;&#39;, &#39;webkit&#39;, &#39;background&#39;, &#39;image&#39;]  
-然后从第三个元素开始，将首字母变大写（注意字符串是不可变的）
-function func(pre){
-    let splitArr = pre.split(&#39;-&#39;)
-    for(let i=2;i&amp;lt;splitArr.length;i++){
-        splitArr[i] = splitArr[i][0].toUpperCase() + splitArr[i].slice(1)
-    }
-    return splitArr.join(&#39;&#39;)
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;解法二、  
-思路：
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;22题&lt;br /&gt;
-请实现一个简单的事件机制，能够实现对事件的触发和监听。
-如：EventEmitter.on(); EventEmitter.trigger();&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;思路：封装一个对象，该对象有两个方法：on、trigger。on方法接收两个参数，事件名和回调函数，如果一个事件可以绑定过个回调，可以考虑使用数组。trigger方法接受一个参数，即事件名，拿到指定事件，将该事件下的所有回调函数执行一遍。
-这种写法只是实现了时间的触发和更新，并没有将事件绑定到某个元素上。
-function EventEmitter () {
-    let eventObj = {}
-
-    function on (eventName, callback) {
-        if (!eventObj[eventName]) {
-            eventObj[eventName] = []
-        }
-        eventObj[eventName].push(callback)
-    }
-
-    function trigger (eventName) {
-        if (!eventObj[eventName]) {
-            return
-        }
-        for(let i=0;i&amp;lt;eventObj[eventName].length;i++){
-            eventObj[eventName][i]()
-        }
-    }
-
-    return {
-        on: on,
-        trigger: trigger
-    }
-}
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
